@@ -1,0 +1,110 @@
+﻿@page "/service/silos"
+
+@using AgroTemp.WWW.Services.Abstractions;
+@using BlazorBootstrap;
+@inject ISiloService siloService;
+@inject NavigationManager navigationManager;
+
+<h3>Silosy</h3>
+
+<div class="container">
+    <div class="card border-primary mb-3">
+        <div class="card-header ">
+            Dodanie nowego silosu
+        </div>
+        <EditForm Model="@Silo" OnSubmit="@Submit">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <label for="Name">Nazwa:</label>
+                        <InputText @bind-Value=Silo.Name class="form-control" style="max-width:170px;" placeholder="Podaj nazwę silosu"/>
+                    </div>
+                    <div class="col">
+                        <label for="Size">Rozmiar:</label>
+                        <InputSelect @bind-Value=Silo.Size class="form-select">
+                            <option value="">Wybierz rozmiar</option>
+                            <option value=100>100</option>
+                            <option value=200>200</option>
+                            <option value=300>300</option>
+                            <option value=400>400</option>
+                            <option value=500>500</option>
+                        </InputSelect>
+                    </div>
+                    <div class="col">
+                        <label for="PositionX">Pozycja X:</label>
+                        <InputNumber @bind-Value=Silo.PositionX class="form-control" style="max-width:170px;" placeholder="Podaj nr. pozycji X"/>
+                    </div>
+                    <div class="col">
+                        <label for="PositionY">Pozycja Y:</label>
+                        <InputNumber @bind-Value=Silo.PositionY class ="form-control" style="max-width:170px;" placeholder="Podaj nr. pozycji Y" />
+                    </div>
+                    <div class="col">
+                        <label for="OrderSensors">Kolejność czujników:</label>
+                        <InputSelect @bind-Value=Silo.OrderSensors class="form-select"> 
+                            <option value="">Wybierz kolejność</option>
+                            <option value="FromUp">Od góry</option>
+                            <option value="FromDown">Od dołu</option>
+                        </InputSelect>
+                    </div>
+                    <div class="col" style="position:center">
+                        <input type="submit" class="btn btn-success" value="Dodaj"/>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+<br/>
+
+
+@if (_Silos == null)
+{
+    <p><em>Ładowanie danych...</em></p>
+}
+else
+{   <div >
+        <table class="table align-middle table-bordered" style="min-width:fit-content">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Rozmiar</th>
+                    <th>Pozycja X</th>
+                    <th>Pozycja Y</th>
+                    <th>Kolejność czujników</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var silo in _Silos)
+                {
+                    <tr style="min-width:fit-content">
+                        <td>@silo.Name</td>
+                        <td>@silo.Size</td>
+                        <td>@silo.PositionX</td>
+                        <td>@silo.PositionY</td>
+                        <td>
+                            @switch (silo.OrderSensors)
+                            {
+                                case "FromUp":
+                                    orderSensorsText = "Od góry";
+                                    break;
+                                case "FromDown":
+                                    orderSensorsText = "Od dołu";
+                                    break;
+                            }
+                            @orderSensorsText
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning" @onclick="() => GoEditModal(silo)"><i class="oi oi-pencil"></i> Edytuj</button>
+                            <button class="btn btn-danger" @onclick="() => GoDeleteModal(silo)"><i class="oi oi-bell"></i> Usuń</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<Modal @ref="modalEdit" IsVerticallyCentered="true"/>
+<Modal @ref="modalDelete" IsVerticallyCentered="true" />
+<Toasts class="p-3" Messages="toastMessages" AutoHide="true" Delay="5000" Placement="ToastsPlacement.TopRight" />

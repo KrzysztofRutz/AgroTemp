@@ -1,0 +1,17 @@
+﻿@using AgroTemp.WWW.Services.Abstractions;
+
+@inject ISiloService siloService;
+
+<div class="container-fluid">
+	<div class="align-content-lg-center">
+		Czy napewno chcesz usunąć zbiornik o nazwie @Silo.Name ?
+	</div><br/>
+	<div style="display:block; align-items:center">
+		<span>
+			<button class="btn btn-outline-success" @onclick="() => DeleteAccepted()">Tak</button>
+			<button class="btn btn-outline-danger" @onclick="() => DeleteCanceled()">Nie</button>
+		</span>
+	</div>
+</div>
+
+

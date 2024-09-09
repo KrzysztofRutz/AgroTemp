@@ -1,0 +1,44 @@
+﻿@using AgroTemp.WWW.Services.Abstractions
+@inject ISiloService siloService;
+@inject NavigationManager navigationManager;
+
+<EditForm Model="@silo" OnSubmit="@Submit">   
+    <div class="row">
+        <div class="col-5 col-md-3 text-end">Nazwa:</div>
+        <div class="col-7 col-md-9"><InputText @bind-Value=silo.Name class="form-control" style="max-width:170px;" placeholder="Podaj nazwę silosu"/></div>
+    </div><br/>
+    <div class="row">
+        <div class="col-5 col-md-3 text-end">Rozmiar:</div>
+        <div class="col-7 col-md-9">
+            <InputSelect @bind-Value=silo.Size class="form-select" style="max-width:max-content">
+                <option value="">Wybierz rozmiar</option>
+                <option value=100>100</option>
+                <option value=200>200</option>
+                <option value=300>300</option>
+                <option value=400>400</option>
+                <option value=500>500</option>
+            </InputSelect>
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-5 col-md-3 text-end">Pozycja X:</div>
+        <div class="col-7 col-md-9"><InputNumber @bind-Value=silo.PositionX class="form-control" style="max-width:170px;" placeholder="Podaj nr. pozycji X"/></div>
+    </div><br />
+    <div class="row">
+        <div class="col-5 col-md-3 text-end">Pozycja Y:</div>
+        <div class="col-7 col-md-9"><InputNumber @bind-Value=silo.PositionY class="form-control" style="max-width:170px;" placeholder="Podaj nr. pozycji Y" /></div>
+    </div><br />
+    <div class="row">
+        <div class="col-5 col-md-3 text-end">Kolejność czujników:</div>
+        <div class="col-7 col-md-9">
+            <InputSelect @bind-Value=silo.OrderSensors class="form-select" style="max-width:max-content">
+                <option value="">Wybierz kolejność</option>
+                <option value="FromUp">Od góry</option>
+                <option value="FromDown">Od dołu</option>
+            </InputSelect>
+        </div>
+    </div><br />
+    <button type="submit" class="btn btn-warning"><i class="oi oi-pencil"></i> Edytuj</button>
+</EditForm>
+
+<Toasts class="p-3" Messages="toastMessages" AutoHide="true" Delay="5000" Placement="ToastsPlacement.TopRight" />
