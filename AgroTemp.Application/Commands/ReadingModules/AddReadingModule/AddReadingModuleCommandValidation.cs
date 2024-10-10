@@ -27,6 +27,10 @@ public class AddReadingModuleCommandValidation : AbstractValidator<AddReadingMod
         RuleFor(x => x.BitsOfSign)
             .NotEmpty().WithMessage("Bits of sign is required.");
 
+        RuleFor(x => x.Parity)
+            .NotEmpty().WithMessage("Parity is required.")
+            .IsInEnum().WithMessage("Parity has not valid value.");
+
         RuleFor(x => x.StopBit)
             .NotEmpty().WithMessage("Bit stop is required.");
 

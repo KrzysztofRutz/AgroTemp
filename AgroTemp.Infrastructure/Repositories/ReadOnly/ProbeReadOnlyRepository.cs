@@ -13,9 +13,10 @@ internal class ProbeReadOnlyRepository : IProbeReadOnlyRepository
     {
         _dbContext = dbContext;
     }
+
     public async Task<IEnumerable<Probe>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _dbContext.Probes.AsNoTracking().ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<Probe>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default)
-        => await _dbContext.Probes.Include(x => x.Silo).Include(x => x.ReadingModule).AsNoTracking().ToListAsync(cancellationToken);
+        => await _dbContext.Probes.Include(x => x.Silo).Include(x => x.ReadingModule).ThenInclude(x => x.Temperatures).AsNoTracking().ToListAsync(cancellationToken);
 }

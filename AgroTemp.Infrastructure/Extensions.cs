@@ -29,7 +29,9 @@ public static class Extensions
         services.AddScoped<IUserReadOnlyRepository, UsersReadOnlyRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
-        services.AddDbContext<AgroTempDbContext>(options => options.UseMySql(configuration.GetConnectionString("AgroTempCS"), ServerVersion.AutoDetect(configuration.GetConnectionString("AgroTempCS"))));
+		services.AddScoped<ITemperatureRepository, TemperatureRepository>();
+
+		services.AddDbContext<AgroTempDbContext>(options => options.UseMySql(configuration.GetConnectionString("AgroTempCS"), ServerVersion.AutoDetect(configuration.GetConnectionString("AgroTempCS"))));
         
         return services;
     }

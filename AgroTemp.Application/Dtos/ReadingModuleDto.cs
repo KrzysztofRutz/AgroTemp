@@ -1,4 +1,5 @@
-﻿namespace AgroTemp.Application.Dtos;
+﻿
+namespace AgroTemp.Application.Dtos;
 
 public class ReadingModuleDto
 {
@@ -9,6 +10,7 @@ public class ReadingModuleDto
     public int ModuleID { get; set; }
     public int Baudrate { get; set; }
     public int BitsOfSign { get; set; }
+    public string Parity { get; set; }
     public int StopBit { get; set; }
     public string ModuleType { get; set; }
 }

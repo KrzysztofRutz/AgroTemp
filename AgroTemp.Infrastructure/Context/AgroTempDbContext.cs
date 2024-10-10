@@ -11,6 +11,7 @@ internal class AgroTempDbContext : DbContext
     public DbSet<ReadingModule> ReadingModules { get; set; }
     public DbSet<Silo> Silos { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Temperature> Temperatures { get; set; }
     public AgroTempDbContext(DbContextOptions options) : base(options)
     {
     }
@@ -25,5 +26,6 @@ internal class AgroTempDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ReadingModulesConfiguration());
         modelBuilder.ApplyConfiguration(new SilosConfiguration());
         modelBuilder.ApplyConfiguration(new UsersConfiguration());
+        modelBuilder.ApplyConfiguration(new TemperaturesConfiguration());
     }
 }

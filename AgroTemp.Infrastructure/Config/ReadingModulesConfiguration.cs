@@ -37,16 +37,24 @@ public class ReadingModulesConfiguration : BaseEntityConfiguration<ReadingModule
         builder.Property(x => x.BitsOfSign)
             .IsRequired();
 
-        builder.Property(x => x.StopBit)
-            .IsRequired();
+		builder.Property(x => x.Parity)
+			.IsRequired()
+            .HasConversion<string>();
 
-        builder.Property(x => x.ModuleType)
+        builder.Property(x => x.StopBit)
+            .IsRequired();         
+
+		builder.Property(x => x.ModuleType)
             .IsRequired();
 
         builder.HasMany(x => x.Probes)
             .WithOne(x => x.ReadingModule)
             .HasForeignKey(x => x.ReadingModuleId);
 
-        base.Configure(builder);
+        builder.HasMany(x => x.Temperatures)
+            .WithOne(x => x.ReadingModule)
+            .HasForeignKey(x => x.ReadingModuleId);	
+
+		base.Configure(builder);
     }
 }

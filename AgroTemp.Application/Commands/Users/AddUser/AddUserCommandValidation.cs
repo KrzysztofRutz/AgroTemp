@@ -32,7 +32,7 @@ public class AddUserCommandValidation : AbstractValidator<AddUserCommand>
 
         RuleFor(x => x.TypeOfUser)
             .NotEmpty().WithMessage("Type of user is required.")
-            .Must(x => x == "Operator" || x == "Manager").WithMessage("Type of user hasnot valid name.");
+            .Must(x => x == "Operator" || x == "Manager").WithMessage("Type of user has not valid name.");
     }
 
     private static bool PasswordHasSpecialCharacter(string password)

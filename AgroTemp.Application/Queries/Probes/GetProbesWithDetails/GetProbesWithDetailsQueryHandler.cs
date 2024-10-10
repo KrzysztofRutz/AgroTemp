@@ -1,5 +1,6 @@
 ﻿using AgroTemp.Application.Configuration.Queries;
 using AgroTemp.Application.Dtos;
+using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Abstractions.ReadOnly;
 using AutoMapper;
 
@@ -8,12 +9,14 @@ namespace AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
 public class GetProbesWithDetailsQueryHandler : IQueryHandler<GetProbesWithDetailsQuery, IEnumerable<ProbeWithDetailsDto>>
 {
     private readonly IProbeReadOnlyRepository _probeReadOnlyRepository;
-    private readonly IMapper _mapper;
+	private readonly ITemperatureRepository _temperatureRepository;
+	private readonly IMapper _mapper;
 
-    public GetProbesWithDetailsQueryHandler(IProbeReadOnlyRepository probeReadOnlyRepository, IMapper mapper)
+    public GetProbesWithDetailsQueryHandler(IProbeReadOnlyRepository probeReadOnlyRepository, ITemperatureRepository temperatureRepository, IMapper mapper)
     {
         _probeReadOnlyRepository = probeReadOnlyRepository;
-        _mapper = mapper;
+		_temperatureRepository = temperatureRepository;
+		_mapper = mapper;
     }
 
     public async Task<IEnumerable<ProbeWithDetailsDto>> Handle(GetProbesWithDetailsQuery request, CancellationToken cancellationToken)

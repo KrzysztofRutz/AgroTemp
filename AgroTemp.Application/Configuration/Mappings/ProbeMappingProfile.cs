@@ -12,6 +12,7 @@ public class ProbeMappingProfile : Profile
 
         CreateMap<Silo, SiloDto>();
         CreateMap<ReadingModule, ReadingModuleDto>();
+        CreateMap<Temperature, TemperatureDto>();
         CreateMap<Probe, ProbeWithDetailsDto>();
     }
 }

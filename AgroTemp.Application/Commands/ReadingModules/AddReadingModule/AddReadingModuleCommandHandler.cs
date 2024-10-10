@@ -37,6 +37,7 @@ public class AddReadingModuleCommandHandler : ICommandHandler<AddReadingModuleCo
             ModuleID = request.ModuleID,
             Baudrate = request.Baudrate,
             BitsOfSign = request.BitsOfSign,
+            Parity = request.Parity,
             StopBit = request.StopBit,
             ModuleType = request.ModuleType,
         };

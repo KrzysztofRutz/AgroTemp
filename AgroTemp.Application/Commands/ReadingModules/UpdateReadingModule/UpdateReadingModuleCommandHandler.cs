@@ -30,7 +30,8 @@ public class UpdateReadingModuleCommandHandler : ICommandHandler<UpdateReadingMo
         readingModule.ModuleID = request.ModuleID;
         readingModule.Baudrate = request.Baudrate;
         readingModule.BitsOfSign = request.BitsOfSign;
-        readingModule.StopBit = request.StopBit;
+		readingModule.Parity = request.Parity;
+		readingModule.StopBit = request.StopBit;
         readingModule.ModuleType = request.ModuleType;
 
         _readingModuleRepository.Update(readingModule);

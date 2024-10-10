@@ -1,4 +1,6 @@
-﻿namespace AgroTemp.Domain.Entities;
+﻿using System.IO.Ports;
+
+namespace AgroTemp.Domain.Entities;
 
 public class ReadingModule : Entity
 {
@@ -8,7 +10,9 @@ public class ReadingModule : Entity
     public int ModuleID { get; set; }
     public int Baudrate { get; set; }
     public int BitsOfSign { get; set; }
-    public int StopBit { get; set; }
-    public string ModuleType { get; set; }
+	public Parity Parity { get; set; }
+	public int StopBit { get; set; }
+	public string ModuleType { get; set; }
     public ICollection<Probe> Probes { get; set; }
+    public ICollection<Temperature> Temperatures { get; set; }
 }
