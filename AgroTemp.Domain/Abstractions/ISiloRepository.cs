@@ -2,6 +2,6 @@
 
 namespace AgroTemp.Domain.Abstractions;
 
-public interface ISiloRepository : IBasicRepository<Silo>
+public interface ISiloRepository : IBaseRepository<Silo>
 {
 }

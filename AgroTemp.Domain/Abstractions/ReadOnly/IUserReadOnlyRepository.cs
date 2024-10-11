@@ -2,7 +2,6 @@
 
 namespace AgroTemp.Domain.Abstractions.ReadOnly;
 
-public interface IUserReadOnlyRepository
+public interface IUserReadOnlyRepository : IBaseReadOnlyRepository<User>
 {
-    Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default);
 }

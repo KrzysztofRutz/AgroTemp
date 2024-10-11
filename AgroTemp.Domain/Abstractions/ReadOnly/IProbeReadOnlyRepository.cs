@@ -2,8 +2,7 @@
 
 namespace AgroTemp.Domain.Abstractions.ReadOnly;
 
-public interface IProbeReadOnlyRepository
+public interface IProbeReadOnlyRepository : IBaseReadOnlyRepository<Probe>
 {
-    Task<IEnumerable<Probe>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<IEnumerable<Probe>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default);
 }

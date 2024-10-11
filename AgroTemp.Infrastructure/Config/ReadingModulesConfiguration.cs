@@ -53,8 +53,12 @@ public class ReadingModulesConfiguration : BaseEntityConfiguration<ReadingModule
 
         builder.HasMany(x => x.Temperatures)
             .WithOne(x => x.ReadingModule)
-            .HasForeignKey(x => x.ReadingModuleId);	
+            .HasForeignKey(x => x.ReadingModuleId);
 
-		base.Configure(builder);
+        builder.HasMany(x => x.DeltaTemperatures)
+            .WithOne(x => x.ReadingModule)
+            .HasForeignKey(x => x.ReadingModuleId);
+
+        base.Configure(builder);
     }
 }

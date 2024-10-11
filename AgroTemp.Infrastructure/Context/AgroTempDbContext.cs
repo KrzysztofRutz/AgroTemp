@@ -1,4 +1,5 @@
 ﻿using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.Settings;
 using AgroTemp.Infrastructure.Config;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ internal class AgroTempDbContext : DbContext
     public DbSet<Silo> Silos { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Temperature> Temperatures { get; set; }
+    public DbSet<DeltaTemperature> DeltaTemperatures { get; set; }
+    public DbSet<Settings> Settings { get; set; }
     public AgroTempDbContext(DbContextOptions options) : base(options)
     {
     }
@@ -27,5 +30,19 @@ internal class AgroTempDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SilosConfiguration());
         modelBuilder.ApplyConfiguration(new UsersConfiguration());
         modelBuilder.ApplyConfiguration(new TemperaturesConfiguration());
+        modelBuilder.ApplyConfiguration(new DeltaTemperaturesConfiguration());
+        modelBuilder.ApplyConfiguration(new SettingsConfiguration());
+        modelBuilder.Entity<Settings>()
+            .HasData(new Settings 
+            { 
+                Id = 1, 
+                Language = Language.ENG, 
+                HourOfReading = 12, 
+                FrequencyOfReading = FrequencyOfReading.Every24hours, 
+                EnableSMSNotificationMode = false, 
+                EnableEmailNotificationMode = false, 
+                CreatedAt = DateTime.Now, 
+                UpdatedAt = DateTime.Now
+            });
     }
 }

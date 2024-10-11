@@ -2,7 +2,7 @@
 
 namespace AgroTemp.Domain.Abstractions;
 
-public interface IProbeRepository : IBasicRepository<Probe>
+public interface IProbeRepository : IBaseRepository<Probe>
 {
     Task<IEnumerable<Probe>> GetBySiloIdAsync(int siloId, CancellationToken cancellation = default);
 }

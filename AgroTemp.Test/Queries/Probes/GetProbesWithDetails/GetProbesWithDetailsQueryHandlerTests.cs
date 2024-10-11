@@ -1,5 +1,6 @@
 ﻿using AgroTemp.Application.Configuration.Mappings;
 using AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
+using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Abstractions.ReadOnly;
 using AgroTemp.Domain.Entities;
 using AgroTemp.Domain.Enums.ReadingModule;
@@ -13,12 +14,14 @@ namespace AgroTemp.UnitTests.Queries.Probes.GetProbesWithDetails;
 public class GetProbesWithDetailsQueryHandlerTests
 {
 	private readonly Mock<IProbeReadOnlyRepository> _probeReadOnlyRepositoryMock;
-	private readonly IMapper _mapper;
+    private readonly Mock<ITemperatureRepository> _temperatureRepositoryMock;
+    private readonly IMapper _mapper;
 
 	public GetProbesWithDetailsQueryHandlerTests()
 	{
 		_probeReadOnlyRepositoryMock = new Mock<IProbeReadOnlyRepository>();
-		_mapper = MapperHelper.CreateMapper(new ProbeMappingProfile());
+        _temperatureRepositoryMock = new Mock<ITemperatureRepository>();
+        _mapper = MapperHelper.CreateMapper(new ProbeMappingProfile());
 	}
 
 	[Fact]
@@ -29,7 +32,7 @@ public class GetProbesWithDetailsQueryHandlerTests
 			x => x.GetAllWithDetailsAsync(
 				It.IsAny<CancellationToken>())).ReturnsAsync(Enumerable.Empty<Probe>);
 
-		var handler = new GetProbesWithDetailsQueryHandler(_probeReadOnlyRepositoryMock.Object, _mapper);
+		var handler = new GetProbesWithDetailsQueryHandler(_probeReadOnlyRepositoryMock.Object, _temperatureRepositoryMock.Object, _mapper);
 
 		//Act
 		await handler.Handle(new GetProbesWithDetailsQuery(), default);
@@ -113,7 +116,7 @@ public class GetProbesWithDetailsQueryHandlerTests
 			x => x.GetAllWithDetailsAsync(
 				It.IsAny<CancellationToken>())).ReturnsAsync(probes);
 
-		var handler = new GetProbesWithDetailsQueryHandler(_probeReadOnlyRepositoryMock.Object, _mapper);
+		var handler = new GetProbesWithDetailsQueryHandler(_probeReadOnlyRepositoryMock.Object, _temperatureRepositoryMock.Object, _mapper);
 
 		//Act
 		var probesWithDetailsDto = await handler.Handle(new GetProbesWithDetailsQuery(), default);

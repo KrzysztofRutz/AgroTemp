@@ -2,6 +2,6 @@
 
 namespace AgroTemp.Domain.Abstractions.ReadOnly;
 
-public interface ISiloReadOnlyRepository : IBaseReadOnlyRepository<Silo>
+public interface ISettingsReadOnlyRepository : IBaseReadOnlyRepository<Settings>
 {
 }

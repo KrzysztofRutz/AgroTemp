@@ -2,6 +2,6 @@
 
 namespace AgroTemp.Domain.Abstractions;
 
-public interface IReadingModuleRepository : IBasicRepository<ReadingModule>
+public interface IReadingModuleRepository : IBaseRepository<ReadingModule>
 {
 }

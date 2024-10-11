@@ -2,6 +2,6 @@
 
 namespace AgroTemp.Domain.Abstractions;
 
-public interface IUserRepository : IBasicRepository<User>
+public interface IUserRepository : IBaseRepository<User>
 {     
 }

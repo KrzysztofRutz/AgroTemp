@@ -2,7 +2,7 @@
 
 namespace AgroTemp.Domain.Abstractions;
 
-public interface IBasicRepository<T> where T : Entity
+public interface IBaseRepository<T> where T : Entity
 {
     Task<T> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<bool> IsAlreadyExistAsync(string name, CancellationToken cancellation = default);

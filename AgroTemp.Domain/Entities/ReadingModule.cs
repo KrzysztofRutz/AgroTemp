@@ -16,4 +16,5 @@ public class ReadingModule : Entity
 	public ModuleType ModuleType { get; set; }
     public ICollection<Probe> Probes { get; set; }
     public ICollection<Temperature> Temperatures { get; set; }
+    public ICollection<DeltaTemperature> DeltaTemperatures { get; set; }
 }

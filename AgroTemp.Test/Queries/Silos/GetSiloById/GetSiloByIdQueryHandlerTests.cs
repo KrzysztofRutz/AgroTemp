@@ -77,7 +77,7 @@ public class GetSiloByIdQueryHandlerTests
         siloDto.Size.Should().Be(silo.Size);
         siloDto.PositionX.Should().Be(silo.PositionX);
         siloDto.PositionY.Should().Be(silo.PositionY);
-        siloDto.OrderSensors.Should().Be(silo.OrderSensors);
+        siloDto.OrderSensors.Should().Be(silo.OrderSensors.ToString());
     }
 
     [Fact]
