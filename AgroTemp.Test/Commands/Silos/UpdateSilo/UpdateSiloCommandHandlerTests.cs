@@ -1,6 +1,7 @@
 ﻿using AgroTemp.Application.Commands.Silos.UpdateSilo;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
 using Moq;
 
@@ -28,7 +29,7 @@ public class UpdateSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "FromUp",
+            OrderSensors = "OrderSensors.FromDown",
         };
 
         _siloRepositoryMock.Setup(
@@ -42,7 +43,7 @@ public class UpdateSiloCommandHandlerTests
                 Size = 200,
                 PositionX = 2,
                 PositionY = 2,
-                OrderSensors = "FromDown",
+                OrderSensors = OrderSensors.FromDown,
             });
 
         var handler = new UpdateSiloCommandHandler(
@@ -69,7 +70,7 @@ public class UpdateSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "FromUp",
+            OrderSensors = "OrderSensors.FromDown",
         };
 
         var result = _siloRepositoryMock.Setup(

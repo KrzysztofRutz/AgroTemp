@@ -1,5 +1,6 @@
 ﻿using AgroTemp.Application.Configuration.Commands;
 using AgroTemp.Application.Dtos;
+using AgroTemp.Domain.Enums.User;
 
 
 namespace AgroTemp.Application.Commands.Users.AddUser;

@@ -1,4 +1,6 @@
-﻿namespace AgroTemp.Domain.Entities;
+﻿using AgroTemp.Domain.Enums.Silo;
+
+namespace AgroTemp.Domain.Entities;
 
 public class Silo : Entity
 {
@@ -6,6 +8,6 @@ public class Silo : Entity
     public int Size { get; set; }
     public int PositionX { get; set; }
     public int PositionY { get; set; }
-    public string OrderSensors {  get; set; }
+    public OrderSensors OrderSensors {  get; set; }
     public ICollection<Probe> Probes { get; set; }
 }

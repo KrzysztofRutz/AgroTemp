@@ -1,4 +1,6 @@
-﻿namespace AgroTemp.Domain.Entities;
+﻿using AgroTemp.Domain.Enums.User;
+
+namespace AgroTemp.Domain.Entities;
 
 public class User : Entity
 {
@@ -7,5 +9,5 @@ public class User : Entity
     public string Email { get; set; }
     public string Login {  get; set; }
     public string Password { get; set; }
-    public string TypeOfUser { get; set; }
+    public TypeOfUser TypeOfUser { get; set; }
 }

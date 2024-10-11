@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using AgroTemp.Domain.Enums.ReadingModule;
+using FluentValidation;
+using System.IO.Ports;
 
 namespace AgroTemp.Application.Commands.ReadingModules.AddReadingModule;
 
@@ -12,7 +14,7 @@ public class AddReadingModuleCommandValidation : AbstractValidator<AddReadingMod
 
         RuleFor(x => x.CommunicationType)
             .NotEmpty().WithMessage("Type of communication is required.")
-            .Must(x => x == "TCP" || x == "RTU").WithMessage("Type of communication has not valid name.");
+            .IsEnumName(typeof(CommunicationType)).WithMessage("Type of communication has not valid value.");
 
         RuleFor(x => x.Port_or_AddressIP)
             .NotEmpty().WithMessage("Serial port/address IP is required.")
@@ -22,20 +24,22 @@ public class AddReadingModuleCommandValidation : AbstractValidator<AddReadingMod
             .NotEmpty().WithMessage("ID module is required.");
 
         RuleFor(x => x.Baudrate)
-            .NotEmpty().WithMessage("Baudrate is required.");
+            .NotEmpty().WithMessage("Baudrate is required.")
+            .IsInEnum().WithMessage("Baudrate has not valid value.");
 
         RuleFor(x => x.BitsOfSign)
             .NotEmpty().WithMessage("Bits of sign is required.");
 
         RuleFor(x => x.Parity)
             .NotEmpty().WithMessage("Parity is required.")
-            .IsInEnum().WithMessage("Parity has not valid value.");
+            .IsEnumName(typeof(Parity)).WithMessage("Parity has not valid value.");
 
         RuleFor(x => x.StopBit)
-            .NotEmpty().WithMessage("Bit stop is required.");
+            .NotEmpty().WithMessage("Bit stop is required.")
+            .IsEnumName(typeof(StopBits)).WithMessage("Bit stop has not valid value.");
 
         RuleFor(x => x.ModuleType)
             .NotEmpty().WithMessage("Type of module is required.")
-            .Must(x => x == "ELECSO" || x == "WIRECHIP").WithMessage("Type of module has not valid name.");
+            .IsEnumName(typeof(ModuleType)).WithMessage("Type of module has not valid value.");
     }
 }

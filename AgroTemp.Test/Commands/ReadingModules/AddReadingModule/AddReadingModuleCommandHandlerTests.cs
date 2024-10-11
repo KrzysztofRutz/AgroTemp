@@ -2,6 +2,7 @@
 using AgroTemp.Application.Configuration.Mappings;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.ReadingModule;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 using Moq;
@@ -28,13 +29,13 @@ public class AddReadingModuleCommandHandlerTests
         var command = new AddReadingModuleCommand()
         {
             Name = "WC1",
-            CommunicationType = "TCP",
+            CommunicationType = "CommunicationType.TCP",
             Port_or_AddressIP = "192.168.0.222",
             ModuleID = 1,
-            Baudrate = 9600,
+            Baudrate = Baudrate.bs9600,
             BitsOfSign = 8,
-            StopBit = 1,
-            ModuleType = "Elecso",
+            StopBit = "1",
+            ModuleType = "ModuleType.Elecso",
         };
 
 		_readingModuleRepositoryMock.Setup(
@@ -64,13 +65,13 @@ public class AddReadingModuleCommandHandlerTests
 		var command = new AddReadingModuleCommand()
 		{
 			Name = "WC1",
-			CommunicationType = "TCP",
+			CommunicationType = "CommunicationType.TCP",
 			Port_or_AddressIP = "192.168.0.222",
 			ModuleID = 1,
-			Baudrate = 9600,
+			Baudrate = Baudrate.bs9600,
 			BitsOfSign = 8,
-			StopBit = 1,
-			ModuleType = "Elecso",
+			StopBit = "1",
+			ModuleType = "ModuleType.Elecso",
 		};
 
 		_readingModuleRepositoryMock.Setup(

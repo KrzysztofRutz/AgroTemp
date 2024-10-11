@@ -18,21 +18,19 @@ public class ReadingModulesConfiguration : BaseEntityConfiguration<ReadingModule
             .IsRequired();
 
         builder.Property(x => x.CommunicationType)
-            .HasMaxLength(3)
-            .IsRequired();
+            .IsRequired()
+            .HasConversion<string>();
 
         builder.Property(x => x.Port_or_AddressIP)
             .HasMaxLength(15)
             .IsRequired();
 
-        builder.HasIndex(x => x.ModuleID)
-            .IsUnique();
-
         builder.Property(x => x.ModuleID)
             .IsRequired();
 
         builder.Property(x => x.Baudrate)
-            .IsRequired();
+            .IsRequired()
+            .HasConversion<int>();
 
         builder.Property(x => x.BitsOfSign)
             .IsRequired();
@@ -42,10 +40,12 @@ public class ReadingModulesConfiguration : BaseEntityConfiguration<ReadingModule
             .HasConversion<string>();
 
         builder.Property(x => x.StopBit)
-            .IsRequired();         
+            .IsRequired()
+            .HasConversion<string>();
 
-		builder.Property(x => x.ModuleType)
-            .IsRequired();
+        builder.Property(x => x.ModuleType)
+            .IsRequired()
+            .HasConversion<string>();
 
         builder.HasMany(x => x.Probes)
             .WithOne(x => x.ReadingModule)

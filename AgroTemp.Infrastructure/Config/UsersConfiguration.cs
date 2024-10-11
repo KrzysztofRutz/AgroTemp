@@ -2,7 +2,6 @@
 using AgroTemp.Infrastructure.Config.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Security.Cryptography;
 
 namespace AgroTemp.Infrastructure.Config;
 
@@ -37,8 +36,8 @@ public class UsersConfiguration : BaseEntityConfiguration<User>
             .IsRequired();
 
         builder.Property(x => x.TypeOfUser)
-            .HasMaxLength(15)
-            .IsRequired();
+            .IsRequired()
+            .HasConversion<string>();
 
         base.Configure(builder);
     }

@@ -2,6 +2,7 @@
 using AgroTemp.Application.Dtos;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 
@@ -35,7 +36,7 @@ public class AddSiloCommandHandler : ICommandHandler<AddSiloCommand, SiloDto>
             Size = request.Size,
             PositionX = request.PositionX,
             PositionY = request.PositionY,
-            OrderSensors = request.OrderSensors,
+            OrderSensors = (OrderSensors)Enum.Parse(typeof(OrderSensors), request.OrderSensors),
         };
 
         _siloRepository.Add(silo);

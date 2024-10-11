@@ -1,5 +1,6 @@
 ﻿using AgroTemp.Application.Configuration.Commands;
 using AgroTemp.Domain.Abstractions;
+using AgroTemp.Domain.Enums.User;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 
@@ -30,7 +31,7 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
         user.Email = request.Email;
         user.Login = request.Login;
         user.Password = request.Password;
-        user.TypeOfUser = request.TypeOfUser;
+        user.TypeOfUser = (TypeOfUser)Enum.Parse(typeof(TypeOfUser), request.TypeOfUser);
 
         _userRepository.Update(user);
         await _unitOfWork.SaveChangesAsync();

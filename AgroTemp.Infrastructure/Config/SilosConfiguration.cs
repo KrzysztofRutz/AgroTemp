@@ -27,8 +27,8 @@ public class SilosConfiguration : BaseEntityConfiguration<Silo>
             .IsRequired();
 
         builder.Property(x => x.OrderSensors)
-            .HasMaxLength(8)
-            .IsRequired();
+            .IsRequired()
+            .HasConversion<string>();
 
         builder.HasMany(x => x.Probes)
             .WithOne(x => x.Silo)

@@ -1,4 +1,5 @@
 ﻿using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.ReadingModule;
 using Modbus.Device;
 using System.IO.Ports;
 using System.Net.Sockets;
@@ -10,59 +11,40 @@ internal static class AgroTempModbus
 	public static async Task<Temperature> ReadRegistersAsync(ReadingModule readingModule)
 	{
 		ushort[] registers = new ushort[100];
+        byte slaveId = (byte)readingModule.ModuleID;
+        const ushort startAddress = 100;
+		ushort numRegisters = (readingModule.ModuleType == ModuleType.Elecso) ? (ushort)100 : (ushort)64;
 
-		if (readingModule.CommunicationType == "RTU")
+        if (readingModule.CommunicationType == CommunicationType.RTU)
 		{
 			using (SerialPort port = new SerialPort(readingModule.Port_or_AddressIP))
 			{
 				// configure serial port
-				port.BaudRate = readingModule.Baudrate;
-				port.DataBits = readingModule.BitsOfSign;
+				port.BaudRate = (int)readingModule.Baudrate;
+				port.DataBits = (int)readingModule.BitsOfSign;
 				port.Parity = readingModule.Parity;
-				switch (readingModule.StopBit)
-				{
-					case 0:
-						port.StopBits = StopBits.None;
-						break;
-					case 1:
-						port.StopBits = StopBits.One;
-						break;
-					case 2:
-						port.StopBits = StopBits.Two;
-						break;
-					case 3:
-						port.StopBits = StopBits.OnePointFive;
-						break;
-				}
+				port.StopBits = readingModule.StopBit;
 				port.Open();
 
 				// create modbus master
 				var master = ModbusSerialMaster.CreateRtu(port);
 
-				byte slaveId = (byte)readingModule.ModuleID;
-				ushort startAddress = 0;
-				ushort numRegisters = 100;
-
 				// read registers		
 				registers = await master.ReadHoldingRegistersAsync(slaveId, startAddress, numRegisters);
 			};
 		}
-		else if (readingModule.CommunicationType == "TCP")
+		else if (readingModule.CommunicationType == CommunicationType.TCP)
 		{
 			using (TcpClient client = new TcpClient(readingModule.Port_or_AddressIP, 502))
 			{
-				ModbusIpMaster master = ModbusIpMaster.CreateIp(client);
-
-				byte slaveId = (byte)readingModule.ModuleID;
-				ushort startAddress = 0;
-				ushort numRegisters = 100;
+                var master = ModbusIpMaster.CreateIp(client);
 
 				// read registers		
 				registers = await master.ReadHoldingRegistersAsync(slaveId, startAddress, numRegisters);
 			}
 		}
 
-		if (readingModule.ModuleType == "ELECSO")
+		if (readingModule.ModuleType == ModuleType.Elecso)
 		{
 			for (int i = 0; i < registers.Length; i++)
 			{

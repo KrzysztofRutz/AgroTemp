@@ -1,4 +1,5 @@
-﻿namespace AgroTemp.Application.Dtos;
+﻿
+namespace AgroTemp.Application.Dtos;
 
 public class SiloDto
 {

@@ -2,8 +2,11 @@
 using AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
 using AgroTemp.Domain.Abstractions.ReadOnly;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.ReadingModule;
+using AgroTemp.Domain.Enums.Silo;
 using AutoMapper;
 using Moq;
+using System.IO.Ports;
 
 namespace AgroTemp.UnitTests.Queries.Probes.GetProbesWithDetails;
 
@@ -59,19 +62,19 @@ public class GetProbesWithDetailsQueryHandlerTests
 					Size = 100,
 					PositionX = 1,
 					PositionY = 1,
-					OrderSensors = "FromUp",
+					OrderSensors = OrderSensors.FromUp,
 				},
 				ReadingModule = new ReadingModule
 				{
 					Id = 1,
 					Name = "WC1",
-					CommunicationType = "RTU",
+					CommunicationType = CommunicationType.RTU,
 					Port_or_AddressIP = "COM1",
 					ModuleID = 1,
-					Baudrate = 9600,
+					Baudrate = Baudrate.bs9600,
 					BitsOfSign = 8,
-					StopBit = 1,
-					ModuleType = "ELECSO"
+					StopBit = StopBits.One,
+					ModuleType = ModuleType.Elecso
 				}
 			},
 			new Probe()
@@ -89,19 +92,19 @@ public class GetProbesWithDetailsQueryHandlerTests
 					Size = 100,
 					PositionX = 1,
 					PositionY = 1,
-					OrderSensors = "FromUp",
+					OrderSensors = OrderSensors.FromUp,
 				},
 				ReadingModule = new ReadingModule
 				{
 					Id = 1,
 					Name = "WC1",
-					CommunicationType = "RTU",
+					CommunicationType = CommunicationType.RTU,
 					Port_or_AddressIP = "COM1",
 					ModuleID = 1,
-					Baudrate = 9600,
+					Baudrate = Baudrate.bs9600,
 					BitsOfSign = 8,
-					StopBit = 1,
-					ModuleType = "ELECSO"
+					StopBit = StopBits.One,
+					ModuleType = ModuleType.Elecso
 				}
 			},
 		};

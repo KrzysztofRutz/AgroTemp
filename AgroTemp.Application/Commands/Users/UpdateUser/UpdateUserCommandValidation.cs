@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AgroTemp.Domain.Enums.User;
+using FluentValidation;
 
 namespace AgroTemp.Application.Commands.Users.UpdateUser;
 
@@ -32,7 +33,7 @@ public class UpdateUserCommandValidation : AbstractValidator<UpdateUserCommand>
 
         RuleFor(x => x.TypeOfUser)
             .NotEmpty().WithMessage("Type of user is required.")
-            .Must(x => x == "Operator" || x == "Manager").WithMessage("Type of user hasnot valid name.");
+            .IsEnumName(typeof(TypeOfUser)).WithMessage("Type of user has not valid value.");
     }
 
     private static bool PasswordHasSpecialCharacter(string password)

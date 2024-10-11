@@ -1,5 +1,6 @@
 ﻿using AgroTemp.Application.Configuration.Commands;
 using AgroTemp.Domain.Abstractions;
+using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
 
 namespace AgroTemp.Application.Commands.Silos.UpdateSilo;
@@ -28,7 +29,7 @@ public class UpdateSiloCommandHandler : ICommandHandler<UpdateSiloCommand>
         silo.Size = request.Size;
         silo.PositionX = request.PositionX;
         silo.PositionY = request.PositionY;
-        silo.OrderSensors = request.OrderSensors;
+        silo.OrderSensors = (OrderSensors)Enum.Parse(typeof(OrderSensors), request.OrderSensors);
 
         _siloRepository.Update(silo);
         await _unitOfWork.SaveChangesAsync();

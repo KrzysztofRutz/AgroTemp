@@ -2,6 +2,7 @@
 using AgroTemp.Application.Dtos;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.User;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 
@@ -35,7 +36,7 @@ public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserDto>
             Email = request.Email,
             Login = request.Login,
             Password = request.Password,
-            TypeOfUser = request.TypeOfUser,
+            TypeOfUser = (TypeOfUser)Enum.Parse(typeof(TypeOfUser), request.TypeOfUser),
         };
 
         _userRepository.Add(user);

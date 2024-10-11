@@ -1,6 +1,7 @@
 ﻿using AgroTemp.Application.Commands.ReadingModules.AddReadingModule;
 using AgroTemp.Application.Commands.ReadingModules.RemoveReadingModule;
 using AgroTemp.Application.Commands.ReadingModules.UpdateReadingModule;
+using AgroTemp.Application.Dtos;
 using AgroTemp.Application.Queries.ReadingModules.GetReadingModuleById;
 using AgroTemp.Application.Queries.ReadingModules.GetReadingModules;
 using MediatR;
@@ -23,7 +24,7 @@ public class ReadingModuleController : Controller
 
     [HttpGet]
     [SwaggerOperation("Get reading modules")]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(IEnumerable<ReadingModuleDto>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult> Get()
     {
         var result = await _mediator.Send(new GetReadingModulesQuery());
@@ -33,7 +34,7 @@ public class ReadingModuleController : Controller
 
     [HttpGet("{id}")]
     [SwaggerOperation("Get reading module by Id")]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ReadingModuleDto), (int)HttpStatusCode.OK)]
     public async Task<ActionResult> GetById([FromRoute] int id)
     {
         var result = await _mediator.Send(new GetReadingModuleByIdQuery(id));
@@ -43,7 +44,7 @@ public class ReadingModuleController : Controller
 
     [HttpPost]
     [SwaggerOperation("Add reading module")]
-    [ProducesResponseType((int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(ReadingModuleDto), (int)HttpStatusCode.Created)]
     public async Task<ActionResult> Post([FromBody] AddReadingModuleCommand command)
     {
         var result = await _mediator.Send(command);

@@ -2,8 +2,10 @@
 using AgroTemp.Application.Dtos;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.ReadingModule;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
+using System.IO.Ports;
 
 namespace AgroTemp.Application.Commands.ReadingModules.AddReadingModule;
 
@@ -32,14 +34,14 @@ public class AddReadingModuleCommandHandler : ICommandHandler<AddReadingModuleCo
         var readingModule = new ReadingModule
         {
             Name = request.Name,
-            CommunicationType = request.CommunicationType,
+            CommunicationType = (CommunicationType)Enum.Parse(typeof(CommunicationType), request.CommunicationType),
             Port_or_AddressIP = request.Port_or_AddressIP,
             ModuleID = request.ModuleID,
             Baudrate = request.Baudrate,
             BitsOfSign = request.BitsOfSign,
-            Parity = request.Parity,
-            StopBit = request.StopBit,
-            ModuleType = request.ModuleType,
+            Parity = (Parity)Enum.Parse(typeof(Parity), request.Parity),
+            StopBit = (StopBits)Enum.Parse(typeof(StopBits), request.StopBit),
+            ModuleType = (ModuleType)Enum.Parse(typeof(ModuleType), request.ModuleType),
         };
 
         _readingModuleRepository.Add(readingModule);

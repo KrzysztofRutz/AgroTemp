@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AgroTemp.Domain.Enums.Silo;
+using FluentValidation;
 
 namespace AgroTemp.Application.Commands.Silos.UpdateSilo;
 
@@ -14,13 +15,15 @@ public class UpdateSiloCommandValidation : AbstractValidator<UpdateSiloCommand>
             .NotEmpty().WithMessage("Size is required.");
 
         RuleFor(x => x.PositionX)
-            .NotEmpty().WithMessage("Position x is required.");
+            .NotEmpty().WithMessage("Position x is required.")
+            .GreaterThan(0).WithMessage("Position x can be greater than 0.");
 
         RuleFor(x => x.PositionY)
-            .NotEmpty().WithMessage("Position y is required.");
+            .NotEmpty().WithMessage("Position y is required.")
+            .GreaterThan(0).WithMessage("Position y can be greater than 0.");
 
         RuleFor(x => x.OrderSensors)
             .NotEmpty().WithMessage("Order of sensors is required.")
-            .Must(x => x == "FromUp" || x == "FromDown").WithMessage("Order of sensors has not valid name.");
+            .IsEnumName(typeof(OrderSensors)).WithMessage("Order of sensors has not valid value.");
     }
 }

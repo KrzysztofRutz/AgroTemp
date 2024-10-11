@@ -2,5 +2,5 @@
 
 public	class TemperatureForOneProbeDto
 {
-	public List<ushort> Temperatures { get; set; }
+	public List<ushort> ListOfTemperatures { get; set; }
 }

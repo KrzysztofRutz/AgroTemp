@@ -2,6 +2,7 @@
 using AgroTemp.Application.Configuration.Mappings;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 using Moq;
@@ -30,7 +31,7 @@ public class AddSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "FromUp",
+            OrderSensors = "OrderSensors.FromUp",
         };
 
         _siloRepositoryMock.Setup(
@@ -66,7 +67,7 @@ public class AddSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "FromUp",
+            OrderSensors = "OrderSensors.FromUp",
         };
 
         _siloRepositoryMock.Setup(

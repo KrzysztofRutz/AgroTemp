@@ -2,6 +2,7 @@
 using AgroTemp.Application.Queries.Silos.GetSilos;
 using AgroTemp.Domain.Abstractions.ReadOnly;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.Silo;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
@@ -56,7 +57,7 @@ public class GetSilosQueryHandlertests
                 Size = 100,
                 PositionX = 1,
                 PositionY = 1,
-                OrderSensors = "FromUp",
+                OrderSensors = OrderSensors.FromUp,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
             },
@@ -67,7 +68,7 @@ public class GetSilosQueryHandlertests
                 Size = 100,
                 PositionX = 2,
                 PositionY = 1,
-                OrderSensors = "FromDown",
+                OrderSensors = OrderSensors.FromDown,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
             },

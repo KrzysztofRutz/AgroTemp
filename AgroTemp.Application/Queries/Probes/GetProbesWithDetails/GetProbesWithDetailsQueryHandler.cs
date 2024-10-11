@@ -9,14 +9,14 @@ namespace AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
 public class GetProbesWithDetailsQueryHandler : IQueryHandler<GetProbesWithDetailsQuery, IEnumerable<ProbeWithDetailsDto>>
 {
     private readonly IProbeReadOnlyRepository _probeReadOnlyRepository;
-	private readonly ITemperatureRepository _temperatureRepository;
-	private readonly IMapper _mapper;
+    private readonly ITemperatureRepository _temperatureRepository;
+    private readonly IMapper _mapper;
 
     public GetProbesWithDetailsQueryHandler(IProbeReadOnlyRepository probeReadOnlyRepository, ITemperatureRepository temperatureRepository, IMapper mapper)
     {
         _probeReadOnlyRepository = probeReadOnlyRepository;
-		_temperatureRepository = temperatureRepository;
-		_mapper = mapper;
+        _temperatureRepository = temperatureRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<ProbeWithDetailsDto>> Handle(GetProbesWithDetailsQuery request, CancellationToken cancellationToken)
@@ -24,6 +24,15 @@ public class GetProbesWithDetailsQueryHandler : IQueryHandler<GetProbesWithDetai
         var probes = await _probeReadOnlyRepository.GetAllWithDetailsAsync(cancellationToken);
 
         var probesDto = _mapper.Map<IEnumerable<ProbeWithDetailsDto>>(probes);
+
+        foreach (var probe in probesDto)
+        {
+            var temperature = await _temperatureRepository.GetActualMeasureByReadingModuleIdAsync(probe.ReadingModule.Id);
+
+            var temperatureDto = _mapper.Map<TemperatureForOneProbeDto>(temperature);
+
+            probe.Temperatures = temperatureDto.ListOfTemperatures.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
+        }
 
         return probesDto;
     }

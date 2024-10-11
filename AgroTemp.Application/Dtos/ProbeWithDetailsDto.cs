@@ -4,5 +4,5 @@ public class ProbeWithDetailsDto : ProbeDto
 {
     public SiloDto Silo { get; set; }
     public ReadingModuleDto ReadingModule { get; set; }
-    public TemperatureForOneProbeDto Temperatures { get; set; }
+    public List<ushort> Temperatures { get; set; }
 }

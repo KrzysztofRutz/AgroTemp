@@ -2,6 +2,7 @@
 using AgroTemp.Application.Commands.Silos.UpdateSilo;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
+using AgroTemp.Domain.Enums.Silo;
 using FluentValidation.TestHelper;
 using Moq;
 
@@ -26,7 +27,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "FromUp"
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -54,7 +55,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "FromUp"
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -82,7 +83,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "FromUp"
+            OrderSensors = "OrderSensors.FromUp",
         };
 
         _siloRepositoryMock.Setup(
@@ -110,7 +111,7 @@ public class UpdateSiloCommandValidationTests
             Size = default,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "FromUp"
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -138,7 +139,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = default,
             PositionY = 2,
-            OrderSensors = "FromUp"
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -166,7 +167,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = default,
-            OrderSensors = "FromUp"
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -194,7 +195,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = string.Empty
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -222,7 +223,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "FromD0wn"
+            OrderSensors = "OrderSensors.FromUp"
         };
 
         _siloRepositoryMock.Setup(
