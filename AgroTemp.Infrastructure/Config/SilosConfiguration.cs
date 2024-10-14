@@ -34,6 +34,10 @@ public class SilosConfiguration : BaseEntityConfiguration<Silo>
             .WithOne(x => x.Silo)
             .HasForeignKey(x => x.SiloId);
 
+        builder.HasOne(x => x.ExtremeValues)
+            .WithOne(x => x.Silo)
+            .HasForeignKey<ExtremeValues>(x => x.SiloId);
+
         base.Configure(builder);
     }
 }

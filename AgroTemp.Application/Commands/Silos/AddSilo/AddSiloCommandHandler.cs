@@ -11,12 +11,14 @@ namespace AgroTemp.Application.Commands.Silos.AddSilo;
 public class AddSiloCommandHandler : ICommandHandler<AddSiloCommand, SiloDto>
 {
     private readonly ISiloRepository _siloRepository;
+    private readonly IExtremeValuesRepository _extremeValuesRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AddSiloCommandHandler(ISiloRepository siloRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    public AddSiloCommandHandler(ISiloRepository siloRepository, IExtremeValuesRepository extremeValuesRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _siloRepository = siloRepository;
+        _extremeValuesRepository = extremeValuesRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
@@ -40,6 +42,17 @@ public class AddSiloCommandHandler : ICommandHandler<AddSiloCommand, SiloDto>
         };
 
         _siloRepository.Add(silo);
+        await _unitOfWork.SaveChangesAsync();
+
+        var extremeValues = new Domain.Entities.ExtremeValues
+        {
+            SiloId = silo.Id,
+            MaxTemperature = default,
+            MinTemperature = default,
+            MaxDeltaTemperature = default,
+        };
+
+        _extremeValuesRepository.Add(extremeValues);
         await _unitOfWork.SaveChangesAsync();
 
         var siloDto = _mapper.Map<SiloDto>(silo);

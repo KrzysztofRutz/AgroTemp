@@ -1,4 +1,5 @@
-﻿namespace AgroTemp.Domain.Entities;
+﻿
+namespace AgroTemp.Domain.Entities;
 
 public class DeltaTemperature : Entity
 {

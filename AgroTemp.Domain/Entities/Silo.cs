@@ -9,5 +9,6 @@ public class Silo : Entity
     public int PositionX { get; set; }
     public int PositionY { get; set; }
     public OrderSensors OrderSensors {  get; set; }
+    public ExtremeValues ExtremeValues { get; set; }
     public ICollection<Probe> Probes { get; set; }
 }

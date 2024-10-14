@@ -23,7 +23,7 @@ internal class SiloRepository : ISiloRepository
         => _dbContext.Silos.Add(silo);
 
     public void Update(Silo silo)
-        => _dbContext?.Silos.Update(silo);
+        => _dbContext.Silos.Update(silo);
 
     public void Delete(Silo silo)
         => _dbContext.Silos.Remove(silo);   

@@ -31,7 +31,14 @@ public static class Extensions
 
 		services.AddScoped<ITemperatureRepository, TemperatureRepository>();
 
-		services.AddDbContext<AgroTempDbContext>(options => options.UseMySql(configuration.GetConnectionString("AgroTempCS"), ServerVersion.AutoDetect(configuration.GetConnectionString("AgroTempCS"))));
+        services.AddScoped<IDeltaTemperatureRepository, DeltaTemperatureRepository>();
+
+        services.AddScoped<ISettingsRepository, SettingsRepository>();
+
+        services.AddScoped<IExtremeValuesReadOnlyRepository, ExtremeValuesReadOnlyRepository>();
+        services.AddScoped<IExtremeValuesRepository, ExtremeValuesRepository>();
+
+        services.AddDbContext<AgroTempDbContext>(options => options.UseMySql(configuration.GetConnectionString("AgroTempCS"), ServerVersion.AutoDetect(configuration.GetConnectionString("AgroTempCS"))));
         
         return services;
     }

@@ -15,6 +15,7 @@ internal class AgroTempDbContext : DbContext
     public DbSet<Temperature> Temperatures { get; set; }
     public DbSet<DeltaTemperature> DeltaTemperatures { get; set; }
     public DbSet<Settings> Settings { get; set; }
+    public DbSet<ExtremeValues> ExtremeValues { get; set; }
     public AgroTempDbContext(DbContextOptions options) : base(options)
     {
     }
@@ -44,5 +45,6 @@ internal class AgroTempDbContext : DbContext
                 CreatedAt = DateTime.Now, 
                 UpdatedAt = DateTime.Now
             });
+        modelBuilder.ApplyConfiguration(new ExtremeValuesConfiguration());
     }
 }
