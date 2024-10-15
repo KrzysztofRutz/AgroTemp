@@ -12,11 +12,13 @@ namespace AgroTemp.UnitTests.Commands.Silos.AddSilo;
 public class AddSiloCommandHandlerTests
 {
     private readonly Mock<ISiloRepository> _siloRepositoryMock;
+    private readonly Mock<IExtremeValuesRepository> _extremeValuesRepositoryMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly IMapper _mapper;
     public AddSiloCommandHandlerTests()
     {
-        _siloRepositoryMock = new ();
+        _siloRepositoryMock = new();
+        _extremeValuesRepositoryMock = new();  
         _unitOfWorkMock = new();
         _mapper = MapperHelper.CreateMapper(new SiloMappingProfile());
     }
@@ -27,11 +29,11 @@ public class AddSiloCommandHandlerTests
         //Arrange 
         var command = new AddSiloCommand()
         {
-            Name = "Jan",
+            Name = "Z1",
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "OrderSensors.FromUp",
+            OrderSensors = "FromUp",
         };
 
         _siloRepositoryMock.Setup(
@@ -45,6 +47,7 @@ public class AddSiloCommandHandlerTests
 
         var handler = new AddSiloCommandHandler(
             _siloRepositoryMock.Object,
+            _extremeValuesRepositoryMock.Object,
             _mapper,
             _unitOfWorkMock.Object);
 
@@ -67,7 +70,7 @@ public class AddSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "OrderSensors.FromUp",
+            OrderSensors = "FromUp",
         };
 
         _siloRepositoryMock.Setup(
@@ -81,6 +84,7 @@ public class AddSiloCommandHandlerTests
 
         var handler = new AddSiloCommandHandler(
             _siloRepositoryMock.Object,
+            _extremeValuesRepositoryMock.Object,
             _mapper,
             _unitOfWorkMock.Object);
 

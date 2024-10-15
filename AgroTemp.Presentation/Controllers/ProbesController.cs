@@ -6,6 +6,7 @@ using AgroTemp.Application.Queries.Probes.GetProbeById;
 using AgroTemp.Application.Queries.Probes.GetProbes;
 using AgroTemp.Application.Queries.Probes.GetProbesBySiloId;
 using AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
+using AgroTemp.Application.Queries.Probes.GetProbesWithDetailsBySiloId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -40,6 +41,16 @@ public class ProbesController : Controller
     public async Task<ActionResult> GetWithDetails()
     {
         var result = await _mediator.Send(new GetProbesWithDetailsQuery());
+
+        return Ok(result);
+    }
+
+    [HttpGet("[action]/{siloId}")]
+    [SwaggerOperation("Get probes with details by siloId")]
+    [ProducesResponseType(typeof(IEnumerable<ProbeWithDetailsDto>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> GetWithDetailsBySiloId([FromRoute]int siloId)
+    {
+        var result = await _mediator.Send(new GetProbesWithDetailsBySiloIdQuery(siloId));
 
         return Ok(result);
     }

@@ -1,4 +1,6 @@
 ﻿using AgroTemp.Application.Commands.ExtremeValues.UpdateExtremeValues;
+using AgroTemp.Application.Dtos;
+using AgroTemp.Application.Queries.ExtremeValues.GetExtremeValues;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -25,5 +27,15 @@ public class ExtremeValuesController : Controller
         await _mediator.Send(updateExtremeValuesCommand);
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [SwaggerOperation("Get extreme values.")]
+    [ProducesResponseType(typeof(IEnumerable<ExtremeValuesDto>),(int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Get()
+    {
+        var result = await _mediator.Send(new GetExtremeValuesQuery());
+
+        return Ok(result);
     }
 }

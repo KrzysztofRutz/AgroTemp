@@ -6,7 +6,6 @@ using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 using FluentAssertions;
-using Moq;
 
 namespace AgroTemp.UnitTests.Queries.Silos.GetSiloById;
 

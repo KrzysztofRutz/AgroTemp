@@ -29,7 +29,7 @@ public class UpdateSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "OrderSensors.FromDown",
+            OrderSensors = "FromDown",
         };
 
         _siloRepositoryMock.Setup(
@@ -70,7 +70,7 @@ public class UpdateSiloCommandHandlerTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "OrderSensors.FromDown",
+            OrderSensors = "FromDown",
         };
 
         var result = _siloRepositoryMock.Setup(

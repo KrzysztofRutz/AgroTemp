@@ -27,7 +27,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = "FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -55,7 +55,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = "FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -83,7 +83,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "OrderSensors.FromUp",
+            OrderSensors = "FromUp",
         };
 
         _siloRepositoryMock.Setup(
@@ -111,7 +111,7 @@ public class UpdateSiloCommandValidationTests
             Size = default,
             PositionX = 1,
             PositionY = 2,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = "FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -139,7 +139,35 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = default,
             PositionY = 2,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = "FromUp"
+        };
+
+        _siloRepositoryMock.Setup(
+            x => x.GetByIdAsync(command.Id,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Silo());
+
+        var validator = new UpdateSiloCommandValidation();
+
+        //Act
+        var validationResult = validator.TestValidate(command);
+
+        //Assert
+        validationResult.ShouldHaveValidationErrorFor(x => x.PositionX);
+    }
+
+    [Fact]
+    public void ValidationResult_Should_HaveAnyValidationErrorForPositionX_WhenPositionXIsNotGreaterThan0()
+    {
+        //Arrange 
+        var command = new UpdateSiloCommand
+        {
+            Id = 1,
+            Name = "Z11",
+            Size = 100,
+            PositionX = -5,
+            PositionY = 2,
+            OrderSensors = "FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -167,7 +195,35 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = default,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = "FromUp"
+        };
+
+        _siloRepositoryMock.Setup(
+            x => x.GetByIdAsync(command.Id,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Silo());
+
+        var validator = new UpdateSiloCommandValidation();
+
+        //Act
+        var validationResult = validator.TestValidate(command);
+
+        //Assert
+        validationResult.ShouldHaveValidationErrorFor(x => x.PositionY);
+    }
+
+    [Fact]
+    public void ValidationResult_Should_HaveAnyValidationErrorForPositionY_WhenPositionYIsNotGreaterThan0()
+    {
+        //Arrange 
+        var command = new UpdateSiloCommand
+        {
+            Id = 1,
+            Name = "Z11",
+            Size = 100,
+            PositionX = 1,
+            PositionY = -5,
+            OrderSensors = "FromUp"
         };
 
         _siloRepositoryMock.Setup(
@@ -195,7 +251,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = string.Empty
         };
 
         _siloRepositoryMock.Setup(
@@ -223,7 +279,7 @@ public class UpdateSiloCommandValidationTests
             Size = 100,
             PositionX = 1,
             PositionY = 1,
-            OrderSensors = "OrderSensors.FromUp"
+            OrderSensors = "fromUp"
         };
 
         _siloRepositoryMock.Setup(

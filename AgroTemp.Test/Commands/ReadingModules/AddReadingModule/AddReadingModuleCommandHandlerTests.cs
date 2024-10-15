@@ -29,13 +29,14 @@ public class AddReadingModuleCommandHandlerTests
         var command = new AddReadingModuleCommand()
         {
             Name = "WC1",
-            CommunicationType = "CommunicationType.TCP",
+            CommunicationType = "TCP",
             Port_or_AddressIP = "192.168.0.222",
             ModuleID = 1,
             Baudrate = Baudrate.bs9600,
             BitsOfSign = 8,
-            StopBit = "1",
-            ModuleType = "ModuleType.Elecso",
+			Parity = "None",
+            StopBit = "One",
+            ModuleType = "Elecso",
         };
 
 		_readingModuleRepositoryMock.Setup(
@@ -59,19 +60,19 @@ public class AddReadingModuleCommandHandlerTests
 	}
 
 	[Fact]
-	public async Task Handle_Should_CallAddOnRepository_WhenNameIsNotUnique()
+	public async Task Handle_Throw_IsAlreadyExistsException_WhenNameIsNotUnique()
 	{
 		//Arrange
 		var command = new AddReadingModuleCommand()
 		{
 			Name = "WC1",
-			CommunicationType = "CommunicationType.TCP",
+			CommunicationType = "TCP",
 			Port_or_AddressIP = "192.168.0.222",
 			ModuleID = 1,
 			Baudrate = Baudrate.bs9600,
 			BitsOfSign = 8,
 			StopBit = "1",
-			ModuleType = "ModuleType.Elecso",
+			ModuleType = "Elecso",
 		};
 
 		_readingModuleRepositoryMock.Setup(
