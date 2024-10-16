@@ -6,12 +6,12 @@ using AutoMapper;
 
 namespace AgroTemp.Application.Queries.ReadingModules.GetReadingModuleById;
 
-public class GetReadingModuleQueryHandler : IQueryHandler<GetReadingModuleByIdQuery, ReadingModuleDto>
+public class GetReadingModuleByIdQueryHandler : IQueryHandler<GetReadingModuleByIdQuery, ReadingModuleDto>
 {
     private readonly IReadingModuleRepository _readingModuleRepository;
     private readonly IMapper _mapper;
 
-    public GetReadingModuleQueryHandler(IReadingModuleRepository readingModuleRepository, IMapper mapper)
+    public GetReadingModuleByIdQueryHandler(IReadingModuleRepository readingModuleRepository, IMapper mapper)
     {
         _readingModuleRepository = readingModuleRepository;
         _mapper = mapper;

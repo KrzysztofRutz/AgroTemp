@@ -218,5 +218,4 @@ public class UpdateProbeCommandHandlerTests
 		//Act & Assert
 		await Assert.ThrowsAsync<ReadingModuleNotFoundException>(async () => await handler.Handle(command, default));
 	}
-
 }

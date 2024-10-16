@@ -5,7 +5,6 @@ using AgroTemp.Domain.Entities;
 using AgroTemp.Domain.Enums.Silo;
 using AutoMapper;
 using FluentAssertions;
-using Moq;
 
 namespace AgroTemp.UnitTests.Queries.Silos.GetSilos;
 

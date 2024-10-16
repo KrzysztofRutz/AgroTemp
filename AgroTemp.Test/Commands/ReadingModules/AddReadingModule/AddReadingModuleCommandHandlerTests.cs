@@ -5,7 +5,6 @@ using AgroTemp.Domain.Entities;
 using AgroTemp.Domain.Enums.ReadingModule;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
-using Moq;
 
 namespace AgroTemp.UnitTests.Commands.ReadingModules.AddReadingModule;
 

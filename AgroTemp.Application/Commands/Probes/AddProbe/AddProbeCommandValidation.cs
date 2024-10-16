@@ -12,10 +12,12 @@ public class AddProbeCommandValidation : AbstractValidator<AddProbeCommand>
 
         RuleFor(x => x.SensorsCount)
             .NotEmpty().WithMessage("Sensors count is required.")
+            .GreaterThan(0).WithMessage("Sensors count must be greater than 0.")
             .LessThanOrEqualTo(10).WithMessage("Sensors count cannot greater than 10.");
 
         RuleFor(x => x.NrFirstSensor)
-            .NotEmpty().WithMessage("Number first sensor is required.");
+            .NotEmpty().WithMessage("Number of first sensor is required.")
+            .GreaterThan(0).WithMessage("Number of first sensor must be greater than 0.");
 
         RuleFor(x => x.SiloId)
             .NotEmpty().WithMessage("SiloID is required.");
