@@ -28,11 +28,9 @@ public class AddUserCommandValidation : AbstractValidator<AddUserCommand>
             .NotEmpty().WithMessage("Password is required.")
             .Must(x => PasswordHasSpecialCharacter(x)).WithMessage("Password has not any symbol character.")
             .Must(x => PasswordHasNumberCharacter(x)).WithMessage("Password has not any number character.")
-            .MinimumLength(8).WithMessage("Password cannot be shorter than 8 characters.")
-            .MaximumLength(15).WithMessage("Password cannot be longer than 50 characters.");
+            .MinimumLength(8).WithMessage("Password cannot be shorter than 8 characters.");
 
         RuleFor(x => x.TypeOfUser)
-            .NotEmpty().WithMessage("Type of user is required.")
             .IsEnumName(typeof(TypeOfUser)).WithMessage("Type of user has not valid value.");
     }
 

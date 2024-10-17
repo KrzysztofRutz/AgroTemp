@@ -1,5 +1,4 @@
-﻿using AgroTemp.Application.Commands.Probes.UpdateProbe;
-using AgroTemp.Application.Commands.ReadingModules.UpdateReadingModule;
+﻿using AgroTemp.Application.Commands.ReadingModules.UpdateReadingModule;
 using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
 using AgroTemp.Domain.Enums.ReadingModule;

@@ -7,6 +7,7 @@ public class UpdateHourOfReadingCommandValidation : AbstractValidator<UpdateHour
     public UpdateHourOfReadingCommandValidation()
     {
         RuleFor(x => x.HourOfReading)
+            .GreaterThanOrEqualTo(0).WithMessage("Hour of reading must be least at 0.")
             .LessThan(24).WithMessage("Hour of reading must be less than 24.");
     }
 }

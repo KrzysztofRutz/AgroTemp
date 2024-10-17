@@ -1,7 +1,6 @@
 ﻿using AgroTemp.Application.Commands.Silos.AddSilo;
 using AgroTemp.Domain.Abstractions;
 using FluentValidation.TestHelper;
-using Moq;
 
 namespace AgroTemp.UnitTests.Commands.Silos.AddSilo;
 

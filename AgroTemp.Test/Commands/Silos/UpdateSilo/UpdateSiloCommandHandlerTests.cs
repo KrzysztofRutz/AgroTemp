@@ -3,7 +3,6 @@ using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
 using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
-using Moq;
 
 namespace AgroTemp.UnitTests.Commands.Silos.UpdateSilo;
 

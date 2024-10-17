@@ -11,7 +11,6 @@ internal class StringToMD5Converter : ValueConverter<string, string>
             d => d.ToString()
             )
     {
-
     }
 
     private static string StringToMd5(string input)

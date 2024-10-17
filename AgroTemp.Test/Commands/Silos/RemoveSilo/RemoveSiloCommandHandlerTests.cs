@@ -3,13 +3,13 @@ using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Entities;
 using AgroTemp.Domain.Enums.Silo;
 using AgroTemp.Domain.Exceptions;
-using Moq;
 
 namespace AgroTemp.UnitTests.Commands.Silos.RemoveSilo;
 
 public class RemoveSiloCommandHandlerTests
 {
     private readonly Mock<ISiloRepository> _siloRepositoryMock;
+    private readonly Mock<IExtremeValuesRepository> _extremeValuesRepositoryMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     public RemoveSiloCommandHandlerTests()
     {
@@ -30,6 +30,7 @@ public class RemoveSiloCommandHandlerTests
             PositionY = 1,
             OrderSensors = OrderSensors.FromUp
         };
+
         _siloRepositoryMock.Setup(
             x => x.Add(silo));
 
@@ -41,7 +42,7 @@ public class RemoveSiloCommandHandlerTests
 
         var command = new RemoveSiloCommand(silo.Id);
 
-        var handler = new RemoveSiloCommandHandler(_siloRepositoryMock.Object, _unitOfWorkMock.Object);
+        var handler = new RemoveSiloCommandHandler(_siloRepositoryMock.Object, _extremeValuesRepositoryMock.Object, _unitOfWorkMock.Object);
         
         //Act
         await handler.Handle(command, default);
@@ -64,6 +65,7 @@ public class RemoveSiloCommandHandlerTests
             PositionY = 1,
             OrderSensors = OrderSensors.FromUp
         };
+
         _siloRepositoryMock.Setup(
             x => x.Add(silo));
 
@@ -74,7 +76,7 @@ public class RemoveSiloCommandHandlerTests
 
         var command = new RemoveSiloCommand(silo.Id);
 
-        var handler = new RemoveSiloCommandHandler(_siloRepositoryMock.Object, _unitOfWorkMock.Object);
+        var handler = new RemoveSiloCommandHandler(_siloRepositoryMock.Object, _extremeValuesRepositoryMock.Object, _unitOfWorkMock.Object);
 
         //Assert
         await Assert.ThrowsAsync<SiloNotFoundException>(async () => await handler.Handle(command, default));
