@@ -1,6 +1,6 @@
 ﻿namespace AgroTemp.Domain.Enums.Silo;
 
-public enum OrderSensors
+public enum OrderSensors : byte
 {
 	FromUp,
 	FromDown

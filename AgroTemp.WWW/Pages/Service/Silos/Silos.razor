@@ -1,5 +1,6 @@
 ﻿@page "/service/silos"
 
+@using AgroTemp.WWW.Data
 @using AgroTemp.WWW.Services.Abstractions;
 @using BlazorBootstrap;
 @inject ISiloService siloService;
@@ -14,14 +15,14 @@
         </div>
         <EditForm Model="@Silo" OnSubmit="@Submit">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
+                <div class="row align-items-center g-3">
+                    <div class="col-xl-2">
                         <label for="Name">Nazwa:</label>
-                        <InputText @bind-Value=Silo.Name class="form-control" style="max-width:170px;" placeholder="Podaj nazwę silosu"/>
+                        <InputText @bind-Value=Silo.Name class="form-control" style="min-width:150px;" placeholder="Podaj nazwę silosu" />
                     </div>
-                    <div class="col">
+                    <div class="col-xl-2">
                         <label for="Size">Rozmiar:</label>
-                        <InputSelect @bind-Value=Silo.Size class="form-select">
+                        <InputSelect @bind-Value=Silo.Size class="form-select" style="min-width:150px;">
                             <option value="">Wybierz rozmiar</option>
                             <option value=100>100</option>
                             <option value=200>200</option>
@@ -30,23 +31,23 @@
                             <option value=500>500</option>
                         </InputSelect>
                     </div>
-                    <div class="col">
+                    <div class="col-xl-2">
                         <label for="PositionX">Pozycja X:</label>
-                        <InputNumber @bind-Value=Silo.PositionX class="form-control" style="max-width:170px;" placeholder="Podaj nr. pozycji X"/>
+                        <InputNumber @bind-Value=Silo.PositionX class="form-control" style="min-width:150px;" placeholder="Podaj nr. pozycji X" />
                     </div>
-                    <div class="col">
+                    <div class="col-xl-2">
                         <label for="PositionY">Pozycja Y:</label>
-                        <InputNumber @bind-Value=Silo.PositionY class ="form-control" style="max-width:170px;" placeholder="Podaj nr. pozycji Y" />
+                        <InputNumber @bind-Value=Silo.PositionY class ="form-control" style="min-width:150px;" placeholder="Podaj nr. pozycji Y" />
                     </div>
-                    <div class="col">
+                    <div class="col-xl-3">
                         <label for="OrderSensors">Kolejność czujników:</label>
-                        <InputSelect @bind-Value=Silo.OrderSensors class="form-select"> 
+                        <InputSelect @bind-Value=Silo.OrderSensors class="form-select" style="min-width:150px;">
                             <option value="">Wybierz kolejność</option>
                             <option value="FromUp">Od góry</option>
                             <option value="FromDown">Od dołu</option>
                         </InputSelect>
                     </div>
-                    <div class="col" style="position:center">
+                    <div class="col-xl">
                         <input type="submit" class="btn btn-success" value="Dodaj"/>
                     </div>
                 </div>
@@ -62,7 +63,37 @@
     <p><em>Ładowanie danych...</em></p>
 }
 else
-{   <div >
+{
+        <Grid TItem="Silo"
+              Class="table table-hover table-bordered shadow text-nowrap"
+          Style="border:solid; border-color:#cdcdcd; font-family:Kode Mono, monospace; text-align:center"
+          Data="_Silos"
+              Responsive="true">
+            <GridColumns>
+                <GridColumn TItem="Silo" Freeze="true" FreezeLeftPosition="0" HeaderText="Nazwa" PropertyName="Name">
+                        @context.Name
+                    </GridColumn>
+                <GridColumn TItem="Silo" HeaderText="Rozmiar" PropertyName="Size">
+                        @context.Size
+                    </GridColumn>
+                        <GridColumn TItem="Silo" HeaderText="Pozycja X" PropertyName="PositionX">
+                        @context.PositionX
+                    </GridColumn>
+                        <GridColumn TItem="Silo" HeaderText="Pozycja Y" PropertyName="PositionY">
+                        @context.PositionY
+                    </GridColumn>
+                    <GridColumn TItem="Silo" HeaderText="Kolejność czujników" PropertyName="OrderSensors">
+                        @context.OrderSensors
+                </GridColumn>
+                <GridColumn TItem="Silo" Freeze="true" FreezeDirection="FreezeDirection.Right" FreezeRightPosition="0" HeaderText="Akcje" PropertyName="Action">
+                    <button class="btn btn-warning" @onclick="() => GoEditModal(context)"><i class="oi oi-pencil"></i> Edytuj</button>
+                    <button class="btn btn-danger" @onclick="() => GoDeleteModal(context)"><i class="oi oi-bell"></i> Usuń</button>
+                </GridColumn>
+            </GridColumns>
+    </Grid>
+    
+    /*
+    <div >
         <table class="table align-middle table-bordered" style="min-width:fit-content">
             <thead>
                 <tr>
@@ -102,7 +133,7 @@ else
                 }
             </tbody>
         </table>
-    </div>
+    </div>*/
 }
 
 <Modal @ref="modalEdit" IsVerticallyCentered="true"/>

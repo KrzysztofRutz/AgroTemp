@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgroTemp.Mobile.Views.Pages.ObjectPage"            
+             xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
+             xmlns:model="clr-namespace:AgroTemp.Mobile.Models"
+             xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"
+             x:DataType="viewmodel:ObjectViewModel"          
+             NavigationPage.HasBackButton="False" 
+             NavigationPage.HasNavigationBar="False">
+    <Grid>
+        <Image Source="background_agrotemp"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand"
+               Aspect="AspectFill"/>
+        <CollectionView ItemsSource="{Binding SilosList}" 
+                        ItemsLayout="VerticalList" 
+                        EmptyView="Brak dostępnych zbiorników.">
+            <CollectionView.Header>
+                <Frame BackgroundColor="#1D2931" 
+                       Opacity="0.80"
+                       Margin="10">
+                    <HorizontalStackLayout Spacing="5">
+                        <Image Source="user.png" 
+                               VerticalOptions="Center"
+                               WidthRequest="50"
+                               HeightRequest="50" 
+                               Margin="0,0,5,0"/>
+                        <VerticalStackLayout HorizontalOptions="Start">
+                            <Label Text="Imię i nazwisko:"
+                                   FontSize="Small"/>
+                            <Label FontSize="Medium"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center">
+                                <Label.Text>
+                                    <MultiBinding StringFormat=".{0} {1}">
+                                        <Binding Path="User.FirstName" />
+                                        <Binding Path="User.LastName" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <Label Text="Typ użytkownika:"
+                                   Margin="0,5,0,0"/>
+                            <Label Text="{Binding User.TypeOfUser}"
+                                   FontSize="Medium"
+                                   FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                        <HorizontalStackLayout Spacing="10"  
+                                               VerticalOptions="End"
+                                               HorizontalOptions="End">
+                            <Button BackgroundColor="#2C357D"
+                                    FontFamily="FontAwesomeFreeSolid"
+                                    Text="{x:Static fontawesome:FontFreeSolid.PenToSquare}"
+                                    BorderColor="Goldenrod"
+                                    FontSize="Medium"
+                                    Command="{Binding GoToEditActualUserCommand}"/>
+                            <Button BackgroundColor="#2C357D"
+                                    FontFamily="FontAwesomeFreeSolid"
+                                    Text="{x:Static fontawesome:FontFreeSolid.RightFromBracket}"
+                                    FontSize="Medium"
+                                    BorderColor="CornflowerBlue"
+                                    Command="{Binding LogoutCommand}"/>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Silo">
+                    <Frame Margin="10, 5" 
+                           BackgroundColor="#1D2931" 
+                           CornerRadius="25"
+                           Opacity="0.80">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".2*"/>
+                                <ColumnDefinition Width=".8*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="silo.png"
+                                   Grid.Column="0" 
+                                   Grid.Row="0"/>
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 Grid.Row="0" 
+                                                 Padding="5" 
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding Name}" 
+                                       FontSize="Large" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#C8C8C8"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="2" 
+                                         Grid.Row="0" 
+                                         VerticalOptions="Center" 
+                                         Spacing="5" 
+                                         HorizontalOptions="End">
+                                <Button x:Name="GoToProbesWithDetailsButton"
+                                        Text="Szczegóły"
+                                        Clicked="GoToProbesWithDetailsButton_Clicked"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -1,6 +1,6 @@
 ﻿namespace AgroTemp.Domain.Enums.Settings;
 
-public enum Language
+public enum Language : byte
 {
     PL,
     ENG,

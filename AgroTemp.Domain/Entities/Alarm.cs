@@ -1,6 +1,9 @@
-﻿namespace AgroTemp.Domain.Entities;
+﻿using AgroTemp.Domain.Enums.Alarm;
+
+namespace AgroTemp.Domain.Entities;
 
 public class Alarm : Entity
 {
-    public string Description { get; set; }
+    public Description Description { get; set; }
+    public string ObjectName { get; set; }
 }

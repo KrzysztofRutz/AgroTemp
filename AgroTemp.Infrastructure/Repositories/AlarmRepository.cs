@@ -13,8 +13,15 @@ internal class AlarmRepository : IAlarmRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<IEnumerable<Alarm>> GetAlarmsByBetweenCreatedAtAndUpdatedAtAsync(DateTime createdAtTime, DateTime updatedAtTime, CancellationToken cancellationToken = default)
-        => await _dbContext.Alarms.Where(x => x.CreatedAt >= createdAtTime && x.UpdatedAt <= updatedAtTime).ToListAsync();
+
+    public async Task<Alarm> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        => await _dbContext.Alarms.SingleOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+    public async Task<IEnumerable<Alarm>> GetAlarmsBetweenCreatedAtAndUpdatedAtAsync(DateTime createdAtTime, DateTime updatedAtTime, CancellationToken cancellationToken = default)
+        => await _dbContext.Alarms.Where(x => x.CreatedAt >= createdAtTime && x.UpdatedAt <= updatedAtTime && x.CreatedAt != x.UpdatedAt).ToListAsync();
+
+    public async Task<IEnumerable<Alarm>> GetActiveAlarmsAsync(CancellationToken cancellationToken = default)
+        => await _dbContext.Alarms.Where(x => x.CreatedAt == x.UpdatedAt).ToListAsync();
 
     public void Add(Alarm alarm)
         => _dbContext.Alarms.Add(alarm);

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgroTemp.Mobile.Views.Pages.ChartOfTemperaturePage"
+             xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
+             xmlns:model="clr-namespace:AgroTemp.Mobile.Models"
+             xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"
+             x:DataType="viewmodel:ChartOfTemperatureViewModel">
+    <ContentPage.Title>
+        <MultiBinding StringFormat="Zbiornik {0} Sonda {1}">
+            <Binding Path="ProbeWithDetails.Silo.Name"/>
+            <Binding Path="ProbeWithDetails.Name"/>
+        </MultiBinding>
+    </ContentPage.Title>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="background_agrotemp"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand"
+               Aspect="AspectFill"
+               Grid.RowSpan="3"/>
+        <Frame BackgroundColor="#1D2931"
+               Opacity="0.80"
+               Margin="10"
+               Padding="10"
+               Grid.Row="0">
+            <HorizontalStackLayout Spacing="10"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand">
+                <Label FontFamily="FontAwesomeFreeSolid"
+                       Text="{x:Static fontawesome:FontFreeSolid.ChartLine}"
+                       FontSize="Large"
+                       VerticalOptions="Center"/>
+                <Label Text="Wykres temperatur"
+                       FontSize="Large"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame Grid.Row="1"
+               Opacity="0.80"
+               Padding="10"
+               Margin="10">
+            <HorizontalStackLayout Spacing="5">
+                <Label Text="Od:"
+                       TextColor="#1D2931"
+                       VerticalOptions="Center"
+                       FontSize="18"/>
+                <DatePicker Date="{Binding DateFrom}"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            FontSize="17"/>
+                <Label Text="Do:"
+                       TextColor="#1D2931"
+                       VerticalOptions="Center"
+                       FontSize="18"/>
+                <DatePicker Date="{Binding DateTo}"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            FontSize="17"/>
+                <Button BackgroundColor="#2C357D"
+                        FontFamily="FontAwesomeFreeSolid"
+                        Text="{x:Static fontawesome:FontFreeSolid.Filter}"
+                        FontSize="Large"
+                        BorderColor="CornflowerBlue"
+                        HorizontalOptions="End"
+                        Command="{Binding FilterAlarmsCommand}"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame Opacity="0.80"
+               Margin="5"
+               Padding="5"
+               Grid.Row="2">
+            <charts:SfCartesianChart Series="{Binding SeriesCollection}">
+                <charts:SfCartesianChart.Legend>
+                    <charts:ChartLegend>
+                    </charts:ChartLegend>
+                </charts:SfCartesianChart.Legend>
+                <charts:SfCartesianChart.XAxes>
+                    <charts:DateTimeAxis LabelCreated="DateTimeAxis_LabelCreated"
+                                         IntervalType="Hours"
+                                         Interval="{Binding Settings.FrequencyOfReading}"
+                                         MinorTicksPerInterval="24"
+                                         EnableAutoIntervalOnZooming="True"
+                                         RangePadding="Round"
+                                         EdgeLabelsDrawingMode="Center"
+                                         LabelsIntersectAction="MultipleRows">
+                        <charts:DateTimeAxis.Title>
+                            <charts:ChartAxisTitle Text="Data"/>
+                        </charts:DateTimeAxis.Title>
+                    </charts:DateTimeAxis>
+                </charts:SfCartesianChart.XAxes>
+                <charts:SfCartesianChart.YAxes>
+                    <charts:NumericalAxis Interval="10"
+                                          Minimum="-10"
+                                          Maximum="105"
+                                          MinorTicksPerInterval="1">
+                        <charts:NumericalAxis.PlotBands>
+                            <charts:NumericalPlotBandCollection>
+                                <charts:NumericalPlotBand Start="24"  
+                                                          Fill="Red"/>
+                                <charts:NumericalPlotBand Start="-10"
+                                                          End="5"  
+                                                          Fill="Blue"/>
+                            </charts:NumericalPlotBandCollection>
+                        </charts:NumericalAxis.PlotBands>
+                        <charts:NumericalAxis.Title>
+                            <charts:ChartAxisTitle Text="Temperatura [°C]"/>
+                        </charts:NumericalAxis.Title>
+                    </charts:NumericalAxis>
+                </charts:SfCartesianChart.YAxes>
+            </charts:SfCartesianChart>
+        </Frame>
+    </Grid>
+</ContentPage>

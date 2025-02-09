@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+             x:Class="AgroTemp.Mobile.Views.Pages.AlarmPage"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
+             xmlns:model="clr-namespace:AgroTemp.Mobile.Models"
+             xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"            
+             NavigationPage.HasBackButton="False" 
+             NavigationPage.HasNavigationBar="False">
+    <material:TabView Background="#131B20"
+                      StyleClass="Elevation2">
+        <material:TabView.TabHeaderItemTemplate>
+            <DataTemplate>
+                <Button Text="{Binding Title}"
+                        Command="{Binding Command}"
+                        BorderColor="Transparent"
+                        Margin="10,0,0,0">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" 
+                                     Binding="{Binding IsSelected}" 
+                                     Value="True">
+                            <Setter Property="TextColor" 
+                                    Value="{StaticResource White}"/>
+                            <Setter Property="Scale" 
+                                    Value="1.1"/>
+                            <Setter Property="FontAttributes"
+                                    Value="Bold"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" 
+                                     Binding="{Binding IsSelected}" 
+                                     Value="False">
+                            <Setter Property="TextColor" 
+                                    Value="Gray"/>
+                            <Setter Property="Scale" 
+                                    Value="1"/>
+                            <Setter Property="FontAttributes"
+                                    Value="None"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </DataTemplate>
+        </material:TabView.TabHeaderItemTemplate>
+        <material:TabItem Title="Alarmy aktywne">
+            <material:TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_agrotemp"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="FillAndExpand"
+                           Aspect="AspectFill"
+                           Grid.RowSpan="2"/>
+                    <Frame BackgroundColor="#1D2931"
+                           Opacity="0.80"
+                           Margin="10"
+                           Padding="10"
+                           Grid.Row="0">
+                        <HorizontalStackLayout Spacing="10"
+                                               HorizontalOptions="CenterAndExpand"
+                                               VerticalOptions="CenterAndExpand">
+                            <Label FontFamily="FontAwesomeFreeSolid"
+                                   Text="{x:Static fontawesome:FontFreeSolid.Bell}"
+                                   FontSize="Large"
+                                   TextColor="Red"
+                                   VerticalOptions="Center"/>
+                            <Label Text="Alarmy aktywne"
+                                   FontSize="Large"
+                                   VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <dg:DataGrid ItemsSource="{Binding AlarmsActiveList}"
+                                 RowHeight="70"
+                                 HeaderHeight="50"
+                                 Opacity="0.80"
+                                 SelectionMode="None"
+                                 PullToRefreshCommand="{Binding RefreshCommand}"
+                                 IsRefreshing="{Binding IsRefreshing}"
+                                 RefreshColor="#1D2931"
+                                 Grid.Row="1"
+                                 Margin="10,0"
+                                 BorderColor="{StaticResource Gray200}"
+                                 HeaderBordersVisible="False">
+                        <dg:DataGrid.NoDataView>
+                            <Frame BackgroundColor="#1D2931" 
+                                   Opacity="0.80"
+                                   Margin="10"
+                                   Padding="10">
+                                <Label Text="Brak alarmów aktywnych."
+                                       FontSize="Large"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                        </dg:DataGrid.NoDataView>
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn Title="Data wystąpienia"
+                                               PropertyName="CreatedAtToDisplay" 
+                                               Width="120">
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn Title="Opis" 
+                                               PropertyName="DescriptionToDisplay" 
+                                               Width="*"/>
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#1D2931</Color>
+                                <Color>#131B20</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:DataGrid.RowsTextColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#C8C8C8</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsTextColorPalette>
+                    </dg:DataGrid>
+                </Grid>
+            </material:TabItem.Content>
+        </material:TabItem>
+        <material:TabItem Title="Alarmy historyczne">
+            <material:TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_agrotemp"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="FillAndExpand"
+                           Aspect="AspectFill"
+                           Grid.RowSpan="3"/>
+                    <Frame BackgroundColor="#1D2931" 
+                           Opacity="0.80"
+                           Margin="10"
+                           Padding="10"
+                           Grid.Row="0">
+                        <HorizontalStackLayout Spacing="10"
+                                               HorizontalOptions="CenterAndExpand"
+                                               VerticalOptions="CenterAndExpand">
+                            <Label FontFamily="FontAwesomeFreeSolid"
+                                   Text="{x:Static fontawesome:FontFreeSolid.Bell}"
+                                   FontSize="Large"
+                                   TextColor="Red"
+                                   VerticalOptions="Center"/>
+                            <Label Text="Alarmy historyczne"
+                                   FontSize="Large"
+                                   VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <Frame Grid.Row="1"
+                           Opacity="0.80"
+                           Padding="10"
+                           Margin="10">
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="Od:"
+                                   TextColor="#1D2931"
+                                   VerticalOptions="Center"
+                                   FontSize="18"/>
+                            <DatePicker Date="{Binding DateFrom}"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        FontSize="17"/>
+                            <Label Text="Do:"
+                                   TextColor="#1D2931"
+                                   VerticalOptions="Center"
+                                   FontSize="18"/>
+                            <DatePicker Date="{Binding DateTo}"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        FontSize="17"/>
+                            <Button BackgroundColor="#2C357D"
+                                    FontFamily="FontAwesomeFreeSolid"
+                                    Text="{x:Static fontawesome:FontFreeSolid.Filter}"
+                                    FontSize="Large"
+                                    BorderColor="CornflowerBlue"
+                                    HorizontalOptions="End"
+                                    Command="{Binding FilterAlarmsCommand}"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <dg:DataGrid ItemsSource="{Binding AlarmsHistoryList}"
+                                 RowHeight="70"
+                                 HeaderHeight="50"
+                                 Opacity="0.80"
+                                 SelectionMode="None"
+                                 Grid.Row="2"
+                                 Margin="10,0"
+                                 BorderColor="{StaticResource Gray200}"
+                                 HeaderBordersVisible="False"
+                                 RefreshingEnabled="False">
+                        <dg:DataGrid.NoDataView>
+                            <Frame BackgroundColor="#1D2931" 
+                                   Opacity="0.80"
+                                   Margin="10"
+                                   Padding="10">
+                                <Label Text="Brak alarmów w tym przedziale czasu."
+                                       FontSize="Large"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                        </dg:DataGrid.NoDataView>
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn Title="Data wystąpienia" 
+                                               PropertyName="CreatedAtToDisplay" 
+                                               Width="120">
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn Title="Data zakończenia" 
+                                               PropertyName="CreatedAtToDisplay" 
+                                               Width="120"/>
+                            <dg:DataGridColumn Title="Opis" 
+                                               PropertyName="DescriptionToDisplay" 
+                                               Width="*"/>
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#1D2931</Color>
+                                <Color>#131B20</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:DataGrid.RowsTextColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#C8C8C8</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsTextColorPalette>
+                    </dg:DataGrid>
+                </Grid>
+            </material:TabItem.Content>
+        </material:TabItem>
+    </material:TabView>
+</ContentPage>

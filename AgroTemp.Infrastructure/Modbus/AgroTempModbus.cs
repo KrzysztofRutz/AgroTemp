@@ -21,7 +21,7 @@ internal static class AgroTempModbus
 			{
 				// configure serial port
 				port.BaudRate = (int)readingModule.Baudrate;
-				port.DataBits = (int)readingModule.BitsOfSign;
+				port.DataBits = readingModule.BitsOfSign;
 				port.Parity = readingModule.Parity;
 				port.StopBits = readingModule.StopBit;
 				port.Open();

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AgroTemp.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AgroTemp.Mobile.Views.Pages"    
+    Shell.FlyoutBehavior="Disabled"
+    NavigationPage.HasBackButton="False" 
+    NavigationPage.HasNavigationBar="False"
+    TabBarBackgroundColor="#1D2931"
+    TabBarForegroundColor="#C8C8C8"
+    TabBarTitleColor="#C8C8C8"
+    TabBarUnselectedColor="#6E6E6E">
+    <TabBar>
+        <Tab Title="Obiekt" 
+             Icon="storage.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ObjectPage}" 
+                          Route="object"/>
+        </Tab>
+        <Tab Title="Alarmy"
+             Icon="notification.png">
+            <ShellContent ContentTemplate="{DataTemplate local:AlarmPage}" 
+                          Route="alarm"/>
+        </Tab>
+        <Tab Title="Ustawienia" 
+             Icon="settings.png">
+            <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}"
+                          Route="settings"/>
+        </Tab>
+        <Tab Title="Więcej" 
+             Icon="list_text.png">
+            <ShellContent ContentTemplate="{DataTemplate local:MoreInfoPage}"
+                          Route="more"/>
+        </Tab>
+    </TabBar>
+</Shell>

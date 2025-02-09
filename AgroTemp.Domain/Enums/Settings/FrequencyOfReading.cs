@@ -1,6 +1,6 @@
 ﻿namespace AgroTemp.Domain.Enums.Settings;
 
-public enum FrequencyOfReading
+public enum FrequencyOfReading 
 {
     Every1hour = 1,
     Every2hours = 2,

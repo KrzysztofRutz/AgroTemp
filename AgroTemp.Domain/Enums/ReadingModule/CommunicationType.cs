@@ -1,6 +1,6 @@
 ﻿namespace AgroTemp.Domain.Enums.ReadingModule;
 
-public enum CommunicationType
+public enum CommunicationType : byte
 {
     TCP,
     RTU

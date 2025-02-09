@@ -1,0 +1,107 @@
+﻿using AgroTemp.Mobile.Models;
+using AgroTemp.Mobile.Services.Abstractions;
+using Syncfusion.Maui.Charts;
+using System.Windows.Input;
+
+namespace AgroTemp.Mobile.ViewModels;
+
+[QueryProperty(nameof(ProbeWithDetails), "probe")]
+[QueryProperty(nameof(Settings), "settings")]
+public class ChartOfTemperatureViewModel : BaseViewModel
+{
+    private ProbeWithDetails _probeWithDetails;
+    public ProbeWithDetails ProbeWithDetails
+    {
+        get { return _probeWithDetails; }
+        set { SetValue(ref _probeWithDetails, value); }
+    }
+
+    private Settings _settings;
+    public Settings Settings
+    {
+        get { return _settings; }
+        set { SetValue(ref _settings, value); }
+    }
+
+    private DateTime _dateFrom;
+    public DateTime DateFrom
+    {
+        get { return _dateFrom; }
+        set { SetValue(ref _dateFrom, value); }
+    }
+
+    private DateTime _dateTo;
+    public DateTime DateTo
+    {
+        get { return _dateTo; }
+        set { SetValue(ref _dateTo, value); }
+    }
+
+    private ChartSeriesCollection _seriesCollection;
+    public ChartSeriesCollection SeriesCollection
+    {
+        get { return _seriesCollection; }
+        set { SetValue(ref _seriesCollection, value); }
+    }
+
+    public List<DataOfChart> DataOfCharts { get; set; } = new();
+
+    public ICommand FilterAlarmsCommand { get; set; }
+
+    private readonly ITemperatureService _temperatureService;
+
+    public ChartOfTemperatureViewModel(ITemperatureService temperatureService)
+    {
+        _temperatureService = temperatureService;
+
+        DateTo = DateTime.Now;
+        DateFrom = DateTime.Now.AddDays(7);
+
+        //For testing purposes
+        /*for (int i = 0; i < 10; i++)
+        {
+            DataOfCharts.Add(new DataOfChart
+            {
+                Date = DateTime.Now.AddDays(i),
+                Value = (double)(i*111)/10
+            });
+        }*/
+
+        FilterAlarmsCommand = new Command(async () => await InitializeDataSeriesAsync());    
+    }
+    public async Task InitializeDataSeriesAsync()
+    {
+        SeriesCollection = new ChartSeriesCollection();
+        //SeriesCollection.Clear();
+
+        var temperatures = await _temperatureService.GetByProbeIdAndBetweenStartDateTimeAndEndTimeAsync(ProbeWithDetails.Id, DateFrom, DateTo);
+
+        if (temperatures == null)
+        {
+            return;
+        }
+
+        for (int i = 1; i <= _probeWithDetails.SensorsCount; i++)
+        {           
+            var sensorData = new List<DataOfChart>();
+
+            foreach (var temperature in temperatures)
+            {
+                sensorData.Add(new DataOfChart
+                {
+                    Date = temperature.DateTimeStamp,
+                    Value = temperature.ListOfTemperatures[i - 1].Value
+                });
+            }   
+
+            SeriesCollection.Add(new LineSeries()
+            {
+                ItemsSource = sensorData,
+                XBindingPath = "Date",
+                YBindingPath = "Value",
+                Label = $"Czujnik {i}",
+                ShowDataLabels = true,
+            });
+        }       
+    }
+}

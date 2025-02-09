@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           x:Class="AgroTemp.Mobile.Views.Popups.EditActualUserPopup"
+           xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+           xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
+           xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:model="clr-namespace:AgroTemp.Mobile.Models"
+           xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"
+           x:DataType="viewmodel:EditActualUserViewModel" 
+           Color="Transparent">
+    <Frame Padding="30" 
+           CornerRadius="25" 
+           BackgroundColor="#1D2931" 
+           BorderColor="Black">
+        <StackLayout VerticalOptions="Center"           
+                     HorizontalOptions="Center"
+                     Spacing="10">
+            <Label Text="Edycja użytkownika"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,0,0,20"/>
+            <material:TextField Text="{Binding User.Login}"
+                                Title="Login"
+                                AccentColor="Green"
+                                Icon="{FontImageSource FontFamily=FontAwesomeFreeSolid, Glyph={x:Static fontawesome:FontFreeSolid.User}}"
+                                Keyboard="Text"              
+                                FontSize="16"
+                                MaxLength="15"/>
+            <material:TextField Text="{Binding User.Password}"
+                                Title="Hasło"
+                                AccentColor="Green"
+                                Icon="{FontImageSource FontFamily=FontAwesomeFreeSolid, Glyph={x:Static fontawesome:FontFreeSolid.StarOfLife}}"
+                                IsPassword="True"
+                                Keyboard="Text"              
+                                FontSize="16"
+                                MaxLength="50"
+                                FontAutoScalingEnabled="True">
+                <material:TextField.Attachments>
+                    <material:TextFieldPasswordShowHideAttachment />
+                </material:TextField.Attachments>
+            </material:TextField>
+            <material:TextField Text="{Binding User.FirstName}" 
+                                Title="Imię"
+                                AccentColor="Green"
+                                Keyboard="Text"              
+                                FontSize="16"
+                                MaxLength="15"/>
+            <material:TextField Text="{Binding User.LastName}" 
+                                Title="Nazwisko"
+                                AccentColor="Green"
+                                Keyboard="Text"              
+                                FontSize="16"
+                                MaxLength="15"/>
+            <material:TextField Text="{Binding User.Email}"   
+                                Title="E-mail"
+                                AccentColor="Green"
+                                Keyboard="Text"              
+                                FontSize="16"
+                                MaxLength="20"/>
+            <Button Text="Edytuj"
+                    FontSize="Medium"
+                    Command="{Binding EditUserCommand}"/>
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsEnabled="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Color="LimeGreen"/>
+        </StackLayout>
+    </Frame>
+</mct:Popup>

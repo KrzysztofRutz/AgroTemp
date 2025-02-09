@@ -1,6 +1,6 @@
 ﻿namespace AgroTemp.Domain.Enums.ReadingModule;
 
-public enum ModuleType
+public enum ModuleType : byte
 {
     Wirechip,
     Elecso

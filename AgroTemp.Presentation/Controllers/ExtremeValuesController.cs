@@ -1,6 +1,7 @@
 ﻿using AgroTemp.Application.Commands.ExtremeValues.UpdateExtremeValues;
 using AgroTemp.Application.Dtos;
 using AgroTemp.Application.Queries.ExtremeValues.GetExtremeValues;
+using AgroTemp.Application.Queries.ExtremeValues.GetExtremeValuesBySiloId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -35,6 +36,16 @@ public class ExtremeValuesController : Controller
     public async Task<ActionResult> Get()
     {
         var result = await _mediator.Send(new GetExtremeValuesQuery());
+
+        return Ok(result);
+    }
+
+    [HttpGet("silos/{siloId}")]
+    [SwaggerOperation("Get extreme values by siloId.")]
+    [ProducesResponseType(typeof(ExtremeValuesDto), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> GetBySiloId([FromRoute]int siloId)
+    {
+        var result = await _mediator.Send(new GetExtremeValuesBySiloIdQuery(siloId));
 
         return Ok(result);
     }

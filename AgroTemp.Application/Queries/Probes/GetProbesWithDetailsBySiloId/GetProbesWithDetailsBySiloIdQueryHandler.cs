@@ -45,8 +45,8 @@ public class GetProbesWithDetailsBySiloIdQueryHandler : IQueryHandler<GetProbesW
             if (temperature != null)
             {
                 var temperatureForOneProbeDto = _mapper.Map<TemperatureForOneProbeDto>(temperature);
-                probe.ActualTemperatures = temperatureForOneProbeDto.ListOfTemperatures.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
 
+                probe.ActualTemperatures = temperatureForOneProbeDto.ListOfTemperatures.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
             }
 
             if (deltaTemperature != null)

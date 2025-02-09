@@ -11,7 +11,10 @@ public class AlarmsConfiguration : BaseEntityConfiguration<Alarm>
         builder.ToTable("Alarms");
 
         builder.Property(x => x.Description)
-            .HasMaxLength(50)
+            .IsRequired()
+            .HasConversion<string>();
+
+        builder.Property(x => x.ObjectName)
             .IsRequired();
 
         base.Configure(builder);

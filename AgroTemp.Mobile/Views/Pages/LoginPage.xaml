@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             x:Class="AgroTemp.Mobile.Views.Pages.LoginPage"           
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False">
+    <StackLayout VerticalOptions="FillAndExpand" 
+                 HorizontalOptions="FillAndExpand"
+                 BackgroundColor="#1D2931">
+        <BoxView Color="#131B20"
+                 BackgroundColor="Transparent"
+                 HeightRequest="150" 
+                 CornerRadius="0, 0, 150, 0"/>
+        <Frame BorderColor="Black"
+               CornerRadius="15"
+               BackgroundColor="#1D2931"
+               Padding="20"
+               Margin="30,80,30,0">
+            <StackLayout VerticalOptions="FillAndExpand" 
+                         HorizontalOptions="FillAndExpand"
+                         Spacing="10">
+                <Image Source="agrotemp_logo1.png"
+                       HorizontalOptions="Center" 
+                       WidthRequest="140"
+                       HeightRequest="140"/>
+                <material:TextField TextColor="#C8C8C8"
+                                    Text="{Binding User.Login}"               
+                                    Keyboard="Text"
+                                    Title="Login"
+                                    Icon="{FontImageSource FontFamily=FontAwesomeFreeSolid, Glyph={x:Static fontawesome:FontFreeSolid.User}}"
+                                    AccentColor="Green"/>
+                <material:TextField TextColor="#C8C8C8"
+                                    Text="{Binding User.Password}"
+                                    x:FieldModifier="passwd"              
+                                    IsPassword="True"
+                                    Keyboard="Text"
+                                    Title="Hasło"
+                                    Icon="{FontImageSource FontFamily=FontAwesomeFreeSolid, Glyph={x:Static fontawesome:FontFreeSolid.StarOfLife}}"
+                                    AccentColor="Green">
+                    <material:TextField.Attachments>
+                        <material:TextFieldPasswordShowHideAttachment />
+                    </material:TextField.Attachments>
+                </material:TextField>
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="CenterAndExpand"
+                             Spacing="20"
+                             Padding="10">
+                    <Button Text="Zaloguj"
+                            Command="{Binding LoginCommand}"/>
+                    <Button  x:Name="conf_button" 
+                             Text="Konfiguracja"/>                                        
+                </StackLayout>
+                <Label IsVisible="{Binding IsVisibleFailOfLoginMessage}"               
+                       TextColor="Red"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       Text="Błędny login i/lub hasło"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+        </Frame>
+        <BoxView Color="#131B20" 
+                 BackgroundColor="Transparent"
+                 VerticalOptions="EndAndExpand" 
+                 HeightRequest="150" 
+                 CornerRadius="0, 150, 0, 0"/>
+    </StackLayout>
+</ContentPage>

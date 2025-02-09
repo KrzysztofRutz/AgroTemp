@@ -1,5 +1,4 @@
 ﻿using AgroTemp.Application.Configuration.Commands;
-using AgroTemp.Domain.Enums.User;
 
 namespace AgroTemp.Application.Commands.Users.UpdateUser;
 

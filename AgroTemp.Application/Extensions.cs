@@ -13,6 +13,8 @@ using AgroTemp.Application.Commands.ReadingModules.UpdateReadingModule;
 using AgroTemp.Application.Configuration.Validation;
 using AgroTemp.Application.Middlewares;
 using Microsoft.AspNetCore.Builder;
+using AgroTemp.Application.Commands.Alarms.AddAlarm;
+using AgroTemp.Application.Commands.Alarms.UpdateAlarm;
 
 namespace AgroTemp.Application;
 
@@ -23,6 +25,9 @@ public static class Extensions
         var executingAssembly = Assembly.GetExecutingAssembly();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(executingAssembly));
         services.AddAutoMapper(executingAssembly);
+
+        services.AddScoped<IValidator<AddAlarmCommand>, AddAlarmCommandValidation>();
+        services.AddScoped<IValidator<UpdateAlarmCommand>, UpdateAlarmCommandValidation>();
 
         services.AddScoped<IValidator<AddProbeCommand>, AddProbeCommandValidation>();
         services.AddScoped<IValidator<UpdateProbeCommand>, UpdateProbeCommandValidation>();

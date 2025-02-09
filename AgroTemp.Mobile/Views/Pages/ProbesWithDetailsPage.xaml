@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgroTemp.Mobile.Views.Pages.ProbesWithDetailsPage"
+             xmlns:droid="clr-namespace:CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;assembly=CommunityToolkit.Maui"
+             xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
+             xmlns:model="clr-namespace:AgroTemp.Mobile.Models"
+             xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"
+             xmlns:conv="clr-namespace:AgroTemp.Mobile.Converters"
+             x:DataType="viewmodel:ProbesWithDetailsViewModel"
+             droid:NavigationBar.Color="#1D2931"
+             Title="{Binding Silo.Name, StringFormat='Silos {0}'}">
+    <Grid>
+        <Image Source="background_agrotemp"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand"
+               Aspect="AspectFill"/>
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding ProbeWithDetailsList}" 
+                            ItemsLayout="VerticalList"
+                            EmptyView="{Binding Silo.Name, StringFormat='Brak sond pomiarowych dla zbiornika {0}.'}">
+                <CollectionView.Header>
+                    <Frame Margin="10"
+                           BackgroundColor="#1D2931" 
+                           Opacity="0.80">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Wartości graniczne:" 
+                                   VerticalOptions="Center" 
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"/>
+                            <HorizontalStackLayout Spacing="5">
+                                <BoxView BackgroundColor="Blue"
+                                         HeightRequest="10"
+                                         WidthRequest="10"
+                                         CornerRadius="180"/>
+                                <Label Text="{Binding ExtremeValues.MinTemperature, StringFormat='Minimalna temperatura: {0}°C'}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="5">
+                                <BoxView BackgroundColor="Red"
+                                         HeightRequest="10"
+                                         WidthRequest="10"
+                                         CornerRadius="180"/>
+                                <Label Text="{Binding ExtremeValues.MaxTemperature, StringFormat='Maksymalna temperatura: {0}°C'}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="5">
+                                <BoxView BackgroundColor="Orange"
+                                         HeightRequest="10"
+                                         WidthRequest="10"
+                                         CornerRadius="180"/>
+                                <Label Text="{Binding ExtremeValues.MaxDeltaTemperature, StringFormat='Maksymalny przyrost ΔT: {0}°C'}"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ProbeWithDetails">
+                        <Frame BackgroundColor="#1D2931" 
+                               Opacity="0.80"  
+                               Padding="15" 
+                               Margin="5" >
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label FontFamily="FontAwesomeFreeSolid"
+                                           Text="{x:Static fontawesome:FontFreeSolid.Burst}"
+                                           FontSize="Large"/>
+                                    <Label FontFamily="RubikDistressed"
+                                           Text="{Binding Name, StringFormat='Sonda {0}'}" 
+                                           FontSize="Large" 
+                                           FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding SensorsCount, StringFormat='Ilość czujników: {0}'}" 
+                                       FontAttributes="Bold" />
+                                <Grid HorizontalOptions="CenterAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="silo_background2.svg"
+                                           Aspect="Fill"                       
+                                           Grid.ColumnSpan="2"
+                                           Grid.RowSpan="2"/>
+                                    <Label Text="Temperatury:" 
+                                           FontAttributes="Bold" 
+                                           Margin="0,10,0,0"
+                                           Grid.Column="0"
+                                           Grid.Row="0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Start"/>
+                                    <HorizontalStackLayout Grid.Column="0"
+                                                           Grid.Row="1"
+                                                           HorizontalOptions="Center">
+                                        <CollectionView ItemsSource="{Binding ActualTemperatures}" 
+                                                        ItemsLayout="VerticalList"
+                                                        EmptyView="Brak wartości temperatur.">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <HorizontalStackLayout VerticalOptions="Center">
+                                                        <Grid>
+                                                            <BoxView BackgroundColor="#424A4E"
+                                                                     WidthRequest="5"/>
+                                                            <BoxView WidthRequest="8"
+                                                                     HeightRequest="8"
+                                                                     CornerRadius="180">
+                                                                <BoxView.BackgroundColor>
+                                                                    <MultiBinding Converter="{StaticResource TemperatureValueToColorMultiValueConverter}">
+                                                                        <Binding Path="."/>
+                                                                        <Binding Source="{RelativeSource AncestorType={x:Type viewmodel:ProbesWithDetailsViewModel}}"
+                                                                                 Path="ExtremeValues"/>
+                                                                    </MultiBinding>
+                                                                </BoxView.BackgroundColor>
+                                                            </BoxView>
+                                                        </Grid>
+                                                        <Label Text="{Binding }" 
+                                                               Margin="2,0,0,2.5"
+                                                               TextColor="Black"
+                                                               FontAttributes="Bold"/>
+                                                        <Label Text="°C"
+                                                               TextColor="Black"
+                                                               FontAttributes="Bold"/>
+                                                    </HorizontalStackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </HorizontalStackLayout>
+                                    <Button x:Name="GoToChartOfTemperatureButton"
+                                            BackgroundColor="#2C357D"
+                                            FontFamily="FontAwesomeFreeSolid"
+                                            Text="{x:Static fontawesome:FontFreeSolid.ChartLine}"
+                                            BorderColor="CornflowerBlue"
+                                            FontSize="Large"
+                                            Grid.Column="0"
+                                            Grid.Row="2"
+                                            HorizontalOptions="Center"
+                                            Clicked="GoToChartOfTemperatureButton_Clicked"/>
+                                    <Label Text="Przyrosty:" 
+                                           FontAttributes="Bold" 
+                                           Margin="0,10,0,0"
+                                           Grid.Column="1"
+                                           Grid.Row="0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="End"/>
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                           Grid.Row="1"
+                                                           HorizontalOptions="Center">
+                                        <CollectionView ItemsSource="{Binding ActualDeltaTemperatures}" 
+                                                        ItemsLayout="VerticalList">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <HorizontalStackLayout VerticalOptions="Center">
+                                                        <Grid>
+                                                            <BoxView BackgroundColor="#424A4E"
+                                                                     WidthRequest="5"/>
+                                                            <BoxView WidthRequest="8"
+                                                                     HeightRequest="8"
+                                                                     CornerRadius="180">
+                                                                <BoxView.BackgroundColor>
+                                                                    <MultiBinding Converter="{StaticResource DeltaValueToColorMultiValueConverter}">
+                                                                        <Binding Path="."/>
+                                                                        <Binding Source="{RelativeSource AncestorType={x:Type viewmodel:ProbesWithDetailsViewModel}}"
+                                                                                 Path="ExtremeValues"/>
+                                                                    </MultiBinding>
+                                                                </BoxView.BackgroundColor>
+                                                            </BoxView>
+                                                        </Grid>
+                                                        <Label Text="{Binding }" 
+                                                               Margin="2,0,0,2.5"
+                                                               TextColor="Black"
+                                                               FontAttributes="Bold"/>
+                                                        <Label Text="°C"
+                                                               TextColor="Black"
+                                                               FontAttributes="Bold"/>
+                                                    </HorizontalStackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </HorizontalStackLayout>
+                                    <Button x:Name="GoToChartOfDeltaButton"
+                                            BackgroundColor="#2C357D"
+                                            FontFamily="FontAwesomeFreeSolid"
+                                            Text="{x:Static fontawesome:FontFreeSolid.ChartLine}"
+                                            BorderColor="CornflowerBlue"
+                                            FontSize="Large"
+                                            Grid.Column="1"
+                                            Grid.Row="2"
+                                            HorizontalOptions="Center"
+                                            Clicked="GoToChartOfDeltaButton_Clicked"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Resources>
+                    <ResourceDictionary>
+                        <conv:TemperatureValueToColorMultiValueConverter x:Key="TemperatureValueToColorMultiValueConverter"/>
+                        <conv:DeltaValueToColorMultiValueConverter x:Key="DeltaValueToColorMultiValueConverter"/>
+                    </ResourceDictionary>
+                </CollectionView.Resources>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>

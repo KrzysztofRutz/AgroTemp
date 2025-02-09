@@ -6,6 +6,9 @@ public class UpdateProbeCommandValidation : AbstractValidator<UpdateProbeCommand
 {
     public UpdateProbeCommandValidation()
     {
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Id is required.");
+
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required.")
             .MaximumLength(5).WithMessage("Name cannot be longer than 5 characters.");

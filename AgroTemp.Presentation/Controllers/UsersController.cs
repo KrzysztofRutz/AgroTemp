@@ -3,6 +3,7 @@ using AgroTemp.Application.Commands.Users.RemoveUser;
 using AgroTemp.Application.Commands.Users.UpdateUser;
 using AgroTemp.Application.Dtos;
 using AgroTemp.Application.Queries.Users.GetUserById;
+using AgroTemp.Application.Queries.Users.GetUserByLoginAndPassword;
 using AgroTemp.Application.Queries.Users.GetUsers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,16 @@ public class UsersController : Controller
     public async Task<ActionResult> GetById([FromRoute] int id)
     {
         var result = await _mediator.Send(new GetUserByIdQuery(id));
+
+        return Ok(result);
+    }
+
+    [HttpGet("getByLoginAndPassword")]
+    [SwaggerOperation("Get user by login and password.")]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    public async Task<ActionResult> GetByLoginAndPassword([FromQuery] string login, [FromQuery] string password)
+    {
+        var result = await _mediator.Send(new GetUserByLoginAndPasswordQuery(login, password));
 
         return Ok(result);
     }
