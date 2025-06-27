@@ -25,6 +25,7 @@ public class TemperaturesController : Controller
     public async Task<ActionResult> Get([FromQuery] GetTemperaturesByProbeIdAndTimeIntervalQuery query)
     {
         var result = await _mediator.Send(query);
+
         return Ok(result);
     }
 

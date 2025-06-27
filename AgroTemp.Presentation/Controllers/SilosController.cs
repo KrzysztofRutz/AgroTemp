@@ -11,7 +11,6 @@ using System.Net;
 
 namespace AgroTemp.Presentation.Controllers;
 
-
 [ApiController]
 [Route("api/silos")]
 public class SilosController : Controller

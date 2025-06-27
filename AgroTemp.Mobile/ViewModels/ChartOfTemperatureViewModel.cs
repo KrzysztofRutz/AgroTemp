@@ -7,6 +7,7 @@ namespace AgroTemp.Mobile.ViewModels;
 
 [QueryProperty(nameof(ProbeWithDetails), "probe")]
 [QueryProperty(nameof(Settings), "settings")]
+[QueryProperty(nameof(ExtremeValues), "extremeValues")]
 public class ChartOfTemperatureViewModel : BaseViewModel
 {
     private ProbeWithDetails _probeWithDetails;
@@ -21,6 +22,13 @@ public class ChartOfTemperatureViewModel : BaseViewModel
     {
         get { return _settings; }
         set { SetValue(ref _settings, value); }
+    }
+
+    private ExtremeValues _extremeValues;
+    public ExtremeValues ExtremeValues
+    {
+        get { return _extremeValues; }
+        set { SetValue(ref _extremeValues, value); }
     }
 
     private DateTime _dateFrom;
@@ -48,24 +56,14 @@ public class ChartOfTemperatureViewModel : BaseViewModel
 
     public ICommand FilterAlarmsCommand { get; set; }
 
-    private readonly ITemperatureService _temperatureService;
+    private readonly IValueWithTimeStampService<Temperature> _temperatureService;
 
-    public ChartOfTemperatureViewModel(ITemperatureService temperatureService)
+    public ChartOfTemperatureViewModel(IValueWithTimeStampService<Temperature> temperatureService)
     {
         _temperatureService = temperatureService;
 
         DateTo = DateTime.Now;
-        DateFrom = DateTime.Now.AddDays(7);
-
-        //For testing purposes
-        /*for (int i = 0; i < 10; i++)
-        {
-            DataOfCharts.Add(new DataOfChart
-            {
-                Date = DateTime.Now.AddDays(i),
-                Value = (double)(i*111)/10
-            });
-        }*/
+        DateFrom = DateTime.Now.AddDays(-7);
 
         FilterAlarmsCommand = new Command(async () => await InitializeDataSeriesAsync());    
     }
@@ -90,7 +88,7 @@ public class ChartOfTemperatureViewModel : BaseViewModel
                 sensorData.Add(new DataOfChart
                 {
                     Date = temperature.DateTimeStamp,
-                    Value = temperature.ListOfTemperatures[i - 1].Value
+                    Value = temperature.ListOfValues[i - 1].Value
                 });
             }   
 

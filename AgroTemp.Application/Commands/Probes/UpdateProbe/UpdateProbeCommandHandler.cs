@@ -1,5 +1,6 @@
 ﻿using AgroTemp.Application.Configuration.Commands;
 using AgroTemp.Domain.Abstractions;
+using AgroTemp.Domain.Enums.Probe;
 using AgroTemp.Domain.Exceptions;
 using AutoMapper;
 
@@ -48,6 +49,7 @@ public class UpdateProbeCommandHandler : ICommandHandler<UpdateProbeCommand>
 		probe.Name = request.Name;
         probe.SensorsCount = request.SensorsCount;
         probe.NrFirstSensor = request.NrFirstSensor;
+        probe.NrOfCircle = request.NrOfCircle;
         probe.SiloId = request.SiloId;
         probe.ReadingModuleId = request.ReadingModuleId;
 

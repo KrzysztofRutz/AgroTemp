@@ -1,0 +1,11 @@
+services:
+  agrotemp.api:
+    image: ${DOCKER_REGISTRY-}agrotempapi
+    build:
+      context: .
+      dockerfile: AgroTemp.Api/Dockerfile
+  redis:
+    image: redis
+    ports:
+    - "6379:6379"
+

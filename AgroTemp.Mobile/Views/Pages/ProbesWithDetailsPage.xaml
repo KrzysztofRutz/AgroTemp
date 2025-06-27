@@ -8,7 +8,9 @@
              xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"
              xmlns:conv="clr-namespace:AgroTemp.Mobile.Converters"
              x:DataType="viewmodel:ProbesWithDetailsViewModel"
-             droid:NavigationBar.Color="#1D2931"
+             Shell.ForegroundColor="#C8C8C8"
+             Shell.BackgroundColor="#1D2931"
+             Shell.TitleColor="#C8C8C8"
              Title="{Binding Silo.Name, StringFormat='Silos {0}'}">
     <Grid>
         <Image Source="background_agrotemp"
@@ -54,7 +56,7 @@
                 </CollectionView.Header>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ProbeWithDetails">
-                        <Frame BackgroundColor="#1D2931" 
+                        <Border BackgroundColor="#1D2931" 
                                Opacity="0.80"  
                                Padding="15" 
                                Margin="5" >
@@ -191,7 +193,7 @@
                                             Clicked="GoToChartOfDeltaButton_Clicked"/>
                                 </Grid>
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.Resources>

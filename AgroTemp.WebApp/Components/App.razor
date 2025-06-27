@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>AgroTemp</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <base href="/" />
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: {"families":["Public Sans:300,400,500,600,700"]},
+            custom: {"families":["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['assets/css/fonts.min.css']},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!--Stylesheets-->
+    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <link rel="stylesheet" href="@Assets["AgroTemp.WebApp.styles.css"]" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css">
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css">
+
+    <!-- CSS Just for demo purpose, don't include it in your project 
+    <link rel="stylesheet" href="assets/css/demo.css" /> -->
+    <ImportMap />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender: false)" />
+</head>
+
+<body>
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
+
+    <script src="_framework/blazor.web.js"></script>
+
+    <!--   Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script> 
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>   
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Moment JS -->
+    <script src="assets/js/plugin/moment/moment.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>   
+
+    <!-- Bootstrap Toggle -->
+    <script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Dropzone -->
+    <script src="assets/js/plugin/dropzone/dropzone.min.js"></script>
+
+    <!-- Fullcalendar -->
+    <script src="assets/js/plugin/fullcalendar/fullcalendar.min.js"></script>
+
+    <!-- DateTimePicker -->
+    <script src="assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- Bootstrap Tagsinput -->
+    <script src="assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+
+    <!-- jQuery Validation -->
+    <script src="assets/js/plugin/jquery.validate/jquery.validate.min.js"></script>
+
+    <!-- Summernote -->
+    <script src="assets/js/plugin/summernote/summernote-lite.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="assets/js/plugin/select2/select2.full.min.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Owl Carousel -->
+    <script src="assets/js/plugin/owl-carousel/owl.carousel.min.js"></script>
+
+    <!-- Magnific Popup -->
+    <script src="assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script> 
+
+    <!-- <script src="assets/js/silo.js"></script>-->
+
+</body>
+
+</html>

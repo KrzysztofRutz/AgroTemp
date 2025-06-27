@@ -10,4 +10,18 @@ public partial class ChartOfDeltaPage : ContentPage
 
 		BindingContext = viewModel;
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await (BindingContext as ChartOfDeltaViewModel).InitializeDataSeriesAsync();
+    }
+
+    private void DateTimeAxis_LabelCreated(object sender, Syncfusion.Maui.Charts.ChartAxisLabelEventArgs e)
+    {
+        DateTime date = DateTime.Parse(e.Label);
+
+        e.Label = date.ToString("dd.MM.yyyy HH:mm");
+    }
 }

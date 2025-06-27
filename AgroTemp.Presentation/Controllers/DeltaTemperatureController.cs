@@ -1,4 +1,6 @@
 ﻿using AgroTemp.Application.Commands.DeltaTemperatures.AddDeltaTemperature;
+using AgroTemp.Application.Dtos;
+using AgroTemp.Application.Queries.DeltaTemperatures.GetDeltaTemperaturesByProbeIdAndTimeInterval;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -15,6 +17,16 @@ public class DeltaTemperatureController : Controller
     public DeltaTemperatureController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    [SwaggerOperation("Get delta temperatures by probe id and time interval")]
+    [ProducesResponseType(typeof(IEnumerable<DeltaTemperatureByIntervalTimeDto>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Get([FromQuery] GetDeltaTemperaturesByProbeIdAndTimeIntervalQuery query)
+    {
+        var result = await _mediator.Send(query);
+
+        return Ok(result);
     }
 
     [HttpPost]

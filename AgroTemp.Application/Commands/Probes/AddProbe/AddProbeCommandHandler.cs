@@ -52,6 +52,7 @@ public class AddProbeCommandHandler : ICommandHandler<AddProbeCommand, ProbeDto>
             Name = request.Name,
             SensorsCount = request.SensorsCount,
             NrFirstSensor = request.NrFirstSensor,
+            NrOfCircle = request.NrOfCircle,
             SiloId = request.SiloId,
             ReadingModuleId = request.ReadingModuleId,
         };

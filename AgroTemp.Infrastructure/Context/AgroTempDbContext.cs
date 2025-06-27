@@ -37,7 +37,7 @@ internal class AgroTempDbContext : DbContext
             .HasData(new Settings 
             { 
                 Id = 1, 
-                Language = Language.ENG, 
+                Language = Language.PL, 
                 HourOfReading = 12, 
                 FrequencyOfReading = FrequencyOfReading.Every24hours, 
                 EnableSMSNotificationMode = false, 

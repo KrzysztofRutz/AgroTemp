@@ -6,7 +6,10 @@
              xmlns:fontawesome="clr-namespace:AgroTemp.Mobile.Utility"
              xmlns:model="clr-namespace:AgroTemp.Mobile.Models"
              xmlns:viewmodel="clr-namespace:AgroTemp.Mobile.ViewModels"
-             x:DataType="viewmodel:ChartOfTemperatureViewModel">
+             x:DataType="viewmodel:ChartOfTemperatureViewModel"
+             Shell.ForegroundColor="#C8C8C8"
+             Shell.BackgroundColor="#1D2931"
+             Shell.TitleColor="#C8C8C8">
     <ContentPage.Title>
         <MultiBinding StringFormat="Zbiornik {0} Sonda {1}">
             <Binding Path="ProbeWithDetails.Silo.Name"/>
@@ -101,10 +104,10 @@
                                           MinorTicksPerInterval="1">
                         <charts:NumericalAxis.PlotBands>
                             <charts:NumericalPlotBandCollection>
-                                <charts:NumericalPlotBand Start="24"  
+                                <charts:NumericalPlotBand Start="{Binding ExtremeValues.MaxTemperature}"  
                                                           Fill="Red"/>
                                 <charts:NumericalPlotBand Start="-10"
-                                                          End="5"  
+                                                          End="{Binding ExtremeValues.MinTemperature}"  
                                                           Fill="Blue"/>
                             </charts:NumericalPlotBandCollection>
                         </charts:NumericalAxis.PlotBands>

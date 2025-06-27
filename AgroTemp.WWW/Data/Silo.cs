@@ -1,8 +1,7 @@
-﻿namespace AgroTemp.WWW.Data;
+﻿namespace AgroTemp.WebApp.Models;
 
-public class Silo
+public class Silo 
 {
-	public int Id { get; set; }
 	public string Name { get; set; }
 	public int Size { get; set; }
 	public int PositionX { get; set; }

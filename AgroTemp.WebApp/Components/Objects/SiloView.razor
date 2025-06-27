@@ -1,0 +1,118 @@
+﻿
+<style>
+    .svg-container {
+        width: 100%;
+        max-width: 500px;
+        margin: auto;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+        .svg-container:hover {
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="svg-container" @onclick="GoToPage">
+    <canvas id="@CanvasId" width="300" height="300"></canvas>
+</div>
+
+
+<script id="silo">
+    window.drawSilo = (canvasId, siloName, probes) => 
+    {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        const centerX = 150;
+        const centerY = 150;
+        const radius = 120;
+
+        ctx.clearRect(0, 0, 300, 300);
+
+        // Kopuła silosu z gradientem
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, radius);
+        gradient.addColorStop(0, "#eeeeee");
+        gradient.addColorStop(1, "#888888");
+        ctx.fillStyle = gradient;
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Żebra konstrukcyjne co 30°
+        ctx.strokeStyle = "#aaaaaa";
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 12; i++) 
+        {
+            const angle = (2 * Math.PI / 12) * i;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        // Nazwa silosu na środku
+        ctx.fillStyle = "#222";
+        ctx.font = "bold 20px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 3;
+
+        // White background under silo title
+        ctx.strokeText(siloName, centerX, centerY);
+        ctx.fillText(siloName, centerX, centerY);
+
+        // Probes
+        for (let nrOfCircleCounter = 1; nrOfCircleCounter <= 3; nrOfCircleCounter++)
+        {
+            const probesByNrOfCircle = probes.filter(element => element.nrOfCircle === nrOfCircleCounter);
+
+            for (let i = 0; i < probesByNrOfCircle.length; i++)
+            {                   
+                const probe = probesByNrOfCircle[i];
+                const label = probe.name || probe.Label;
+                const nrOfCircle = probe.nrOfCircle ?? probe.NrOfCircle;
+
+                const angle = 2 * Math.PI * i / probesByNrOfCircle.length;
+
+                switch (nrOfCircle)
+                {
+                    case 1:
+                        probeRadius = 100; // internal
+                        break;
+                    case 2:
+                        probeRadius = 65; // external
+                        break;
+                    case 3:
+                        probeRadius = 25; // middle
+                        break;
+                }
+
+
+                const x = centerX + probeRadius * Math.cos(angle);
+                const y = centerY + probeRadius * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.fillStyle = "#ffcc00";
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = "black";
+                ctx.font = "12px Arial";
+                ctx.fillText(label, x - 10, y - 10);
+            }
+        }        
+    };
+
+</script>
+
+

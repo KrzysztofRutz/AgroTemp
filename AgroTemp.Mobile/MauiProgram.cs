@@ -36,8 +36,8 @@ public static class MauiProgram
         builder.Services.AddCommunityToolkitDialogs();
         builder.Services.AddMopupsDialogs();
 
-        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://10.0.2.2:5043/") }); //For Android Emulator
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.18:5043/") }); //For Android Device
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://10.0.2.2:5043/") }); //For Android Emulator
+        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.18:5043/") }); //For Android Device
 
         builder.Services.AddServices();        
 

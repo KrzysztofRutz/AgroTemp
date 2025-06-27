@@ -28,6 +28,6 @@ internal class UserRepository : IUserRepository
     public void Delete(User user)
         => _dbContext.Users.Remove(user);
 
-    public async Task<User> GetByLoginAndPasswordAsync(string login, string password, CancellationToken cancellationToken = default)
-        => await _dbContext.Users.SingleAsync(x => x.Login == login & x.Password == password);
+    public async Task<User?> GetByLoginAndPasswordAsync(string login, string password, CancellationToken cancellationToken = default)
+        => await _dbContext.Users.SingleOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken);
 }

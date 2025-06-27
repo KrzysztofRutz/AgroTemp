@@ -19,6 +19,9 @@ public class AddProbeCommandValidation : AbstractValidator<AddProbeCommand>
             .NotEmpty().WithMessage("Number of first sensor is required.")
             .GreaterThan(0).WithMessage("Number of first sensor must be greater than 0.");
 
+        RuleFor(x => x.NrOfCircle)
+            .IsInEnum().WithMessage("Number of circle has not valid value.");
+
         RuleFor(x => x.SiloId)
             .NotEmpty().WithMessage("SiloID is required.");
 

@@ -27,7 +27,7 @@ public partial class ObjectPage : ContentPage
     {
         var silo = ((VisualElement)sender).BindingContext as Silo;
 
-        using var progress = await _dialogService.DisplayProgressAsync("£adowanie", "£adowanie danych, proszê czekaæ.");
+        //using var progress = await _dialogService.DisplayProgressAsync("£adowanie", "£adowanie danych, proszê czekaæ.");
 
         if (silo == null)
         {

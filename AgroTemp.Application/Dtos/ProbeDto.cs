@@ -6,4 +6,5 @@ public class ProbeDto
     public string Name { get; set; }
     public int SensorsCount { get; set; }
     public int NrFirstSensor { get; set; }
+    public int NrOfCircle { get; set; }
 }

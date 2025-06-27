@@ -19,7 +19,7 @@ public class ProbesWithDetailsViewModel : BaseViewModel
     {
         get { return _probeWithDetailsList; }
         set { SetValue(ref _probeWithDetailsList, value); }
-    }
+    } 
 
     private ExtremeValues _extremeValues;
     public ExtremeValues ExtremeValues

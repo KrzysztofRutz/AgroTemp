@@ -36,33 +36,33 @@ public class AddUserCommandValidation : AbstractValidator<AddUserCommand>
 
     private static bool PasswordHasSpecialCharacter(string password)
     {
-        bool valid = false;
+        bool isValid = false;
 
         foreach (char c in password)
         {
             if (!char.IsLetterOrDigit(c))
             {
-                valid = true;
+                isValid = true;
                 break;
             }
         }
 
-        return valid;
+        return isValid;
     }
 
     private static bool PasswordHasNumberCharacter(string password)
     {
-        bool valid = false;
+        bool isValid = false;
 
         foreach (char c in password)
         {
             if (char.IsNumber(c))
             {
-                valid = true;
+                isValid = true;
                 break;
             }
         }
 
-        return valid;
+        return isValid;
     }
 }

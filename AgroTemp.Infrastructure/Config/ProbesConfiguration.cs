@@ -23,8 +23,9 @@ public class ProbesConfiguration : BaseEntityConfiguration<Probe>
         builder.Property(x => x.NrFirstSensor)
             .IsRequired();
 
-        builder.Property(x => x.NrFirstSensor)
-            .IsRequired();
+        builder.Property(x => x.NrOfCircle)
+            .IsRequired()
+            .HasConversion<int>(); 
 
         builder.HasOne(x => x.Silo)
             .WithMany(x => x.Probes)

@@ -1,0 +1,26 @@
+﻿@page "/Dashboard"
+
+@using AgroTemp.WebApp.Components.Objects
+
+<h1>Witaj w aplikacji AgroTemp</h1>
+
+@if (Silos == null)
+{
+    <p><em>Brak zbiorników.</em></p>
+}
+else
+{
+    @foreach (var group in SiloGroupByPositionY)
+    {
+        <div class="row row-cols gx-4">
+            @foreach (var silo in group)
+            {
+                <div class="col-xl-2" style="align-content: center">
+                    <SiloView @key="silo.Id" Silo="@silo" Probes="@probesBySiloId[silo.Id]" />
+                </div>
+            }
+        </div>
+    }
+}
+
+

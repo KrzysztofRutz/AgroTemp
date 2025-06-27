@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AgroTemp.Mobile.Services;
 
-public class TemperatureService : ITemperatureService
+public class TemperatureService : IValueWithTimeStampService<Temperature>
 {
     private readonly HttpClient _httpClient;
 
