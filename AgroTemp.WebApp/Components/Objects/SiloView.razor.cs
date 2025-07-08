@@ -1,4 +1,5 @@
 ﻿using AgroTemp.WebApp.Models;
+using AgroTemp.WebApp.Services.Abstractions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -10,6 +11,8 @@ public partial class SiloView
     public NavigationManager Navigation { get; set; }
     [Inject] 
     public IJSRuntime JS { get; set; }
+    [Inject]
+    public IExtremeValuesService ExtremeValuesService { get; set; }
 
     [Parameter]
     public Silo Silo { get; set; } = new();
@@ -18,8 +21,13 @@ public partial class SiloView
     [Parameter]
     public string CanvasId { get; set; } = $"siloCanvas-{Guid.NewGuid():N}";
 
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
-        => await JS.InvokeVoidAsync("drawSilo", CanvasId, Silo.Name, Probes);
+    {
+        var extremeValues = await ExtremeValuesService.GetBySiloIdAsync(Silo.Id);
+
+        await JS.InvokeVoidAsync("drawSilo", CanvasId, Silo.Name, Probes, extremeValues);
+    }
 
     private void GoToPage()
         => Navigation.NavigateTo($"/Silo/{Silo.Id}");

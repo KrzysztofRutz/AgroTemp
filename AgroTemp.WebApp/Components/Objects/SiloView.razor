@@ -8,18 +8,17 @@
         transition: transform 0.3s ease;
     }
 
-        .svg-container:hover {
-            transform: scale(1.05);
-        }
+    .svg-container:hover {
+        transform: scale(1.05);
+    }       
 </style>
 
 <div class="svg-container" @onclick="GoToPage">
     <canvas id="@CanvasId" width="300" height="300"></canvas>
 </div>
 
-
 <script id="silo">
-    window.drawSilo = (canvasId, siloName, probes) => 
+    window.drawSilo = (canvasId, siloName, probes, extremeValues) => 
     {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
@@ -58,7 +57,7 @@
             ctx.stroke();
         }
 
-        // Nazwa silosu na środku
+        // Silo name on the middle
         ctx.fillStyle = "#222";
         ctx.font = "bold 20px Arial";
         ctx.textAlign = "center";
@@ -102,7 +101,19 @@
 
                 ctx.beginPath();
                 ctx.arc(x, y, 6, 0, 2 * Math.PI);
-                ctx.fillStyle = "#ffcc00";
+                
+                for (let j = 0; j < probe.actualTemperatures.length; j++)
+                {
+                    if (probe.actualTemperatures[j] > extremeValues.maxTemperature || probe.actualTemperatures[j] < extremeValues.minTemperature 
+                        || probe.actualDeltaTemperatures[j] > extremeValues.maxDeltaTemperature)
+                        {
+                            ctx.fillStyle = "#7F2B32";
+                        }
+                        else{
+                            ctx.fillStyle = "#00cc00";
+                        }
+                }
+
                 ctx.fill();
                 ctx.stroke();
 
@@ -114,5 +125,6 @@
     };
 
 </script>
+
 
 
