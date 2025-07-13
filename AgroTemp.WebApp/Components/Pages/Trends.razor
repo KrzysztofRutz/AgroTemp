@@ -1,0 +1,256 @@
+﻿@page "/Trends"
+
+<div class="row"> <!-- Cards of filter charts for time range.-->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Zakres czasu</h4>
+            </div>
+            <div class="card-body">
+                <EditForm Model="@Model" OnValidSubmit="FilterChartsAsync">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Zbiornik:</label>
+                                <div class="input-group">
+                                    <InputSelect @bind-Value="Model.SiloId" class="form-control" @oninput="OnSiloChanged">
+                                        <option value="">Wybierz opcję</option>
+                                        @foreach (var silo in _silos)
+                                        {
+                                            <option value="@silo.Id">Zbiornik @silo.Name</option>
+                                        }
+                                    </InputSelect>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Sonda:</label>
+                                <div class="input-group">
+                                    <InputSelect @bind-Value="Model.ProbeWithDetailsId" class="form-control" disabled="@(!_probes.Any())">
+                                        <option value="">Wybierz opcję</option>
+                                        @foreach (var probe in _probes)
+                                        {
+                                            <option value="@probe.Id">Sonda @probe.Name</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Data początkowa:</label>
+                                <div class="input-group">
+                                    <InputDate @bind-Value="Model.StartAt" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Data końcowa:</label>
+                                <InputDate @bind-Value="Model.EndAt" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <center>
+                                    <b><ValidationMessage For="() => Model.SiloId" /></b>
+                                </center>                                
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <b><ValidationMessage For="() => Model.ProbeWithDetailsId" /></b>
+                                </center>                               
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <b><ValidationMessage For="() => Model.StartAt" /></b>
+                                </center>                                
+                            </div>
+                            <div class="col-md-3">
+                                <center>
+                                    <b><ValidationMessage For="() => Model.EndAt" /></b>
+                                </center>                               
+                            </div>
+                        </div>
+                        <div class="col-md-3 align-content-end">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Szukaj</button>
+                            </div>
+                        </div>
+                    </div>                   
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">  <!--Cards of limit values-->   
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-thermometer-full"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Maksimum</p>
+                            <h4 class="card-title">@_extremeValues.MaxTemperature °C</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                            <i class="fas fa-thermometer-empty"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Minimum</p>
+                            <h4 class="card-title">@_extremeValues.MinTemperature °C</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-thermometer-three-quarters"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Maksimum ΔT</p>
+                            <h4 class="card-title">@_extremeValues.MaxDeltaTemperature °C</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Charts-->
+<div class="row">
+    <div class="col-md">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row card-tools-still-right">
+                    <div class="card-title">Temperatury</div>
+                    <div class="card-tools">
+                        <label>Wykres:</label>
+                        <select id="basic" name="basic" @oninput="TypeOfTemperatureChartSelected">
+                            <option value="line">Liniowy</option>
+                            <option value="bar">Słupkowy</option>
+                        </select>
+                        <a href="#" class="btn btn-label-info btn-round btn-sm">
+                            <span class="btn-label">
+                                <i class="fa fa-print"></i>
+                            </span>
+                            Drukuj
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="temperatureChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Przyrosty temperatur</div>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="deltaTemperatureChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.drawTemperatureChart = (temperatureLabels, temperatureDatasets, _extremeValues) =>
+    {
+        //Chart of temperatures
+        const typeOfChartSelect = document.getElementById("basic");       
+        var myMultipleLineChart = new Chart(temperatureChart, {
+            type: typeOfChartSelect.value,
+            data: {
+              labels: temperatureLabels,
+              datasets: temperatureDatasets,
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                position: "top",
+              },
+              tooltips: {
+                bodySpacing: 4,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest",
+                xPadding: 10,
+                yPadding: 10,
+                caretPadding: 10,
+              },
+              layout: {
+                padding: { left: 15, right: 15, top: 15, bottom: 15 },
+              },
+            },
+          });         
+    };
+
+    window.drawDeltaTemperatureChart = (deltaTemperatureLabels, deltaTemperatureDatasets, _extremeValues) =>
+    {
+        //Chart of delta temperatures
+        var myMultipleBarChart = new Chart(deltaTemperatureChart, {
+            type: "bar",
+            data: {
+              labels: deltaTemperatureLabels,
+              datasets: deltaTemperatureDatasets,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                position: "top",
+              },
+              tooltips: {
+                bodySpacing: 4,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest",
+                xPadding: 10,
+                yPadding: 10,
+                caretPadding: 10,
+              },
+              layout: {
+                padding: { left: 15, right: 15, top: 15, bottom: 15 },
+              },
+            },
+            }
+        });
+    };
+</script>
+

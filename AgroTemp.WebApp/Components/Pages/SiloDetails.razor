@@ -2,6 +2,65 @@
 
 <h2>Szczegóły zbiornika <b>@silo.Name</b></h2>
 
+<div class="row"> <!--Cards of limit values-->
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-thermometer-full"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Maksimum</p>
+                            <h4 class="card-title">@extremeValues.MaxTemperature °C</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                            <i class="fas fa-thermometer-empty"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Minimum</p>
+                            <h4 class="card-title">@extremeValues.MinTemperature °C</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-thermometer-three-quarters"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Maksimum ΔT</p>
+                            <h4 class="card-title">@extremeValues.MaxDeltaTemperature °C</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
 <div class="row"> <!--Table of temperatures-->
     <div class="col-md">
         <div class="card">
@@ -9,12 +68,6 @@
                 <div class="card-title">Pomiar temperatury</div>
             </div>
             <div class="card-body">
-                <div class="card-sub">
-                    <b>Wartości graniczne:</b>
-                    <span>Maksymalna temperatura: <b style="color:red">@extremeValues.MaxTemperature °C</b></span>
-                    <span>      </span>
-                    <span>Minimalna temperatura: <b style="color:blue">@extremeValues.MinTemperature °C</b></span>
-                </div>
                 @if (probesWithDetails.Count() == 0)
                 {
                     <p><em>Brak sond pomiarowych.</em></p>
@@ -69,10 +122,6 @@
                 <div class="card-title">Pomiar przyrostu temperatury</div>
             </div>
             <div class="card-body">
-                <div class="card-sub">
-                    <b>Wartości graniczne:</b>
-                    <span>Maksymalny przyrost temperatury: <b style="color:red">@extremeValues.MaxDeltaTemperature °C</b></span>
-                </div>
                 @if (probesWithDetails.Count() == 0)
                 {
                     <p><em>Brak sond pomiarowych.</em></p>

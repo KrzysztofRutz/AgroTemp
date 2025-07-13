@@ -6,5 +6,6 @@ public interface IUserService
 {
     Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<User> GetByLoginAndPasswordAsync(string login, string password, CancellationToken cancellationToken = default);
+    Task<User> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task UpdateAsync(User user);
 }

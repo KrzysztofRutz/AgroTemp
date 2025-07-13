@@ -22,12 +22,10 @@ public partial class MainLayout
     public string _pageTitle = "Dashboard";
     private string? _firstName;
     private string? _fullName;
-    private string? _email;
+    private int _userId;
+    private string? _role;
     private int _activeAlarmsCount;
     private IEnumerable<Alarm> _activeAlarms = new List<Alarm>();
-
-    public void Logout_Click()
-        => Navigation.NavigateTo("/logout", true);
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,22 +35,26 @@ public partial class MainLayout
         if (user.Identity.IsAuthenticated)
         {
             _firstName = user.FindFirst(c => c.Type == ClaimTypes.GivenName)?.Value;
-            _email = user.FindFirst(c => c.Type == ClaimTypes.Email)?.Value;
-            _fullName = $"{_firstName} {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";           
+            _userId = int.Parse(user.FindFirst(c => c.Type == "UserId")?.Value);
+            _fullName = $"{_firstName} {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+            _role = user.FindFirst(c => c.Type == ClaimTypes.Role)?.Value;          
         }
 
         _activeAlarms = await AlarmService.GetActiveAlarmsAsync();
         _activeAlarmsCount = _activeAlarms.Count();
     }
 
-    protected async override Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
-        {
             await JS.InvokeAsync<IJSObjectReference>("import", "./assets/js/kaiadmin.min.js");
-        }
     }
 
     private void SeeAllActiveAlarms_Click()
         => _pageTitle = "Alarmy aktywne";
+
+    private void MyProfileSettings_Click()
+    {
+        _pageTitle = "Mój Profil";
+    }
 }

@@ -27,6 +27,7 @@ public class JwtTokenService : IJwtTokenService
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Surname, user.LastName),
             new Claim(ClaimTypes.GivenName, user.FirstName),
+            new Claim("UserId", user.Id.ToString())
         };
 
         string secret = _configuration.GetValue<string>("Jwt:Secret");

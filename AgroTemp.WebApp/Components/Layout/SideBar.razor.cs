@@ -20,4 +20,7 @@ public partial class Sidebar
 
     private async Task Settings_Click()
         => await PageTitleChanged.InvokeAsync("Ustawienia");
+
+    private async Task Trends_Click()
+        => await PageTitleChanged.InvokeAsync("Wykresy");
 }

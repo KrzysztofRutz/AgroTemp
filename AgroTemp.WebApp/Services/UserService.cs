@@ -19,9 +19,7 @@ public class UserService : IUserService
         var result = await _httpClient.GetAsync("api/users", cancellationToken);
 
         if (!result.IsSuccessStatusCode)
-        {
             return null;
-        }
 
         string content = await result.Content.ReadAsStringAsync();
 
@@ -38,11 +36,23 @@ public class UserService : IUserService
         var result = await _httpClient.GetAsync($"api/users/getByLoginAndPassword?login={loginEncode}&password={passwdEncode}", cancellationToken);       
 
         if (!result.IsSuccessStatusCode)
-        {
             return null;
-        }
 
         string content = await result.Content.ReadAsStringAsync();
+        var user = JsonConvert.DeserializeObject<User>(content);
+
+        return user;
+    }
+
+    public async Task<User> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var result = await _httpClient.GetAsync($"api/users/{id}", cancellationToken);
+
+        if (!result.IsSuccessStatusCode)
+            return null;
+
+        string content = await result.Content.ReadAsStringAsync();
+
         var user = JsonConvert.DeserializeObject<User>(content);
 
         return user;

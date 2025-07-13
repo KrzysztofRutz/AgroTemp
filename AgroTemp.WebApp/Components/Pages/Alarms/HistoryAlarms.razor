@@ -9,6 +9,7 @@
             </div>
             <div class="card-body">               
                 <EditForm Model="@Model" OnValidSubmit="FilterAlarmsAsync">
+                    <DataAnnotationsValidator />
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -22,6 +23,18 @@
                             <div class="form-group">
                                 <label>Data końcowa:</label>
                                 <InputDate @bind-Value="Model.EndAt" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <center>
+                                    <b><ValidationMessage For="() => Model.StartAt" /></b>
+                                </center>
+                            </div>
+                            <div class="col-md-4">
+                                <center>
+                                    <b><ValidationMessage For="() => Model.EndAt" /></b>
+                                </center>
                             </div>
                         </div>
                         <div class="col-md-4 align-content-end">

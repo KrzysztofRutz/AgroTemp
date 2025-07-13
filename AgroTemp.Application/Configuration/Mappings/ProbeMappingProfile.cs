@@ -15,12 +15,12 @@ public class ProbeMappingProfile : Profile
         CreateMap<ReadingModule, ReadingModuleDto>();
         CreateMap<Probe, ProbeWithDetailsDto>();
         CreateMap<Temperature, TemperatureForOneProbeDto>()
-            .ForMember(member => member.ListOfTemperatures, conf => conf.MapFrom(src =>
+            .ForMember(member => member.ListOfValues, conf => conf.MapFrom(src =>
                 Enumerable.Range(1, 100)
                 .Select(i => (double?)((ushort?)typeof(Temperature).GetProperty($"sensor{i}").GetValue(src)) / 100)
                 .ToList()));
         CreateMap<DeltaTemperature, DeltaTemperatureForOneProbeDto>()
-            .ForMember(member => member.ListOfDeltaTemperatures, conf => conf.MapFrom(src =>
+            .ForMember(member => member.ListOfValues, conf => conf.MapFrom(src =>
                 Enumerable.Range(1, 100)
                 .Select(i => (double?)((ushort?)typeof(DeltaTemperature).GetProperty($"sensor{i}").GetValue(src)) / 100)
                 .ToList()));

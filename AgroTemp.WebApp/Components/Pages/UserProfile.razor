@@ -1,0 +1,68 @@
+﻿@page "/user-profile/{UserId:int}"
+
+<div class="row">
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Ustawienia użytkownika</h4>
+			</div>
+			<div class="card-body">
+				<EditForm Model="@Model" OnValidSubmit="SaveChangesAsync">
+					<div class="row mt-3">
+						<div class="col-md-6">
+							<div class="form-group form-group-default">
+								<label>Imię</label>
+								<input type="text" class="form-control" name="name" placeholder="Imię" value="@_user.FirstName">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-group-default">
+								<label>Nazwisko</label>
+								<input type="email" class="form-control" name="email" placeholder="Nazwisko" value="@_user.LastName">
+							</div>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-6">
+							<div class="form-group form-group-default">
+								<label>Typ</label>
+								<select class="form-control" value="@_user.TypeOfUser">
+									<option value="Operator">Operator</option>
+									<option value="Manager">Administrator</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-group-default">
+								<label>Email</label>
+								<input type="email" class="form-control" name="email" placeholder="Email" value="@_user.Email">
+							</div>
+						</div>
+					</div>
+					<div class="text-end mt-3 mb-3">
+						<button class="btn btn-success">Zapisz</button>
+						<button class="btn btn-danger">Reset</button>
+					</div>
+                </EditForm>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="card card-profile">
+			<div class="card-header" style="background-image: url('assets/img/AgroTemp/background_agrotemp.jpg'); background-size:cover">
+				<div class="profile-picture">
+					<div class="avatar avatar-xl">
+						<img src="assets/img/AgroTemp/user.png" alt="..." class="avatar-img rounded-circle">
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="user-profile text-center">
+					<div class="name">@_user.FirstName @_user.LastName</div>
+					<div class="job">@_user.TypeOfUser</div>
+					<div class="desc">A man who hates loneliness</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

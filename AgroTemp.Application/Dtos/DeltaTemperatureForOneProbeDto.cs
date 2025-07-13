@@ -2,5 +2,5 @@
 
 public class DeltaTemperatureForOneProbeDto 
 {
-    public List<double?> ListOfDeltaTemperatures { get; set; }
+    public List<double?> ListOfValues { get; set; }
 }

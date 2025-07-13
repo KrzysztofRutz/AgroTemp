@@ -175,16 +175,13 @@
                               </div>
                               <div class="u-text">
                                 <h4>@_fullName</h4>
-                                <p class="text-muted">@_email</p>
-                                <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Zobacz profil</a>
+                                <p class="text-muted">@_role</p>
                               </div>
                             </div>
                           </li>
                           <li>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Mój Profil</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Ustawienia użytkownika</a>
+                                    <a class="dropdown-item" href="user-profile/@_userId.ToString()" @onclick=MyProfileSettings_Click>Mój Profil</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="logout">Wyloguj</a>
                           </li>

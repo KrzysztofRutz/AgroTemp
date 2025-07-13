@@ -35,11 +35,16 @@ public class GetTemperaturesByProbeIdAndTimeIntervalQueryHandler : IQueryHandler
 
         var temperatures = await _temperatureRepository.GetByReadingModuleIdAndBetweenStartDateTimeAndEndTimeAsync(probe.ReadingModuleId, request.startDateTime, request.endDateTime, settings.HourOfReading, settings.FrequencyOfReading, cancellationToken);
 
+        if (temperatures == null || !temperatures.Any())
+        {
+            return Enumerable.Empty<TemperatureByIntervalTimeDto>();
+        }
+
         var temperaturesByIntervalTimeDto = _mapper.Map<IEnumerable<TemperatureByIntervalTimeDto>>(temperatures);
 
         foreach (var temperature in temperaturesByIntervalTimeDto)
         {
-            temperature.ListOfTemperatures = temperature.ListOfTemperatures.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
+            temperature.ListOfValues = temperature.ListOfValues.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
         }
 
         return temperaturesByIntervalTimeDto;

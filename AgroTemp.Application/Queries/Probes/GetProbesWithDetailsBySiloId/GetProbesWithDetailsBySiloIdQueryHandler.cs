@@ -46,14 +46,14 @@ public class GetProbesWithDetailsBySiloIdQueryHandler : IQueryHandler<GetProbesW
             {
                 var temperatureForOneProbeDto = _mapper.Map<TemperatureForOneProbeDto>(temperature);
 
-                probe.ActualTemperatures = temperatureForOneProbeDto.ListOfTemperatures.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
+                probe.ActualTemperatures = temperatureForOneProbeDto.ListOfValues.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
             }
 
             if (deltaTemperature != null)
             {
                 var deltaTemperatureForOneProbeDto = _mapper.Map<DeltaTemperatureForOneProbeDto>(deltaTemperature);
 
-                probe.ActualDeltaTemperatures = deltaTemperatureForOneProbeDto.ListOfDeltaTemperatures.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
+                probe.ActualDeltaTemperatures = deltaTemperatureForOneProbeDto.ListOfValues.Skip(probe.NrFirstSensor - 1).Take(probe.SensorsCount).ToList();
             }
         }
 

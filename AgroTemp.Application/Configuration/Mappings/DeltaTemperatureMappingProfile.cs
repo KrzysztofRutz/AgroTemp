@@ -12,7 +12,7 @@ public class DeltaTemperatureMappingProfile : Profile
 
         //For GetDeltaTemperaturesByProbeIdAndTimeIntervalQuery
         CreateMap<DeltaTemperature, DeltaTemperatureByIntervalTimeDto>()
-            .ForMember(member => member.ListOfTemperatures, conf => conf.MapFrom(src =>
+            .ForMember(member => member.ListOfValues, conf => conf.MapFrom(src =>
                 Enumerable.Range(1, 100)
                 .Select(i => (double?)((ushort?)typeof(DeltaTemperature).GetProperty($"sensor{i}").GetValue(src)) / 100)
                 .ToList()))

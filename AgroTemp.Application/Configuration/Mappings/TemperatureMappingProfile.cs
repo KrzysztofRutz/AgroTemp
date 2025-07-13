@@ -12,7 +12,7 @@ public class TemperatureMappingProfile : Profile
 
         //For GetTemperaturesByProbeIdAndTimeIntervalQuery
         CreateMap<Temperature, TemperatureByIntervalTimeDto>()
-            .ForMember(member => member.ListOfTemperatures, conf => conf.MapFrom(src =>
+            .ForMember(member => member.ListOfValues, conf => conf.MapFrom(src =>
                 Enumerable.Range(1, 100)
                 .Select(i => (double?)((ushort?)typeof(Temperature).GetProperty($"sensor{i}").GetValue(src)) / 100)
                 .ToList()))
