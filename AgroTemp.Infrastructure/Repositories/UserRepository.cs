@@ -30,4 +30,24 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByLoginAndPasswordAsync(string login, string password, CancellationToken cancellationToken = default)
         => await _dbContext.Users.SingleOrDefaultAsync(u => u.Login == login && u.Password == password, cancellationToken);
+
+    public async Task UpdateLoginAsync(int id, string login)
+    => await _dbContext.Users
+            .Where(u => u.Id == id)
+            .ExecuteUpdateAsync(u => u.SetProperty(p => p.Login, login));
+
+    public async Task UpdatePasswordAsync(int id, string password)
+        => await _dbContext.Users
+            .Where(u => u.Id == id)
+            .ExecuteUpdateAsync(u => u.SetProperty(p => p.Password, password));
+
+    public async Task UpdateUserParametersAsync(User user)
+        => await _dbContext.Users
+            .Where(u => u.Id == user.Id)
+            .ExecuteUpdateAsync(u => u
+                .SetProperty(p => p.FirstName, user.FirstName)
+                .SetProperty(p => p.LastName, user.LastName)
+                .SetProperty(p => p.Email, user.Email)
+                .SetProperty(p => p.TypeOfUser, user.TypeOfUser)
+            );
 }

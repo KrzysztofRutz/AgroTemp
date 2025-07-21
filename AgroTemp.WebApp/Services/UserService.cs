@@ -1,4 +1,5 @@
-﻿using AgroTemp.WebApp.Models;
+﻿using AgroTemp.WebApp.Components.Pages.Authentication;
+using AgroTemp.WebApp.Models;
 using AgroTemp.WebApp.Services.Abstractions;
 using Newtonsoft.Json;
 using System.Web;
@@ -58,14 +59,47 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task UpdateAsync(User user)
+    public async Task UpdateLoginAsync(int id, int login)
     {
-        var result =  await _httpClient.PutAsJsonAsync("api/users", user);
+        var patchValue = new 
+        {
+            Id = id,
+            Login = login 
+        };
+
+        var result =  await _httpClient.PatchAsJsonAsync("api/users/login", patchValue);
+
+        if (!result.IsSuccessStatusCode)
+        {
+            var message = await result.Content.ReadAsStringAsync();   
+            throw new Exception(message);
+        }
+    }
+
+    public async Task UpdatePasswordAsync(int id, string password)
+    {
+        var patchValue = new
+        {
+            Id = id,
+            Password = password
+        };
+
+        var result = await _httpClient.PatchAsJsonAsync("api/users/password", patchValue);
 
         if (!result.IsSuccessStatusCode)
         {
             var message = await result.Content.ReadAsStringAsync();
-     
+            throw new Exception(message);
+        }
+    }
+
+    public async Task UpdateUserParametersAsync(User user)
+    {
+        var result = await _httpClient.PatchAsJsonAsync("api/users/UserParameters", user);
+
+        if (!result.IsSuccessStatusCode)
+        {
+            var message = await result.Content.ReadAsStringAsync();
             throw new Exception(message);
         }
     }

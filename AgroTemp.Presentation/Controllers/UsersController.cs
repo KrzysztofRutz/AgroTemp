@@ -1,6 +1,9 @@
 ﻿using AgroTemp.Application.Commands.Users.AddUser;
 using AgroTemp.Application.Commands.Users.RemoveUser;
+using AgroTemp.Application.Commands.Users.UpdateLogin;
+using AgroTemp.Application.Commands.Users.UpdatePassword;
 using AgroTemp.Application.Commands.Users.UpdateUser;
+using AgroTemp.Application.Commands.Users.UpdateUserParameters;
 using AgroTemp.Application.Dtos;
 using AgroTemp.Application.Queries.Users.GetUserById;
 using AgroTemp.Application.Queries.Users.GetUserByLoginAndPassword;
@@ -79,6 +82,36 @@ public class UsersController : Controller
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         await _mediator.Send(new RemoveUserCommand(id));
+
+        return NoContent();
+    }
+
+    [HttpPatch("login")]
+    [SwaggerOperation("Update login for user")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    public async Task<IActionResult> PatchLogin([FromBody] UpdateLoginCommand command)
+    {
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPatch("password")]
+    [SwaggerOperation("Update password for user")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    public async Task<IActionResult> PatchPassword([FromBody] UpdatePasswordCommand command)
+    {
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPatch("UserParameters")]
+    [SwaggerOperation("Update user parameters for user")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    public async Task<IActionResult> PatchUserParameters([FromBody] UpdateUserParametersCommand command)
+    {
+        await _mediator.Send(command);
 
         return NoContent();
     }

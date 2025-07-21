@@ -47,7 +47,11 @@ public partial class MainLayout
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
+        {
             await JS.InvokeAsync<IJSObjectReference>("import", "./assets/js/kaiadmin.min.js");
+            await JS.InvokeAsync<IJSObjectReference>("import", "./assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js");
+        }
+            
     }
 
     private void SeeAllActiveAlarms_Click()

@@ -1,4 +1,5 @@
-﻿using AgroTemp.Domain.Enums.User;
+﻿using AgroTemp.Application.Configuration.Validation;
+using AgroTemp.Domain.Enums.User;
 using FluentValidation;
 
 namespace AgroTemp.Application.Commands.Users.AddUser;
@@ -26,43 +27,11 @@ public class AddUserCommandValidation : AbstractValidator<AddUserCommand>
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required.")
-            .Must(x => PasswordHasSpecialCharacter(x)).WithMessage("Password has not any symbol character.")
-            .Must(x => PasswordHasNumberCharacter(x)).WithMessage("Password has not any number character.")
+            .Must(x => PasswordValidator.HasSpecialCharacter(x)).WithMessage("Password has not any symbol character.")
+            .Must(x => PasswordValidator.HasNumberCharacter(x)).WithMessage("Password has not any number character.")
             .MinimumLength(8).WithMessage("Password cannot be shorter than 8 characters.");
 
         RuleFor(x => x.TypeOfUser)
             .IsEnumName(typeof(TypeOfUser)).WithMessage("Type of user has not valid value.");
-    }
-
-    private static bool PasswordHasSpecialCharacter(string password)
-    {
-        bool isValid = false;
-
-        foreach (char c in password)
-        {
-            if (!char.IsLetterOrDigit(c))
-            {
-                isValid = true;
-                break;
-            }
-        }
-
-        return isValid;
-    }
-
-    private static bool PasswordHasNumberCharacter(string password)
-    {
-        bool isValid = false;
-
-        foreach (char c in password)
-        {
-            if (char.IsNumber(c))
-            {
-                isValid = true;
-                break;
-            }
-        }
-
-        return isValid;
     }
 }

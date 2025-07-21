@@ -3,19 +3,19 @@ using AgroTemp.Domain.Abstractions;
 using AgroTemp.Domain.Enums.User;
 using AgroTemp.Domain.Exceptions;
 
-namespace AgroTemp.Application.Commands.Users.UpdateUser;
+namespace AgroTemp.Application.Commands.Users.UpdateUserParameters;
 
-public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
+public class UpdateUserParametersCommandHandler : ICommandHandler<UpdateUserParametersCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    public UpdateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public UpdateUserParametersCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateUserParametersCommand request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -27,11 +27,9 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
         user.FirstName = request.FirstName;
         user.LastName = request.LastName;
         user.Email = request.Email;
-        user.Login = request.Login;
-        user.Password = request.Password;
         user.TypeOfUser = (TypeOfUser)Enum.Parse(typeof(TypeOfUser), request.TypeOfUser);
 
-        _userRepository.Update(user);
+        await _userRepository.UpdateUserParametersAsync(user);
         await _unitOfWork.SaveChangesAsync();
     }
 }

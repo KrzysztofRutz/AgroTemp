@@ -15,6 +15,9 @@ using AgroTemp.Application.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using AgroTemp.Application.Commands.Alarms.AddAlarm;
 using AgroTemp.Application.Commands.Alarms.UpdateAlarm;
+using AgroTemp.Application.Commands.Users.UpdateLogin;
+using AgroTemp.Application.Commands.Users.UpdatePassword;
+using AgroTemp.Application.Commands.Users.UpdateUserParameters;
 
 namespace AgroTemp.Application;
 
@@ -40,6 +43,10 @@ public static class Extensions
 
         services.AddScoped<IValidator<AddReadingModuleCommand>, AddReadingModuleCommandValidation>();
         services.AddScoped<IValidator<UpdateReadingModuleCommand>, UpdateReadingModuleCommandValidation>();
+
+        services.AddScoped<IValidator<UpdateLoginCommand>, UpdateLoginCommandValidation>();
+        services.AddScoped<IValidator<UpdatePasswordCommand>, UpdatePasswordCommandValidation>();
+        services.AddScoped<IValidator<UpdateUserParametersCommand>, UpdateUserParametersCommandValidation>();
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandValidationBehavior<,>));
         services.AddTransient<ExceptionHandlingMiddleware>();

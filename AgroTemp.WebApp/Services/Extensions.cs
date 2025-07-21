@@ -15,6 +15,7 @@ public static class Extensions
         services.AddScoped<ISettingsService, SettingsService>();
         services.AddScoped<IValueWithTimeStampService<Temperature>, TemperatureService>();
         services.AddScoped<IValueWithTimeStampService<DeltaTemperature>, DeltaTemperatureService>();
+        services.AddScoped<INotificationService, NotificationService>();    
 
         return services;
     }

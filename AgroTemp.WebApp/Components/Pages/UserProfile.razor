@@ -7,18 +7,18 @@
 				<h4 class="card-title">Ustawienia użytkownika</h4>
 			</div>
 			<div class="card-body">
-				<EditForm Model="@Model" OnValidSubmit="SaveChangesAsync">
+				<EditForm Model="@UserViewModel" OnValidSubmit="SaveChangesAsync">
 					<div class="row mt-3">
 						<div class="col-md-6">
 							<div class="form-group form-group-default">
 								<label>Imię</label>
-								<input type="text" class="form-control" name="name" placeholder="Imię" value="@_user.FirstName">
+								<input type="text" class="form-control" name="name" placeholder="Imię" value="@UserViewModel.FirstName">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-group-default">
 								<label>Nazwisko</label>
-								<input type="email" class="form-control" name="email" placeholder="Nazwisko" value="@_user.LastName">
+								<input type="text" class="form-control" placeholder="Nazwisko" value="@UserViewModel.LastName">
 							</div>
 						</div>
 					</div>
@@ -26,7 +26,7 @@
 						<div class="col-md-6">
 							<div class="form-group form-group-default">
 								<label>Typ</label>
-								<select class="form-control" value="@_user.TypeOfUser">
+								<select class="form-control" value="@UserViewModel.TypeOfUser">
 									<option value="Operator">Operator</option>
 									<option value="Manager">Administrator</option>
 								</select>
@@ -35,13 +35,13 @@
 						<div class="col-md-6">
 							<div class="form-group form-group-default">
 								<label>Email</label>
-								<input type="email" class="form-control" name="email" placeholder="Email" value="@_user.Email">
+								<input type="email" class="form-control" name="email" placeholder="Email" value="@UserViewModel.Email">
 							</div>
 						</div>
 					</div>
 					<div class="text-end mt-3 mb-3">
-						<button class="btn btn-success">Zapisz</button>
-						<button class="btn btn-danger">Reset</button>
+						<button class="btn btn-success" type="submit">Zapisz</button>
+						<button class="btn btn-danger" type="button" @onclick="ResetUserProfileAsync">Reset</button>
 					</div>
                 </EditForm>
 			</div>
@@ -58,11 +58,12 @@
 			</div>
 			<div class="card-body">
 				<div class="user-profile text-center">
-					<div class="name">@_user.FirstName @_user.LastName</div>
-					<div class="job">@_user.TypeOfUser</div>
+					<div class="name">@UserViewModel.FirstName @UserViewModel.LastName</div>
+					<div class="job">@UserViewModel.TypeOfUser</div>
 					<div class="desc">A man who hates loneliness</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+

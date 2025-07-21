@@ -16,19 +16,23 @@ internal class StringToMD5Converter : ValueConverter<string, string>
     private static string StringToMd5(string input)
     {
         var sb = new StringBuilder();
-        using (MD5 md5 = MD5.Create())
+        using var md5 = MD5.Create();
+
+        if (string.IsNullOrEmpty(input))
         {
-            // Konwersja stringa na tablicę bajtów
-            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+            return string.Empty; // Return empty string if input is null or empty
+        }
 
-            // Obliczanie skrótu MD5
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
+        // Conversion string to byte array
+        byte[] inputBytes = Encoding.ASCII.GetBytes(input);
 
-            // Konwersja tablicy bajtów na string w formacie heksadecymalnym
-            for (int i = 0; i < hashBytes.Length; i++)
-            {
-                sb.Append(hashBytes[i].ToString("X2"));
-            }
+        // Calculate MD5 hash from byte array
+        byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+        // Convert byte array to hexadecimal string 
+        for (int i = 0; i < hashBytes.Length; i++)
+        {
+            sb.Append(hashBytes[i].ToString("X2"));
         }
         return sb.ToString();
     }
