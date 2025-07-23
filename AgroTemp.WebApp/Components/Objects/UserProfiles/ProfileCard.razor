@@ -1,0 +1,38 @@
+﻿<EditForm Model="@UserViewModel" OnValidSubmit="SaveChangesAsync" >
+	<DataAnnotationsValidator />
+	<div class="row mt-3">
+		<div class="col-md-6">
+			<div class="form-group form-group-default">
+				<label>Imię</label>
+				<InputText type="text" class="form-control" name="name" placeholder="Imię" @bind-Value="@UserViewModel.FirstName" />
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group form-group-default">
+				<label>Nazwisko</label>
+				<InputText type="text" class="form-control" placeholder="Nazwisko" @bind-Value="@UserViewModel.LastName" />
+			</div>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-6">
+			<div class="form-group form-group-default">
+				<label>Typ</label>
+				<InputSelect class="form-control" @bind-Value="@UserViewModel.TypeOfUser">
+					<option value="Operator">Operator</option>
+					<option value="Manager">Administrator</option>
+				</InputSelect>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group form-group-default">
+				<label>Email</label>
+				<InputText type="email" class="form-control" name="email" placeholder="Email" @bind-Value="@UserViewModel.Email" />
+			</div>
+		</div>
+	</div>
+	<div class="text-end mt-3 mb-3">
+		<button class="btn btn-success" type="submit">Zapisz</button>
+		<button class="btn btn-danger" type="button" @onclick="ResetUserProfileAsync">Reset</button>
+	</div>
+</EditForm>

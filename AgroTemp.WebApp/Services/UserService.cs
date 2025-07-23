@@ -1,5 +1,4 @@
-﻿using AgroTemp.WebApp.Components.Pages.Authentication;
-using AgroTemp.WebApp.Models;
+﻿using AgroTemp.WebApp.Models;
 using AgroTemp.WebApp.Services.Abstractions;
 using Newtonsoft.Json;
 using System.Web;
@@ -59,7 +58,7 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task UpdateLoginAsync(int id, int login)
+    public async Task UpdateLoginAsync(int id, string login)
     {
         var patchValue = new 
         {
@@ -95,7 +94,16 @@ public class UserService : IUserService
 
     public async Task UpdateUserParametersAsync(User user)
     {
-        var result = await _httpClient.PatchAsJsonAsync("api/users/UserParameters", user);
+        var patchValue = new
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            TypeOfUser = user.TypeOfUser
+        };
+
+        var result = await _httpClient.PatchAsJsonAsync("api/users/UserParameters", patchValue);
 
         if (!result.IsSuccessStatusCode)
         {

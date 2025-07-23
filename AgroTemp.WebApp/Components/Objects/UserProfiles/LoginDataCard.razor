@@ -1,0 +1,21 @@
+﻿<EditForm Model="@LogViewModel" OnValidSubmit="SaveChangesAsync">
+	<DataAnnotationsValidator />
+	<div class="row mt-3">
+		<div class="col-md-6">
+			<div class="form-group form-group-default">
+				<label>Login</label>
+				<InputText type="text" class="form-control" name="name" placeholder="Login" @bind-Value="@LogViewModel.Login" />
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group form-group-default">
+				<label>Hasło</label>
+				<InputText type="text" class="form-control" placeholder="Hasło" @bind-Value="@LogViewModel.Password" />
+			</div>
+		</div>
+	</div>
+	<div class="text-end mt-3 mb-3">
+		<button class="btn btn-success" type="submit">Zapisz</button>
+		<button class="btn btn-danger" type="button" @onclick="ResetLoginDataAsync">Reset</button>
+	</div>
+</EditForm>

@@ -1,10 +1,8 @@
-﻿using AgroTemp.WebApp.Models;
+﻿using AgroTemp.WebApp.Enums;
+using AgroTemp.WebApp.Models;
 using AgroTemp.WebApp.Services.Abstractions;
 using AgroTemp.WebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 
 namespace AgroTemp.WebApp.Components.Pages;
 
@@ -19,12 +17,14 @@ public partial class UserProfile
     public int UserId { get; set; }
     private UserViewModel UserViewModel { get; set; } = new();
     private LogViewModel LogViewModel { get; set; } = new();
-
+    private UserProfileCards ProfileCard { get; set; } = UserProfileCards.UserProfile;
+    private User _user = new();
     protected override async Task OnInitializedAsync()
     {       
         await InitializeUserProfileAsync();
     }
 
+    /*
     private async Task SaveChangesAsync(EditContext args)
     {
         var user = new User()
@@ -43,23 +43,33 @@ public partial class UserProfile
 
     private async Task ResetUserProfileAsync(MouseEventArgs args)
         => await InitializeUserProfileAsync();
+    */
 
     private async Task InitializeUserProfileAsync()
     {
-        var user = await UserService.GetByIdAsync(UserId);
+        _user = await UserService.GetByIdAsync(UserId);
 
         UserViewModel = new()
         {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            TypeOfUser = user.TypeOfUser,
-            Email = user.Email
+            FirstName = _user.FirstName,
+            LastName = _user.LastName,
+            TypeOfUser = _user.TypeOfUser,
+            Email = _user.Email
         };
 
         LogViewModel = new()
         {
-            Login = user.Login,
-            Password = user.Password,
+            Login = _user.Login,
+            Password = string.Empty // Password should not be displayed for security reasons
         };
     }
+
+    private void UpdateUserProfile(User user)
+        => _user = user;
+
+    private void SelectProfileCard()
+        => ProfileCard = UserProfileCards.UserProfile;
+
+    private void SelectLoginDataCard()
+        => ProfileCard = UserProfileCards.LoginData;
 }
