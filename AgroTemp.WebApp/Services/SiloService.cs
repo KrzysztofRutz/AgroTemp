@@ -18,6 +18,9 @@ public class SiloService : ISiloService
     public async Task<Silo> GetByIdAsync(int id)
         => await _httpClient.GetFromJsonAsync<Silo>($"api/silos/{id}");
 
+    public async Task<IEnumerable<SiloWithDetails>> GetAllWithDeltailsAsync()
+        => await _httpClient.GetFromJsonAsync<IEnumerable<SiloWithDetails>>("api/silos/GetWithDetails");
+
     public async Task<HttpResponseMessage> AddAsync(Silo silo)
         => await _httpClient.PostAsJsonAsync("api/silos", silo);
 
@@ -25,5 +28,5 @@ public class SiloService : ISiloService
         => await _httpClient.PutAsJsonAsync("api/silos", silo);
 
     public async Task<HttpResponseMessage> RemoveAsync(Silo silo)
-        => await _httpClient.DeleteAsync($"api/silos/{silo.Id}");
+        => await _httpClient.DeleteAsync($"api/silos/{silo.Id}");   
 }

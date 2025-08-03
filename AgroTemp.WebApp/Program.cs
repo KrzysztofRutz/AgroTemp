@@ -1,4 +1,5 @@
 using AgroTemp.WebApp.Authentication;
+using AgroTemp.WebApp.Authentication.StateContainers;
 using AgroTemp.WebApp.Components;
 using AgroTemp.WebApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-/*Authentication
+//Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -19,13 +20,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/access-denied";
         options.Cookie.Name = "AgroTempToken";
         options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
-    });*/
+    });
 
 builder.Services.AddAuthentication();
-//builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddScoped<UserState>();
 
 //HttpClient for connecting to the API
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetConnectionString("ApiUri")) });

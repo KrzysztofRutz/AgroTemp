@@ -2,8 +2,8 @@
 
 public interface INotificationService
 {
-    Task ShowInfoAsync();
-    Task ShowSuccessAsync();
-    Task ShowWarningAsync();
-    Task ShowErrorAsync();
+    Task ShowInfoAsync(string message);
+    Task ShowSuccessAsync(string message);
+    Task ShowWarningAsync(string message);
+    Task ShowErrorAsync(string message);
 }

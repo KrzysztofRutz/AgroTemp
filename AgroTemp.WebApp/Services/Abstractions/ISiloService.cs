@@ -6,6 +6,7 @@ public interface ISiloService
 {
     Task<IEnumerable<Silo>> GetAllAsync();
     Task<Silo> GetByIdAsync(int id);
+    Task<IEnumerable<SiloWithDetails>> GetAllWithDeltailsAsync();
     Task<HttpResponseMessage> AddAsync(Silo silo);
     Task<HttpResponseMessage> UpdateAsync(Silo silo);
     Task<HttpResponseMessage> RemoveAsync(Silo silo);

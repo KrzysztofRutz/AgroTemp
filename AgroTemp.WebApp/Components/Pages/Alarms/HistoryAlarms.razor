@@ -63,47 +63,25 @@ else
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <div id="basic-datatables_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="basic-datatables_length">
-                                        <label>
-                                            Pokaż
-                                            <select name="basic-datatables_length" aria-controls="basic-datatables" class="form-control form-control-sm">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>
-                                            wierszy
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="basic-datatables" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
-                                        <thead>
-                                            <tr>
-                                                <th>Opis alarmu</th>
-                                                <th>Data wystąpienia</th>
-                                                <th>Data zakończenia</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var alarm in _alarms)
-                                            {
-                                                <tr>
-                                                    <td>@alarm.DescriptionToDisplay</td>
-                                                    <td>@alarm.CreatedAtToDisplay</td>
-                                                    <td>@alarm.UpdatedAtToDisplay</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        <table id="historyAlarms-datatable" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
+                            <thead>
+                                <tr>
+                                    <th>Opis alarmu</th>
+                                    <th>Data wystąpienia</th>
+                                    <th>Data zakończenia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var alarm in _alarms)
+                                {
+                                    <tr>
+                                        <td>@alarm.DescriptionToDisplay</td>
+                                        <td>@alarm.CreatedAtToDisplay</td>
+                                        <td>@alarm.UpdatedAtToDisplay</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -111,8 +89,26 @@ else
     </div>
 }
 <script>
-    $(document).ready(function () {
-      $("#basic-datatables").DataTable({});
-    });
+    window.ApplyHistoryAlarmsDatatable = () => {
+                $("#historyAlarms-datatable").DataTable(
+            {
+                searching: false,
+                language: {
+                    emptyTable: "Brak danych",
+                    info: "Wyświetlanie od _START_ do _END_ z _TOTAL_ rekordów",
+                    infoEmpty: "Wyświetlanie od 0 do 0 z 0 rekordów",
+                    infoFiltered: "(filtrowanie z _MAX_ rekordów)",
+                    lengthMenu: "Pokaż _MENU_ rekordów",
+                    search: "Szukaj:",
+                    zeroRecords: "Brak pasujących rekordów",
+                    paginate: {
+                    first:      "Pierwszy",
+                    previous:   "Poprzedni",
+                    next:       "Następny",
+                    last:       "Ostatni"
+                    },
+                }
+            });
+    }
 </script>
 

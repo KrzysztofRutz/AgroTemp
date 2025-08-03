@@ -1,9 +1,9 @@
 ﻿window.notifyInterop = {
-    notifySimple: function (type) {
+    notifySimple: function (type, messageFromApp) {
         $.notify({
             icon: 'icon-bell',
             title: '',
-            message: getMessage(type),
+            message: getMessage(type, messageFromApp),
             url: '',
             target: '_blank'
         }, {
@@ -26,13 +26,13 @@
             icon_type: 'class'
         });
 
-        function getMessage(type) {
+        function getMessage(type, messageFromApp) {
             switch (type) {
-                case "info": return "Informacja";
-                case "success": return "Operacja zakończona sukcesem";
-                case "warning": return "Uwaga!";
-                case "danger": return "Błąd operacji";
-                default: return "Powiadomienie";
+                case "info": return messageFromApp;
+                case "success": return messageFromApp;
+                case "warning": return messageFromApp;
+                case "danger": return messageFromApp;
+                default: return messageFromApp;
             }
         }
     }

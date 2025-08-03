@@ -15,4 +15,7 @@ internal class SiloReadOnlyRepository : ISiloReadOnlyRepository
     }
     public async Task<IEnumerable<Silo>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _dbContext.Silos.AsNoTracking().ToListAsync(cancellationToken);
+
+    public async Task<IEnumerable<Silo>> GetAllWithDetailsAsync(CancellationToken cancellationToken = default)
+        => await _dbContext.Silos.Include(x => x.ExtremeValues).AsNoTracking().ToListAsync(cancellationToken);
 }

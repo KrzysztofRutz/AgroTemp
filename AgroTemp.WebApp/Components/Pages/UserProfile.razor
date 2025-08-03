@@ -18,10 +18,10 @@
 				@switch (ProfileCard)
 				{
 					case UserProfileCards.UserProfile:
-						<ProfileCard UserViewModel="@UserViewModel" UserId="UserId" OnUserProfileUpdated="UpdateUserProfile" />
+						<ProfileDataCard  UserId="UserId" OnUserProfileUpdated="UpdateUserProfile" />
 						break;
 					case UserProfileCards.LoginData:
-						<LoginDataCard LogViewModel="@LogViewModel" UserId="UserId" />
+						<LoginDataCard UserId="UserId" />
 						break;
                 }
 			</div>

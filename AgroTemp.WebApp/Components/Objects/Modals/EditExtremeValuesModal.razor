@@ -1,0 +1,55 @@
+﻿<!-- Modal -->
+<div class="modal fade"
+     id="@ModalId"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="modalLabel-@SiloWithDetails.Id"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">
+                    <span class="fw-light"> Zbiornik </span>
+                    <span class="fw-mediumbold"> @SiloWithDetails.Name</span>
+                </h5>
+                <button type="button"
+                        class="close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@Model" OnValidSubmit="EditExtremeValuesAsync" >
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
+                                <label>Maksimum</label>
+                                <InputNumber class="form-control"  max="50" min="-50" @bind-Value="Model.MaxTemperature" />
+                                <ValidationMessage For="() => Model.MaxTemperature" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
+                                <label>Minimum</label>
+                                <InputNumber class="form-control" max="50" min="-50" @bind-Value="Model.MinTemperature" />
+                                <ValidationMessage For="() => Model.MinTemperature" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
+                                <label>Maksimum ΔT</label>
+                                <InputNumber class="form-control" max="50" min="-50" @bind-Value="Model.MaxDeltaTemperature" />
+                                <ValidationMessage For="() => Model.MaxDeltaTemperature" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-warning btn-round"><i class="fa fa-edit"></i> Edytuj</button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,92 @@
 ﻿@page "/Settings"
 
-<h3>Settings</h3>
+@using AgroTemp.WebApp.Components.Objects.Modals
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title">Wartości graniczne</h4>
+                </div>
+            </div>
+            <div class="card-body">               
+                <div class="table-responsive">
+                    <table id="extremeValues-datatable" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
+                        <thead>
+                            <tr>
+                                <th>Nazwa zbiornika</th>
+                                <th>Maksimum</th>
+                                <th>Minimum</th>
+                                <th>Maksimum ΔT</th>
+                                <th style="width: 10%">Akcje</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Nazwa zbiornika</th>
+                                <th>Maksimum</th>
+                                <th>Minimum</th>
+                                <th>Maksimum ΔT</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var siloWithDetails in _silosWithDetailsList)
+                            {
+                                var modalId = $"modal-{siloWithDetails.Id}";
+
+                                <tr>
+                                    <td>@siloWithDetails.Name</td>
+                                    <td>@siloWithDetails.ExtremeValues.MaxTemperature</td>
+                                    <td>@siloWithDetails.ExtremeValues.MinTemperature</td>
+                                    <td>@siloWithDetails.ExtremeValues.MaxDeltaTemperature</td>
+                                    <td>
+                                        <div class="form-button-action">
+                                            <button type="button"
+                                                    title="Zbiornik @siloWithDetails.Name"
+                                                    class="btn btn-link btn-primary btn-lg"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#@modalId"
+                                                    data-original-title="Edit Task">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </div>
+                                        <EditExtremeValuesModal SiloWithDetails="@siloWithDetails" ModalId="@modalId" OnUpdatedCallback="OnUpdatedHandler"/>
+                                    </td>
+                                </tr>
+                            }                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.ApplyExtremeValuesDatatable = () => {
+                $("#extremeValues-datatable").DataTable(
+            {
+                searching: false,
+                language: {
+                    emptyTable: "Brak danych",
+                    info: "Wyświetlanie od _START_ do _END_ z _TOTAL_ rekordów",
+                    infoEmpty: "Wyświetlanie od 0 do 0 z 0 rekordów",
+                    infoFiltered: "(filtrowanie z _MAX_ rekordów)",
+                    lengthMenu: "Pokaż _MENU_ rekordów",
+                    search: "Szukaj:",
+                    zeroRecords: "Brak pasujących rekordów",
+                    paginate: {
+                    first:      "Pierwszy",
+                    previous:   "Poprzedni",
+                    next:       "Następny",
+                    last:       "Ostatni"
+                    },
+                }
+            });
+    }
+</script>
+
+
 

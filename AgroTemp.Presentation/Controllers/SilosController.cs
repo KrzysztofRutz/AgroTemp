@@ -2,8 +2,10 @@
 using AgroTemp.Application.Commands.Silos.RemoveSilo;
 using AgroTemp.Application.Commands.Silos.UpdateSilo;
 using AgroTemp.Application.Dtos;
+using AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
 using AgroTemp.Application.Queries.Silos.GetSiloById;
 using AgroTemp.Application.Queries.Silos.GetSilos;
+using AgroTemp.Application.Queries.Silos.GetSilosWithDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -38,6 +40,16 @@ public class SilosController : Controller
     public async Task<ActionResult> GetById([FromRoute] int id)
     {
         var result = await _mediator.Send(new GetSiloByIdQuery(id));
+
+        return Ok(result);
+    }
+
+    [HttpGet("[action]")]
+    [SwaggerOperation("Get silos with details")]
+    [ProducesResponseType(typeof(IEnumerable<SiloWithDetailsDto>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> GetWithDetails()
+    {
+        var result = await _mediator.Send(new GetSilosWithDetailsQuery());
 
         return Ok(result);
     }

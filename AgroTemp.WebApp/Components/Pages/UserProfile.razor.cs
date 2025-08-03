@@ -1,7 +1,6 @@
 ﻿using AgroTemp.WebApp.Enums;
 using AgroTemp.WebApp.Models;
 using AgroTemp.WebApp.Services.Abstractions;
-using AgroTemp.WebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 
 namespace AgroTemp.WebApp.Components.Pages;
@@ -15,53 +14,21 @@ public partial class UserProfile
 
     [Parameter]
     public int UserId { get; set; }
-    private UserViewModel UserViewModel { get; set; } = new();
-    private LogViewModel LogViewModel { get; set; } = new();
+
     private UserProfileCards ProfileCard { get; set; } = UserProfileCards.UserProfile;
     private User _user = new();
+
     protected override async Task OnInitializedAsync()
-    {       
-        await InitializeUserProfileAsync();
-    }
-
-    /*
-    private async Task SaveChangesAsync(EditContext args)
     {
-        var user = new User()
+        var user = await UserService.GetByIdAsync(UserId);
+
+        if (user == null)
         {
-            Id = UserId,
-            FirstName = UserViewModel.FirstName,
-            LastName = UserViewModel.LastName,
-            Email = UserViewModel.Email,
-            TypeOfUser = UserViewModel.TypeOfUser,
-        };
+            await NotificationService.ShowErrorAsync($"Brak użytkownika w bazie o Id {UserId}");
+            return;
+        }
 
-        await UserService.UpdateUserParametersAsync(user);
-
-        await NotificationService.ShowSuccessAsync();
-    }
-
-    private async Task ResetUserProfileAsync(MouseEventArgs args)
-        => await InitializeUserProfileAsync();
-    */
-
-    private async Task InitializeUserProfileAsync()
-    {
-        _user = await UserService.GetByIdAsync(UserId);
-
-        UserViewModel = new()
-        {
-            FirstName = _user.FirstName,
-            LastName = _user.LastName,
-            TypeOfUser = _user.TypeOfUser,
-            Email = _user.Email
-        };
-
-        LogViewModel = new()
-        {
-            Login = _user.Login,
-            Password = string.Empty // Password should not be displayed for security reasons
-        };
+        _user = user;
     }
 
     private void UpdateUserProfile(User user)
