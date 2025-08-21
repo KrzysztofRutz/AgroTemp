@@ -1,65 +1,19 @@
 ﻿@page "/Silo/{SiloId:int}"
 
-<h2>Szczegóły zbiornika <b>@silo.Name</b></h2>
+@using AgroTemp.WebApp.Components.Objects.Widgets
 
-<div class="row"> <!--Cards of limit values-->
+<h2>Szczegóły zbiornika <b>@_silo.Name</b></h2>
+
+<div class="row">  <!--Widgets of limit values-->   
     <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div class="icon-big text-center icon-danger bubble-shadow-small">
-                            <i class="fas fa-thermometer-full"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Maksimum</p>
-                            <h4 class="card-title">@extremeValues.MaxTemperature °C</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Widget Title="Maksimum" Value="@($"{_extremeValues.MaxTemperature} °C")" Icon="fas fa-thermometer-full" IconStyle="icon-danger" />
     </div>
     <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div class="icon-big text-center icon-primary bubble-shadow-small">
-                            <i class="fas fa-thermometer-empty"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Minimum</p>
-                            <h4 class="card-title">@extremeValues.MinTemperature °C</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Widget Title="Minimum" Value="@($"{_extremeValues.MinTemperature} °C")" Icon="fas fa-thermometer-empty" IconStyle="icon-primary" />
     </div>
     <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div class="icon-big text-center icon-danger bubble-shadow-small">
-                            <i class="fas fa-thermometer-three-quarters"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Maksimum ΔT</p>
-                            <h4 class="card-title">@extremeValues.MaxDeltaTemperature °C</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>   
+        <Widget Title="Maksimum ΔT" Value="@($"{_extremeValues.MaxDeltaTemperature} °C")" Icon="fas fa-thermometer-three-quarters" IconStyle="icon-danger" />
+    </div>
 </div>
 <div class="row"> <!--Table of temperatures-->
     <div class="col-md">
@@ -68,7 +22,7 @@
                 <div class="card-title">Pomiar temperatury</div>
             </div>
             <div class="card-body">
-                @if (probesWithDetails.Count() == 0)
+                @if (_probesWithDetails.Count() == 0)
                 {
                     <p><em>Brak sond pomiarowych.</em></p>
                 }
@@ -79,24 +33,24 @@
                             <thead>
                                 <tr>
                                     <th style="background-color:aliceblue" scope="col"><center>Czujnik</center></th>
-                                    @foreach (var probe in probesWithDetails)
+                                    @foreach (var probe in _probesWithDetails)
                                     {
                                         <th style="background-color:aliceblue" scope="col"><center>@probe.Name</center></th>
                                     }
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int i = maxSensorCount; i >= 1; i--)
+                                @for (int i = _maxSensorCount; i >= 1; i--)
                                 {
                                     <tr>
                                         <td style="background-color:aliceblue"><center>@i</center></td>
-                                        @foreach (var probe in probesWithDetails)
+                                        @foreach (var probe in _probesWithDetails)
                                         {
-                                            @if (probe.ActualTemperatures[i - 1] > extremeValues.MaxTemperature)
+                                            @if (probe.ActualTemperatures[i - 1] > _extremeValues.MaxTemperature)
                                             {
                                                 <td style="background-color:red"><center>@probe.ActualTemperatures[i - 1]</center></td>
                                             }
-                                            else if (probe.ActualTemperatures[i - 1] < extremeValues.MinTemperature)
+                                            else if (probe.ActualTemperatures[i - 1] < _extremeValues.MinTemperature)
                                             {
                                                 <td style="background-color:blue"><center>@probe.ActualTemperatures[i - 1]</center></td>
                                             }
@@ -122,7 +76,7 @@
                 <div class="card-title">Pomiar przyrostu temperatury</div>
             </div>
             <div class="card-body">
-                @if (probesWithDetails.Count() == 0)
+                @if (_probesWithDetails.Count() == 0)
                 {
                     <p><em>Brak sond pomiarowych.</em></p>
                 }
@@ -133,20 +87,20 @@
                             <thead>
                                 <tr>
                                     <th style="background-color:aliceblue" scope="col"><center>Czujnik</center></th>
-                                    @foreach (var probe in probesWithDetails)
+                                    @foreach (var probe in _probesWithDetails)
                                     {
                                         <th style="background-color:aliceblue" scope="col"><center>@probe.Name</center></th>
                                     }
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int i = maxSensorCount; i >= 1; i--)
+                                @for (int i = _maxSensorCount; i >= 1; i--)
                                 {
                                     <tr>
                                         <td style="background-color:aliceblue"><center>@i</center></td>
-                                        @foreach (var probe in probesWithDetails)
+                                        @foreach (var probe in _probesWithDetails)
                                         {
-                                            @if (probe.ActualDeltaTemperatures[i - 1] > extremeValues.MaxDeltaTemperature)
+                                            @if (probe.ActualDeltaTemperatures[i - 1] > _extremeValues.MaxDeltaTemperature)
                                             {
                                                 <td style="background-color:red"><center>@probe.ActualDeltaTemperatures[i - 1]</center></td>
                                             }
@@ -165,11 +119,11 @@
         </div>
     </div>
 </div>
-@if(silos.Count() != 0) //Carousel navigation between silos
+@if(_silos.Count() != 0) //Carousel navigation between silos
 {
     <div class="owl-carousel owl-theme owl-loaded owl-drag">
         <div class="owl-nav">
-            @if (SiloId == silos.OrderBy(x => x.Id).First().Id) //Previous button statements
+            @if (SiloId == _silos.OrderBy(x => x.Id).First().Id) //Previous button statements
             {
                 <button type="button" role="presentation" class="owl-prev disabled">
                     <span aria-label="Previous">‹</span>
@@ -177,11 +131,11 @@
             }
             else
             {
-                <button type="button" role="presentation" class="owl-prev" @onclick="() => NavigateToAnotherSilo_Click(silos.OrderByDescending(x => x.Id).First(x => x.Id < SiloId).Id)">
+                <button type="button" role="presentation" class="owl-prev" @onclick="() => NavigateToAnotherSilo_Click(_silos.OrderByDescending(x => x.Id).First(x => x.Id < SiloId).Id)">
                     <span aria-label="Previous">‹</span>
                 </button>
             }
-            @if (SiloId == silos.OrderBy(x => x.Id).Last().Id) //Next button statements
+            @if (SiloId == _silos.OrderBy(x => x.Id).Last().Id) //Next button statements
             {
                 <button type="button" role="presentation" class="owl-next disabled">
                     <span aria-label="Next">›</span>
@@ -189,13 +143,13 @@
             }
             else
             {
-                <button type="button" role="presentation" class="owl-next" @onclick="() => NavigateToAnotherSilo_Click(silos.OrderBy(x => x.Id).First(x => x.Id > SiloId).Id)">
+                <button type="button" role="presentation" class="owl-next" @onclick="() => NavigateToAnotherSilo_Click(_silos.OrderBy(x => x.Id).First(x => x.Id > SiloId).Id)">
                     <span aria-label="Next">›</span>
                 </button>
             }     
         </div>
         <div class="owl-dots">
-            @foreach(var silo in silos)
+            @foreach(var silo in _silos)
             {
                 if (SiloId == silo.Id)
                 {

@@ -21,6 +21,7 @@ public class ExtremeValuesService : IExtremeValuesService
 
         if (!result.IsSuccessStatusCode)
         {
+            await _notificationService.ShowErrorAsync($"Wystąpił problem z odczytem wartości granicznych zbiorników.");
             return null;
         }
 
@@ -37,6 +38,7 @@ public class ExtremeValuesService : IExtremeValuesService
 
         if (!result.IsSuccessStatusCode)
         {
+            await _notificationService.ShowErrorAsync($"Wystąpił problem z odczytem wartości granicznych zbiornika.");
             return null;
         }
 

@@ -9,5 +9,6 @@ public interface ISettingsRepository
     void UpdateLanguage(Language language);
     void UpdateHourOfReading(int hourOfReading);
     void UpdateFrequencyOfReading(FrequencyOfReading frequencyOfReading);
-    
+    void UpdateSMSNotificationMode(bool enableSMSNotificationMode);
+    void UpdateEmailNotificationMode(bool enableEmailNotificationMode);
 }

@@ -26,4 +26,10 @@ internal class SettingsRepository : ISettingsRepository
 
     public void UpdateLanguage(Language language)
         => _dbContext.Settings.First().Language = language;
+
+    public void UpdateSMSNotificationMode(bool enableSMSNotificationMode)
+        => _dbContext.Settings.First().EnableSMSNotificationMode = enableSMSNotificationMode;
+
+    public void UpdateEmailNotificationMode(bool enableEmailNotificationMode)
+        => _dbContext.Settings.First().EnableEmailNotificationMode = enableEmailNotificationMode;
 }

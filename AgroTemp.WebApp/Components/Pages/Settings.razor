@@ -1,16 +1,24 @@
 ﻿@page "/Settings"
 
 @using AgroTemp.WebApp.Components.Objects.Modals
+@using AgroTemp.WebApp.Components.Objects.Buttons
+@using AgroTemp.WebApp.Components.Objects.Widgets
+@using AgroTemp.WebApp.Enums
 
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <div class="d-flex align-items-center">
-                    <h4 class="card-title">Wartości graniczne</h4>
+                <div class="card-head-row card-tools-still-right">
+                    <div class="card-title">Wartości graniczne</div>
+                    <div class="card-tools">
+                        <ExplainedButton OnExplainedChanged="ChangeExtremeValuesCardBodyStateAsync"/>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">               
+            @if (_isCardExtremeValuesExplained)
+            {
+                <div class="card-body">               
                 <div class="table-responsive">
                     <table id="extremeValues-datatable" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
                         <thead>
@@ -60,32 +68,44 @@
                     </table>
                 </div>
             </div>
+            }            
         </div>
+    </div>
+</div>
+<div class="row">    
+    <div class="col-sm-6 col-md-3">
+        <EditHourOfReadingWidget HourOfReading="@_settings.HourOfReading"/>
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <EditFrequencyOfReadingWidget FrequencyOfReading="@_settings.FrequencyOfReading" />
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <EditNotificationsWidget IsEmailEnabled="@_settings.EnableEmailNotificationMode" IsSMSEnabled="_settings.EnableSMSNotificationMode"/>
     </div>
 </div>
 
 <script>
     window.ApplyExtremeValuesDatatable = () => {
-                $("#extremeValues-datatable").DataTable(
-            {
-                searching: false,
-                language: {
-                    emptyTable: "Brak danych",
-                    info: "Wyświetlanie od _START_ do _END_ z _TOTAL_ rekordów",
-                    infoEmpty: "Wyświetlanie od 0 do 0 z 0 rekordów",
-                    infoFiltered: "(filtrowanie z _MAX_ rekordów)",
-                    lengthMenu: "Pokaż _MENU_ rekordów",
-                    search: "Szukaj:",
-                    zeroRecords: "Brak pasujących rekordów",
-                    paginate: {
+        $("#extremeValues-datatable").DataTable(
+        {
+            searching: false,
+            language: {
+                emptyTable: "Brak danych",
+                info: "Wyświetlanie od _START_ do _END_ z _TOTAL_ rekordów",
+                infoEmpty: "Wyświetlanie od 0 do 0 z 0 rekordów",
+                infoFiltered: "(filtrowanie z _MAX_ rekordów)",
+                lengthMenu: "Pokaż _MENU_ rekordów",
+                search: "Szukaj:",
+                zeroRecords: "Brak pasujących rekordów",
+                paginate: {
                     first:      "Pierwszy",
                     previous:   "Poprzedni",
                     next:       "Następny",
-                    last:       "Ostatni"
-                    },
-                }
-            });
-    }
+                    last:       "Ostatni",
+                },
+            }
+        });        
+    };
 </script>
 
 

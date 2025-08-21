@@ -15,19 +15,36 @@ public partial class Settings
     public IJSRuntime JS { get; set; }
 
     private IEnumerable<SiloWithDetails> _silosWithDetailsList = new List<SiloWithDetails>();
+    private Models.Settings _settings = new ();
+    public bool _isCardExtremeValuesExplained = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _settings = await SettingsService.GetAsync();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            _silosWithDetailsList = await SiloService.GetAllWithDeltailsAsync();
+            _settings = await SettingsService.GetAsync();
+            _silosWithDetailsList = await SiloService.GetAllWithDeltailsAsync();      
 
             StateHasChanged();
             await JS.InvokeVoidAsync("ApplyExtremeValuesDatatable");
+            
         }
         base.OnAfterRender(firstRender);
     }     
 
     private async Task OnUpdatedHandler()
         => _silosWithDetailsList = await SiloService.GetAllWithDeltailsAsync();
+
+    private async Task ChangeExtremeValuesCardBodyStateAsync(bool isExplained)
+    {
+        _isCardExtremeValuesExplained = isExplained;
+
+        StateHasChanged();
+        await JS.InvokeVoidAsync("ApplyExtremeValuesDatatable");
+    }
 }

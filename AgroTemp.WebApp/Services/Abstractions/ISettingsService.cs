@@ -5,7 +5,8 @@ namespace AgroTemp.WebApp.Services.Abstractions;
 public interface ISettingsService
 {
     Task<Settings> GetAsync(CancellationToken cancellationToken = default);
-    void UpdateLanguage(string language);
-    void UpdateHourOfReading(int hourOfReading);
-    void UpdateFrequencyOfReading(int frequencyOfReading);
+    Task UpdateLanguageAsync(string language);
+    Task UpdateHourOfReadingAsync(int hourOfReading);
+    Task UpdateFrequencyOfReadingAsync(int frequencyOfReading);
+    Task UpdateNotificationsAsync(bool isSMSEnabled, bool isEmailEnabled);
 }

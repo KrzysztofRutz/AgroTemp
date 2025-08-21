@@ -4,11 +4,14 @@ using AgroTemp.WebApp.Services.Abstractions;
 using AgroTemp.WebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace AgroTemp.WebApp.Components.Pages;
 
 public partial class Trends
 {
+    [Inject]
+    ISettingsService SettingsService { get; set; }
     [Inject]
     public IExtremeValuesService ExtremeValuesService { get; set; }
     [Inject]
@@ -23,36 +26,38 @@ public partial class Trends
     public IJSRuntime JS { get; set; }
 
     private ChartsViewModel Model { get; set; } = new();
-    private ExtremeValues _extremeValues = new();
+
+    private ExtremeValues _extremeValues;
     private IEnumerable<Silo> _silos = new List<Silo>();
     private IEnumerable<ProbeWithDetails> _probes = new List<ProbeWithDetails>();
-    private string SelectedSilo = string.Empty;
+    private Models.Settings _settings = new();
+    private string _selectedSilo = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
+        _settings = await SettingsService.GetAsync();
         _silos = await SiloService.GetAllAsync();
     }
 
     private async Task OnSiloChanged(ChangeEventArgs e)
     {
-        SelectedSilo = e.Value?.ToString();
+        _selectedSilo = e.Value?.ToString();
 
-        if (string.IsNullOrEmpty(SelectedSilo))
+        if (string.IsNullOrEmpty(_selectedSilo))
         {
             _probes = new List<ProbeWithDetails>();
             return;
         }            
 
-        _probes =  await ProbeService.GetWithDeltailsBySiloIdAsync(int.Parse(SelectedSilo));
+        _probes =  await ProbeService.GetWithDeltailsBySiloIdAsync(int.Parse(_selectedSilo));
     }
 
     private async Task FilterChartsAsync()
     {
+        await Task.Delay(100); // Delay to ensure the UI updates before fetching data
         var temperatures = await TemperatureService.GetByProbeIdAndBetweenStartDateTimeAndEndTimeAsync(Model.ProbeWithDetailsId, Model.StartAt, Model.EndAt);
-        var deltaTemperatures = await DeltaTemperatureService.GetByProbeIdAndBetweenStartDateTimeAndEndTimeAsync(Model.ProbeWithDetailsId, Model.StartAt, Model.EndAt);      
-
-        _extremeValues = await ExtremeValuesService.GetBySiloIdAsync(Model.SiloId);
-
+        var deltaTemperatures = await DeltaTemperatureService.GetByProbeIdAndBetweenStartDateTimeAndEndTimeAsync(Model.ProbeWithDetailsId, Model.StartAt, Model.EndAt);
+       
         // Prepare data for the chart js 
         var sensorColors = Enum.GetValuesAsUnderlyingType(typeof(SensorColors))
             .Cast<SensorColors>()
@@ -86,7 +91,7 @@ public partial class Trends
                 });
             }
         }
-        await JS.InvokeVoidAsync("drawTemperatureChart", temperatureLabels, temperatureDatasets, _extremeValues);
+        await JS.InvokeVoidAsync("drawTemperatureChart", temperatureLabels, temperatureDatasets);
 
         //Data from delta temperatures
         var deltaTemperatureLabels = deltaTemperatures.Select(t => t.DateTimeStamp.ToString("dd.MM.yyyy HH:mm")).ToArray();
@@ -115,9 +120,12 @@ public partial class Trends
                 });
             }
         }
-        await JS.InvokeVoidAsync("drawDeltaTemperatureChart", deltaTemperatureLabels, deltaTemperatureDatasets, _extremeValues);
+        await JS.InvokeVoidAsync("drawDeltaTemperatureChart", deltaTemperatureLabels, deltaTemperatureDatasets);          
     }
 
     private async Task TypeOfTemperatureChartSelected(ChangeEventArgs e)
         => await FilterChartsAsync();
+
+    private async Task InitExtremeValuesAsync(MouseEventArgs args)
+        => _extremeValues = await ExtremeValuesService.GetBySiloIdAsync(Model.SiloId); // For ensure the UI updates before fetching data
 }

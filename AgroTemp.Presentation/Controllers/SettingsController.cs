@@ -1,6 +1,7 @@
 ﻿using AgroTemp.Application.Commands.Settings.UpdateFrequencyOfReading;
 using AgroTemp.Application.Commands.Settings.UpdateHourOfReading;
 using AgroTemp.Application.Commands.Settings.UpdateLanguage;
+using AgroTemp.Application.Commands.Settings.UpdateNotifications;
 using AgroTemp.Application.Dtos;
 using AgroTemp.Application.Queries.Settings.GetSettings;
 using MediatR;
@@ -55,6 +56,16 @@ public class SettingsController : Controller
     [SwaggerOperation("Update frequency of reading")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     public async Task<ActionResult> PatchFrequencyOfReading([FromBody] UpdateFrequencyOfReadingCommand command)
+    {
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPatch("notifications")]
+    [SwaggerOperation("Update notifications (SMS, Email)")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    public async Task<ActionResult> PatchNotifications([FromBody] UpdateNotificationsCommand command)
     {
         await _mediator.Send(command);
 

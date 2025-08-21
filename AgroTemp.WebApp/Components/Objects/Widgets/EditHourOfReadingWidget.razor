@@ -1,0 +1,55 @@
+﻿<div class="card card-stats card-secondary card-round">
+    <div class="card-body">
+        <EditForm Model="@Model" OnValidSubmit="EditHourOfReadingAsync">
+            <DataAnnotationsValidator />
+            <div class="row">
+                <div class="col-2">
+                    <div class="icon-big text-center">
+                        <i class="fas fa-clock op-8"></i>
+                    </div>
+                </div>
+                @if (_isHourOfReadingEdited)
+                {
+                    <div class="col-7">
+                        <p class="card-category op-8">Godzina odczytu:</p>
+                        <div class="input-group">
+                            <InputText class="form-control" id="timepicker" name="timepicker" @bind-Value=Model.Value></InputText>
+                            <span class="input-group-text">
+                                <i class="fa fa-clock"></i>
+                            </span>
+                        </div>
+                        <ValidationMessage For="() => Model.Value" />
+                    </div>
+                    <div class="col-3 align-content-center">
+                        <button class="btn btn-success btn-round" type="submit"><i class="fas fa-check"></i></button>
+                        <button class="btn btn-danger btn-round mt-2" type="button" @onclick=CloseEditHourOfReadingAsync><i class="fas fa-window-close"></i></button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-7">
+                        <p class="card-category op-8">Godzina odczytu:</p>
+                        <div class="input-group">
+                            <h4 class="card-title">@Model.Value</h4>
+                        </div>
+                    </div>
+                    <div class="col-3 align-content-center">
+                        <button class="btn btn-warning btn-round" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Przejdź do edycji" @onclick=OpenEditHourOfReadingAsync><i class="fas fa-edit"></i></button>
+                    </div>
+                }
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+<script>
+    window.InitTimePicker = () => {
+        $('#timepicker').datetimepicker({
+          format: 'H:00',
+        });
+    };
+
+    window.GetTimeValue = () => {
+        return $('#timepicker').val();
+    };
+</script>

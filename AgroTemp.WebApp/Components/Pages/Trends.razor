@@ -1,5 +1,7 @@
 ﻿@page "/Trends"
 
+@using AgroTemp.WebApp.Components.Objects.Widgets
+
 <div class="row"> <!-- Cards of filter charts for time range.-->
     <div class="col-md-12">
         <div class="card">
@@ -76,7 +78,7 @@
                         </div>
                         <div class="col-md-3 align-content-end">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Szukaj</button>
+                                <button type="submit" class="btn btn-primary" @onclick="InitExtremeValuesAsync">Szukaj</button>
                             </div>
                         </div>
                     </div>                   
@@ -85,112 +87,70 @@
         </div>
     </div>
 </div>
-<div class="row">  <!--Cards of limit values-->   
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div class="icon-big text-center icon-danger bubble-shadow-small">
-                            <i class="fas fa-thermometer-full"></i>
+@if(_extremeValues != null)
+{
+    <div class="row">  <!--Widgets of limit values-->   
+        <div class="col-sm-6 col-md-3">
+            <Widget Title="Maksimum" Value="@($"{_extremeValues.MaxTemperature} °C")" Icon="fas fa-thermometer-full" IconStyle="icon-danger" />
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <Widget Title="Minimum" Value="@($"{_extremeValues.MinTemperature} °C")" Icon="fas fa-thermometer-empty" IconStyle="icon-primary" />
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <Widget Title="Maksimum ΔT" Value="@($"{_extremeValues.MaxDeltaTemperature} °C")" Icon="fas fa-thermometer-three-quarters" IconStyle="icon-danger" />
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <Widget Title="Godzina odczytu" Value="@($"{_settings.HourOfReading}:00")" Icon="fas fa-clock" IconStyle="icon-info" />
+        </div>
+    </div>
+    <!--Charts-->
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-head-row card-tools-still-right">
+                        <div class="card-title">Temperatury</div>
+                        <div class="card-tools">
+                            <label>Wykres:</label>
+                            <select id="basic" name="basic" @oninput="TypeOfTemperatureChartSelected">
+                                <option value="line">Liniowy</option>
+                                <option value="bar">Słupkowy</option>
+                            </select>
+                            <a href="#" class="btn btn-label-info btn-round btn-sm">
+                                <span class="btn-label">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                Drukuj
+                            </a>
                         </div>
                     </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Maksimum</p>
-                            <h4 class="card-title">@_extremeValues.MaxTemperature °C</h4>
-                        </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="temperatureChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div class="icon-big text-center icon-primary bubble-shadow-small">
-                            <i class="fas fa-thermometer-empty"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Minimum</p>
-                            <h4 class="card-title">@_extremeValues.MinTemperature °C</h4>
-                        </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Przyrosty temperatur</div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="deltaTemperatureChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div class="icon-big text-center icon-danger bubble-shadow-small">
-                            <i class="fas fa-thermometer-three-quarters"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Maksimum ΔT</p>
-                            <h4 class="card-title">@_extremeValues.MaxDeltaTemperature °C</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--Charts-->
-<div class="row">
-    <div class="col-md">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-head-row card-tools-still-right">
-                    <div class="card-title">Temperatury</div>
-                    <div class="card-tools">
-                        <label>Wykres:</label>
-                        <select id="basic" name="basic" @oninput="TypeOfTemperatureChartSelected">
-                            <option value="line">Liniowy</option>
-                            <option value="bar">Słupkowy</option>
-                        </select>
-                        <a href="#" class="btn btn-label-info btn-round btn-sm">
-                            <span class="btn-label">
-                                <i class="fa fa-print"></i>
-                            </span>
-                            Drukuj
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="temperatureChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Przyrosty temperatur</div>
-            </div>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="deltaTemperatureChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+}
 
 <script>
-    window.drawTemperatureChart = (temperatureLabels, temperatureDatasets, _extremeValues) =>
+    window.drawTemperatureChart = (temperatureLabels, temperatureDatasets) =>
     {
         //Chart of temperatures
         const typeOfChartSelect = document.getElementById("basic");       
@@ -222,7 +182,7 @@
           });         
     };
 
-    window.drawDeltaTemperatureChart = (deltaTemperatureLabels, deltaTemperatureDatasets, _extremeValues) =>
+    window.drawDeltaTemperatureChart = (deltaTemperatureLabels, deltaTemperatureDatasets) =>
     {
         //Chart of delta temperatures
         var myMultipleBarChart = new Chart(deltaTemperatureChart, {

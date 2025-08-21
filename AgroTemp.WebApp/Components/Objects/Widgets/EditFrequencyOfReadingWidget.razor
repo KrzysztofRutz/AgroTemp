@@ -1,0 +1,47 @@
+﻿@using AgroTemp.WebApp.Enums;
+
+<div class="card card-stats card-secondary card-round">
+    <div class="card-body">
+        <EditForm Model="@Model" OnValidSubmit="EditFrequencyOfReadingAsync">
+            <DataAnnotationsValidator />
+            <div class="row">
+                <div class="col-2">
+                    <div class="icon-big text-center">
+                        <i class="fas fa-clock op-8"></i>
+                    </div>
+                </div>
+                @if (_isFrequencyOfReadingEdited)
+                {
+                    <div class="col-7">
+                        <p class="card-category op-8">Częstotliwość odczytu:</p>
+                        <div class="input-group">
+                            <InputSelect class="form-control" @bind-Value=Model.Value >
+                                @foreach (var frequency in Enum.GetValues<FrequencyOfReading>())
+                                {
+                                    <option value="@frequency">@(frequency.ToString().Replace("Every", "Co ").Replace("hours", "h").Replace("hour", "h"))</option>
+                                }
+                            </InputSelect>                               
+                        </div>
+                        <ValidationMessage For="() => Model.Value" />
+                    </div>
+                    <div class="col-3 align-content-center">
+                        <button class="btn btn-success btn-round" type="submit"><i class="fas fa-check"></i></button>
+                        <button class="btn btn-danger btn-round mt-2" type="button" @onclick=CloseEditFrequencyOfReading><i class="fas fa-window-close"></i></button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-7">
+                        <p class="card-category op-8">Częstotliwość odczytu:</p>
+                        <div class="input-group">
+                            <h4 class="card-title">@Model.Value.ToString().Replace("Every", "Co ").Replace("hours", "h").Replace("hour", "h")</h4>
+                        </div>
+                    </div>
+                    <div class="col-3 align-content-center">
+                        <button class="btn btn-warning btn-round" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Przejdź do edycji" @onclick=OpenEditFrequencyOfReading><i class="fas fa-edit"></i></button>
+                    </div>
+                }
+            </div>
+        </EditForm>
+    </div>
+</div>

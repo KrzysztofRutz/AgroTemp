@@ -16,26 +16,26 @@ public partial class SiloDetails
     public IProbeService ProbeService { get; set; }
     [Inject]
     public IExtremeValuesService ExtremeValuesService { get; set; }
-    private Silo silo = new();
-    private IEnumerable<Silo> silos = new List<Silo>();
-    private ExtremeValues extremeValues = new();
-    private IEnumerable<ProbeWithDetails> probesWithDetails = new List<ProbeWithDetails>();
-    private int maxSensorCount = default;
+
+    private Silo _silo = new();
+    private IEnumerable<Silo> _silos = new List<Silo>();
+    private ExtremeValues _extremeValues = new();
+    private IEnumerable<ProbeWithDetails> _probesWithDetails = new List<ProbeWithDetails>();
+    private int _maxSensorCount = default;
 
     protected override async Task OnInitializedAsync()
     {
-        silos = await SiloService.GetAllAsync();
-        silo = await SiloService.GetByIdAsync(SiloId);
-        probesWithDetails = await ProbeService.GetWithDeltailsBySiloIdAsync(SiloId);
+        _silos = await SiloService.GetAllAsync();
+        _silo = await SiloService.GetByIdAsync(SiloId);
+        _extremeValues = await ExtremeValuesService.GetBySiloIdAsync(SiloId);
+        _probesWithDetails = await ProbeService.GetWithDeltailsBySiloIdAsync(SiloId);
 
-        if (probesWithDetails.Count() == 0)
+        if (_probesWithDetails.Count() == 0)
         {
             return;
         }
 
-        extremeValues = await ExtremeValuesService.GetBySiloIdAsync(SiloId);
-
-        maxSensorCount = probesWithDetails.Max(x => x.SensorsCount);
+        _maxSensorCount = _probesWithDetails.Max(x => x.SensorsCount);
     }
 
     private void NavigateToAnotherSilo_Click(int siloId)

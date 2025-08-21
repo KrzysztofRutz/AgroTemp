@@ -1,0 +1,62 @@
+﻿<div class="card card-stats card-secondary card-round">
+    <div class="card-body">
+        <EditForm Model="@Model" OnSubmit="EditNotificationsAsync">
+            <div class="row">
+                <div class="col-2">
+                    <div class="icon-big text-center">
+                        <i class="fas fa-clipboard-list op-8"></i>
+                    </div>
+                </div>
+                @if (_isNotificationsEdited)
+                {
+                    <div class="col-7">
+                        <p class="card-category op-8">Tryb powiadomień:</p>
+                        <div class="input-group">
+                            <div class="form-check form-switch">
+                                <InputCheckbox class="form-check-input"
+                                               id="CheckBoxSMS"
+                                               @bind-Value="Model.IsSMSEnabled" />
+                                <label class="form-check-label" for="CheckBoxSMS"><b>SMS</b></label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <InputCheckbox class="form-check-input"
+                                               id="CheckBoxEmail"
+                                               @bind-Value="Model.IsEmailEnabled" />
+                                <label class="form-check-label" for="CheckBoxEmail"><b>Email</b></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 align-content-center">
+                        <button class="btn btn-success btn-round" type="submit"><i class="fas fa-check"></i></button>
+                        <button class="btn btn-danger btn-round mt-2" type="button" @onclick=CloseEditNotifications><i class="fas fa-window-close"></i></button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-7">
+                        <p class="card-category op-8">Tryb powiadomień:</p>
+                        <div class="input-group">
+                            <div class="form-check form-switch">
+                                <InputCheckbox class="form-check-input"
+                                               id="CheckBoxSMS"
+                                               disabled=""
+                                               @bind-Value="Model.IsSMSEnabled" />
+                                <label class="form-check-label" for="CheckBoxSMS">SMS</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <InputCheckbox class="form-check-input"
+                                               id="CheckBoxEmail"
+                                               disabled=""
+                                               @bind-Value="Model.IsEmailEnabled" />
+                                <label class="form-check-label" for="CheckBoxEmail">Email</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 align-content-center">
+                        <button class="btn btn-warning btn-round" type="button" @onclick="OpenEditNotifications"><i class="fas fa-edit"></i></button>
+                    </div>
+                }
+            </div>
+        </EditForm>
+    </div>
+</div>

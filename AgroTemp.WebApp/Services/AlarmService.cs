@@ -8,10 +8,12 @@ namespace AgroTemp.WebApp.Services;
 public class AlarmService : IAlarmService
 {
     private readonly HttpClient _httpClient;
+    private readonly INotificationService _notificationService;
 
-    public AlarmService(HttpClient httpClient)
+    public AlarmService(HttpClient httpClient, INotificationService notificationService)
     {
         _httpClient = httpClient;
+        _notificationService = notificationService;
     }
 
     public async Task<IEnumerable<Alarm>> GetActiveAlarmsAsync(CancellationToken cancellationToken = default)
@@ -20,6 +22,7 @@ public class AlarmService : IAlarmService
 
         if (!result.IsSuccessStatusCode)
         {
+            await _notificationService.ShowErrorAsync("Wystąpił problem z odczytem aktywnych alarmów.");
             return null;
         }
 
@@ -39,6 +42,7 @@ public class AlarmService : IAlarmService
 
         if (!result.IsSuccessStatusCode)
         {
+            await _notificationService.ShowErrorAsync("Wystąpił problem z odczytem alarmów w podanym przedziale czasowym.");
             return null;
         }
 
