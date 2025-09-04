@@ -2,7 +2,6 @@
 using AgroTemp.Application.Commands.Silos.RemoveSilo;
 using AgroTemp.Application.Commands.Silos.UpdateSilo;
 using AgroTemp.Application.Dtos;
-using AgroTemp.Application.Queries.Probes.GetProbesWithDetails;
 using AgroTemp.Application.Queries.Silos.GetSiloById;
 using AgroTemp.Application.Queries.Silos.GetSilos;
 using AgroTemp.Application.Queries.Silos.GetSilosWithDetails;
